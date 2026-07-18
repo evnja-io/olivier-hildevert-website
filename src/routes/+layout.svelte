@@ -4,6 +4,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import ScrollProgress from '$lib/components/ScrollProgress.svelte';
+	import BookingModal from '$lib/components/BookingModal.svelte';
 
 	let { children } = $props();
 </script>
@@ -19,6 +20,7 @@
 </main>
 
 <Footer />
+<BookingModal />
 
 <noscript>
 	<!-- Sans JavaScript, les sections .reveal doivent rester visibles. -->
