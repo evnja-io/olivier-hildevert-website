@@ -46,4 +46,18 @@ describe('createEntry', () => {
 		) as unknown as typeof fetch;
 		await expect(createEntry('messages-contact', {}, fetcher)).rejects.toBeInstanceOf(StrapiError);
 	});
+
+	it('StrapiError porte le corps de la réponse en échec', async () => {
+		vi.stubEnv('STRAPI_URL', 'http://cms.test');
+		const fetcher = vi.fn(
+			async () => new Response('nope', { status: 500 })
+		) as unknown as typeof fetch;
+		try {
+			await createEntry('messages-contact', {}, fetcher);
+			expect.unreachable();
+		} catch (err) {
+			expect(err).toBeInstanceOf(StrapiError);
+			expect((err as StrapiError).body).toBe('nope');
+		}
+	});
 });

@@ -7,7 +7,7 @@ Site vitrine construit avec SvelteKit (Svelte 5), Tailwind CSS v4 et Strapi comm
 - **SvelteKit 2 / Svelte 5** (TypeScript, runes) — scaffold via la [CLI officielle `sv`](https://github.com/sveltejs/cli)
 - **Tailwind CSS v4** (config CSS-first dans `src/routes/layout.css`, plugins typography + forms)
 - **Formulaires** : [sveltekit-superforms](https://superforms.rocks) v2 + zod v4 (adapter `zod4`) — exemple complet sur `/contact`, avec amélioration progressive (fonctionne sans JavaScript)
-- **Contenu** : client Strapi v5 typé dans `src/lib/server/strapi.ts` (Strapi est un service séparé, voir Configuration)
+- **Contenu** : par défaut `src/lib/content/` (fallback), lecture serveur via `src/lib/server/content.ts` (Strapi + fallback, client typé dans `src/lib/server/strapi.ts`), écriture des formulaires via `src/lib/server/forms.ts` (Strapi est un service séparé, voir Configuration)
 - **Tests** : Vitest (unitaires + composants en mode navigateur) et Playwright (E2E dans `e2e/`)
 - **Déploiement** : Vercel via `@sveltejs/adapter-vercel` (configuré dans `vite.config.ts` — pas de `svelte.config.js`)
 
@@ -69,7 +69,11 @@ Exemple d'usage dans une load function : voir le docblock de `src/lib/server/str
 src/
 ├── lib/
 │   ├── config.ts            # Nom du site, URL, description, navigation
-│   └── server/strapi.ts     # Client Strapi typé (serveur uniquement)
+│   ├── content/              # Contenu par défaut (fallback, sans CMS)
+│   └── server/
+│       ├── strapi.ts        # Client Strapi typé (serveur uniquement)
+│       ├── content.ts       # Lecture contenu : Strapi + fallback
+│       └── forms.ts         # Écriture des soumissions de formulaires
 └── routes/
     ├── +layout.svelte       # Header / nav / footer
     ├── +page.svelte         # Accueil

@@ -52,8 +52,17 @@ export async function inscrireNewsletter(
 	try {
 		await createEntry('inscrits-newsletter', { email: data.email }, fetcher);
 	} catch (err) {
-		// Contrainte d’unicité : une adresse déjà inscrite est un succès (idempotence).
-		if (err instanceof StrapiError && err.status === 400) return;
+		if (err instanceof StrapiError && err.status === 400) {
+			// Cas nominal attendu : contrainte d'unicité (`unique: true` côté CMS) sur un
+			// email déjà inscrit — succès idempotent. On trace quand même le corps de la
+			// réponse pour qu'un 400 inattendu (schéma invalide, etc.) reste détectable
+			// dans les logs Vercel plutôt que d'échouer silencieusement.
+			console.warn('Réponse 400 de Strapi sur inscrits-newsletter (traitée comme idempotente) :', {
+				status: err.status,
+				body: err.body
+			});
+			return;
+		}
 		throw err;
 	}
 }

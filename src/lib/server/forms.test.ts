@@ -10,6 +10,7 @@ const statut = (status: number) => vi.fn(async () => new Response('{}', { status
 beforeEach(() => {
 	vi.stubEnv('STRAPI_URL', 'http://cms.test');
 	vi.spyOn(console, 'log').mockImplementation(() => {});
+	vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {
@@ -71,6 +72,7 @@ describe('inscrireNewsletter', () => {
 		await expect(
 			inscrireNewsletter({ email: 'deja@ex.fr' }, statut(400) as unknown as typeof fetch)
 		).resolves.toBeUndefined();
+		expect(console.warn).toHaveBeenCalledOnce();
 	});
 
 	it('propage les autres erreurs', async () => {

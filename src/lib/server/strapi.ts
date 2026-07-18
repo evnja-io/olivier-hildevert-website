@@ -52,7 +52,8 @@ interface StrapiSingleResponse<T> {
 export class StrapiError extends Error {
 	constructor(
 		public status: number,
-		message: string
+		message: string,
+		public body?: string
 	) {
 		super(message);
 		this.name = 'StrapiError';
@@ -96,7 +97,13 @@ async function strapiFetch<T>(
 	});
 
 	if (!res.ok) {
-		throw new StrapiError(res.status, `Strapi a répondu ${res.status} pour ${path}`);
+		let body: string | undefined;
+		try {
+			body = await res.text();
+		} catch {
+			// Lecture du corps impossible : on propage quand même l'erreur d'origine.
+		}
+		throw new StrapiError(res.status, `Strapi a répondu ${res.status} pour ${path}`, body);
 	}
 
 	return res.json() as Promise<T>;
