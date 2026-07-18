@@ -1717,7 +1717,7 @@ git commit -m "feat: content model complet (page-accueil, réglages, prestations
 
 - [ ] **Step 1: Écrire `README.md`**
 
-````markdown
+```markdown
 # olivier-hildevert-cms
 
 CMS Strapi v5 (TypeScript, SQLite en dev) du site vitrine
@@ -1779,7 +1779,7 @@ prestations) et publie directement (`?status=published`).
 La base SQLite (`.tmp/`) n’est pas versionnée. Pour un déploiement,
 configurer `DATABASE_CLIENT=postgres` et les variables associées
 (`config/database.ts` généré les lit déjà), puis rejouer le seed.
-````
+```
 
 (Retirer les zero-width `​` devant les fences imbriquées lors de l’écriture réelle.)
 
