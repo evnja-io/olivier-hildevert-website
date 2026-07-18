@@ -9,7 +9,7 @@
 	<link rel="canonical" href={site.url} />
 </svelte:head>
 
-<section class="py-12">
+<section class="wrap pt-36 pb-24">
 	<h1 class="text-5xl text-ink">{site.name}</h1>
 	<p class="mt-4 max-w-2xl text-lg text-ink-soft">
 		{site.description}

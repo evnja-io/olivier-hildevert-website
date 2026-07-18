@@ -16,7 +16,7 @@ describe('bookingSchema', () => {
 	});
 
 	it('accepte une demande sans message (optionnel, défaut vide)', () => {
-		const { message: _message, ...sans } = valide;
+		const sans = Object.fromEntries(Object.entries(valide).filter(([k]) => k !== 'message'));
 		const res = bookingSchema.safeParse(sans);
 		expect(res.success).toBe(true);
 		if (res.success) expect(res.data.message).toBe('');

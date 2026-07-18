@@ -15,7 +15,7 @@
 	<link rel="canonical" href="{site.url}/contact" />
 </svelte:head>
 
-<section class="mx-auto max-w-xl">
+<section class="mx-auto max-w-xl px-4 pt-36 pb-24">
 	<h1 class="text-4xl text-ink">Contact</h1>
 	<p class="mt-3 text-ink-soft">
 		Une question, un projet ? Envoyez-moi un message, je vous répondrai rapidement.
