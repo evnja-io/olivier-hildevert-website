@@ -1,42 +1,69 @@
-# sv
+# olivier-hildevert
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Site vitrine construit avec SvelteKit (Svelte 5), Tailwind CSS v4 et Strapi comme CMS headless. Déployé sur Vercel.
 
-## Creating a project
+## Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **SvelteKit 2 / Svelte 5** (TypeScript, runes) — scaffold via la [CLI officielle `sv`](https://github.com/sveltejs/cli)
+- **Tailwind CSS v4** (config CSS-first dans `src/routes/layout.css`, plugins typography + forms)
+- **Formulaires** : [sveltekit-superforms](https://superforms.rocks) v2 + zod v4 (adapter `zod4`) — exemple complet sur `/contact`, avec amélioration progressive (fonctionne sans JavaScript)
+- **Contenu** : client Strapi v5 typé dans `src/lib/server/strapi.ts` (Strapi est un service séparé, voir Configuration)
+- **Tests** : Vitest (unitaires + composants en mode navigateur) et Playwright (E2E dans `e2e/`)
+- **Déploiement** : Vercel via `@sveltejs/adapter-vercel` (configuré dans `vite.config.ts` — pas de `svelte.config.js`)
 
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-pnpm dlx sv@0.16.3 create --template minimal --types ts --add tailwindcss="plugins:typography,forms" vitest="usages:unit,component" playwright eslint prettier sveltekit-adapter="adapter:vercel" --install pnpm .
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Démarrage
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm install
+pnpm dev
 ```
 
-## Building
+## Configuration (Strapi)
 
-To create a production version of your app:
+Le site builde et tourne **sans** Strapi. Pour brancher le contenu :
 
 ```sh
-npm run build
+cp .env.example .env
+# puis renseigner STRAPI_URL et STRAPI_API_TOKEN
 ```
 
-You can preview the production build with `npm run preview`.
+Exemple d'usage dans une load function : voir le docblock de `src/lib/server/strapi.ts`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Commandes
+
+| Commande | Description |
+| --- | --- |
+| `pnpm dev` | Serveur de développement |
+| `pnpm build` | Build de production (adapter Vercel) |
+| `pnpm preview` | Prévisualisation du build |
+| `pnpm check` | svelte-check + TypeScript |
+| `pnpm lint` | Prettier + ESLint |
+| `pnpm format` | Formatage Prettier |
+| `pnpm test:unit` | Tests Vitest (`--run` pour un seul passage) |
+| `pnpm test:e2e` | Tests Playwright (build + preview automatiques) |
+| `pnpm test` | Tous les tests |
+
+## Structure
+
+```
+src/
+├── lib/
+│   ├── config.ts            # Nom du site, URL, description, navigation
+│   └── server/strapi.ts     # Client Strapi typé (serveur uniquement)
+└── routes/
+    ├── +layout.svelte       # Header / nav / footer
+    ├── +page.svelte         # Accueil
+    ├── +error.svelte        # Page d'erreur (404, …)
+    ├── layout.css           # Tailwind v4 + tokens @theme
+    ├── contact/             # Formulaire Superforms + zod (schéma, action, tests)
+    └── sitemap.xml/         # Sitemap prerendered (routes statiques + slugs Strapi à terme)
+```
+
+## Recréer ce socle
+
+```sh
+pnpm dlx sv@0.16.3 create --template minimal --types ts \
+  --add tailwindcss="plugins:typography,forms" vitest="usages:unit,component" \
+        playwright eslint prettier sveltekit-adapter="adapter:vercel" --install pnpm .
+pnpm add sveltekit-superforms zod
+```
