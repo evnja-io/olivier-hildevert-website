@@ -4,7 +4,7 @@ export const prerender = true;
 
 // Routes statiques du site. À terme, ajouter ici les slugs des contenus Strapi
 // (ex. via fetchEntries dans une fonction async).
-const routes = ['/', '/contact'];
+const routes = ['/', '/contact', '/reservation'];
 
 export function GET() {
 	const urls = routes.map((path) => `\t<url><loc>${site.url}${path}</loc></url>`).join('\n');
