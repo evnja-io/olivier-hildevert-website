@@ -20,12 +20,32 @@ pnpm dev
 
 ## Configuration (Strapi)
 
-Le site builde et tourne **sans** Strapi. Pour brancher le contenu :
+Le site builde et tourne **sans** Strapi : si `STRAPI_URL`/`STRAPI_API_TOKEN`
+sont absents ou que le CMS est injoignable, le site sert son contenu par
+défaut (`src/lib/content/defaults.ts`) — jamais de page cassée.
+
+Le CMS est un dépôt séparé, cloné en frère de celui-ci : `../olivier-hildevert-cms`
+(Strapi 5, TypeScript, SQLite en dev).
 
 ```sh
 cp .env.example .env
 # puis renseigner STRAPI_URL et STRAPI_API_TOKEN
 ```
+
+- **Démarrer le CMS** : `cd ../olivier-hildevert-cms && npm install && npm run develop`
+  (admin sur `http://localhost:1337/admin`).
+- **Token API** (`STRAPI_API_TOKEN`) : token custom `site-web` à créer dans
+  l'admin Strapi — permissions exactes documentées dans le
+  `README.md` du dépôt CMS.
+- **Seed du contenu initial** (idempotent) :
+  ```sh
+  npx tsx scripts/export-defaults.ts          # ici : écrit scripts/seed-data.json côté CMS
+  cd ../olivier-hildevert-cms
+  STRAPI_SEED_TOKEN=<token full access temporaire> node scripts/seed.mjs
+  ```
+- **Déploiement (Vercel)** : définir `STRAPI_URL` et `STRAPI_API_TOKEN` dans
+  les variables d'environnement du projet Vercel. Sans elles (ou si le CMS
+  est indisponible), le site sert simplement son contenu par défaut.
 
 Exemple d'usage dans une load function : voir le docblock de `src/lib/server/strapi.ts`.
 
