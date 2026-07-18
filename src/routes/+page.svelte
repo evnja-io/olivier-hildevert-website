@@ -1,23 +1,33 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { site } from '$lib/config';
+	import Hero from '$lib/components/home/Hero.svelte';
+	import ImmersiveBand from '$lib/components/home/ImmersiveBand.svelte';
+	import Mantra from '$lib/components/home/Mantra.svelte';
+	import Approche from '$lib/components/home/Approche.svelte';
+	import EspritAme from '$lib/components/home/EspritAme.svelte';
 </script>
 
 <svelte:head>
-	<title>{site.name} — Accueil</title>
+	<title>{site.name} — {site.tagline}</title>
 	<meta name="description" content={site.description} />
 	<link rel="canonical" href={site.url} />
 </svelte:head>
 
-<section class="wrap pt-36 pb-24">
-	<h1 class="text-5xl text-ink">{site.name}</h1>
-	<p class="mt-4 max-w-2xl text-lg text-ink-soft">
-		{site.description}
-	</p>
-	<a
-		href={resolve('/contact')}
-		class="mt-8 inline-block rounded-lg bg-coral px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ember"
-	>
-		Me contacter
-	</a>
-</section>
+<Hero />
+
+<ImmersiveBand tight>
+	{#snippet image()}
+		<enhanced:img
+			src="$lib/assets/mantra-esprit.jpg"
+			alt="Plage à l'aube — brume lumineuse ondoyant au-dessus du sable humide, reflet du ciel doré reliant l'esprit et l'âme"
+			loading="lazy"
+			sizes="100vw"
+			style="object-position: center 42%"
+		/>
+	{/snippet}
+	<Mantra />
+</ImmersiveBand>
+
+<Approche />
+
+<EspritAme />
