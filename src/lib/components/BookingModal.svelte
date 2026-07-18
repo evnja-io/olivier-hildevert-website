@@ -11,7 +11,11 @@
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { resolve } from '$app/paths';
 	import { booking, closeBooking } from '$lib/booking/booking.svelte';
-	import { PRESTATIONS, type PrestationId } from '$lib/booking/prestations';
+	import type { PrestationId } from '$lib/booking/prestations';
+	import type { PrestationContent } from '$lib/content/types';
+	import { defaultPrestations } from '$lib/content/defaults';
+
+	let { prestations = defaultPrestations }: { prestations?: PrestationContent[] } = $props();
 
 	let dlg: HTMLDialogElement | undefined = $state();
 	let step = $state(0);
@@ -22,7 +26,7 @@
 		applyAction: false
 	});
 
-	const prestationChoisie = $derived(PRESTATIONS.find((p) => p.id === $form.prestation));
+	const prestationChoisie = $derived(prestations.find((p) => p.cle === $form.prestation));
 
 	$effect(() => {
 		if (booking.open) {
@@ -114,15 +118,17 @@
 			Choisissez le type de séance qui vous correspond.
 		</p>
 		<div class="grid gap-3 sm:grid-cols-2">
-			{#each PRESTATIONS as p (p.id)}
+			{#each prestations as p (p.cle)}
 				<button
 					type="button"
 					class="flex cursor-pointer flex-col gap-1 rounded-[14px] border border-[color-mix(in_oklab,var(--color-ink)_12%,transparent)] bg-surface-2 p-[18px_18px_16px] text-left transition hover:-translate-y-px hover:border-coral"
-					onclick={() => choisir(p.id)}
+					onclick={() => choisir(p.cle)}
 				>
 					<span class="font-display text-lg">{p.titre}</span>
-					<span class="text-[12.5px] font-semibold tracking-[0.04em] text-coral">{p.meta}</span>
-					<span class="text-[13.5px] leading-[1.45] text-ink-soft">{p.desc}</span>
+					<span class="text-[12.5px] font-semibold tracking-[0.04em] text-coral"
+						>{p.metaReservation}</span
+					>
+					<span class="text-[13.5px] leading-[1.45] text-ink-soft">{p.descReservation}</span>
 				</button>
 			{/each}
 		</div>
