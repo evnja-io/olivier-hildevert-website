@@ -5,6 +5,12 @@
 	import Mantra from '$lib/components/home/Mantra.svelte';
 	import Approche from '$lib/components/home/Approche.svelte';
 	import EspritAme from '$lib/components/home/EspritAme.svelte';
+	import APropos from '$lib/components/home/APropos.svelte';
+	import Prestations from '$lib/components/home/Prestations.svelte';
+	import PourQui from '$lib/components/home/PourQui.svelte';
+	import Boutique from '$lib/components/home/Boutique.svelte';
+	import Tarifs from '$lib/components/home/Tarifs.svelte';
+	import ContactCta from '$lib/components/home/ContactCta.svelte';
 </script>
 
 <svelte:head>
@@ -31,3 +37,35 @@
 <Approche />
 
 <EspritAme />
+
+<APropos />
+
+<Prestations />
+
+<ImmersiveBand>
+	{#snippet image()}
+		<enhanced:img
+			src="$lib/assets/zen.jpg"
+			alt="Jardin zen, papillon posé sur une pierre"
+			loading="lazy"
+			sizes="100vw"
+		/>
+	{/snippet}
+	<PourQui />
+</ImmersiveBand>
+
+<Boutique />
+
+<Tarifs />
+
+<ImmersiveBand id="contact" onWarm>
+	{#snippet image()}
+		<enhanced:img
+			src="$lib/assets/dune-lumineuse.jpg"
+			alt="Dunes et oyats baignés de lumière face à l'océan"
+			loading="lazy"
+			sizes="100vw"
+		/>
+	{/snippet}
+	<ContactCta />
+</ImmersiveBand>
