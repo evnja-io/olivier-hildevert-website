@@ -2,6 +2,10 @@
 	import { resolve } from '$app/paths';
 	import { site, nav } from '$lib/config';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import type { ReglagesSite } from '$lib/content/types';
+	import { defaultReglages } from '$lib/content/defaults';
+
+	let { reglages = defaultReglages }: { reglages?: ReglagesSite } = $props();
 
 	let scrollY = $state(0);
 	const scrolled = $derived(scrollY > 40);
@@ -38,7 +42,7 @@
 				<small
 					class="mt-1.5 block font-mono text-[8.5px] font-medium tracking-[0.36em] text-mute uppercase"
 				>
-					Consultant
+					{reglages.sousTitreLogo}
 				</small>
 			</span>
 		</a>

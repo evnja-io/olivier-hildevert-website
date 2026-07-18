@@ -3,6 +3,10 @@
 	import { site } from '$lib/config';
 	import { openBooking } from '$lib/booking/booking.svelte';
 	import type { PrestationId } from '$lib/booking/prestations';
+	import type { ReglagesSite } from '$lib/content/types';
+	import { defaultReglages } from '$lib/content/defaults';
+
+	let { reglages = defaultReglages }: { reglages?: ReglagesSite } = $props();
 
 	const home = resolve('/');
 	const reservation = resolve('/reservation');
@@ -32,12 +36,11 @@
 					<small
 						class="mt-1.5 block font-mono text-[8.5px] font-medium tracking-[0.36em] text-on-dusk-soft uppercase"
 					>
-						Consultant
+						{reglages.sousTitreLogo}
 					</small>
 				</span>
 				<p class="mt-4.5 max-w-[30em] text-sm leading-[1.66] text-on-dusk-soft">
-					{site.tagline}. Accompagnement psycho-spirituel et psycho énergétique pour particuliers,
-					groupes et entreprises.
+					{reglages.footerIntro}
 				</p>
 			</div>
 			<nav aria-label="Plan du site">
@@ -79,10 +82,9 @@
 			class="flex flex-wrap justify-between gap-6 border-t border-[color-mix(in_oklab,#fff_14%,transparent)] pt-6.5 font-mono text-[10.5px] leading-[1.7] tracking-[0.04em] text-[color-mix(in_oklab,var(--color-on-dusk-soft)_80%,transparent)] max-sm:flex-col"
 		>
 			<span>
-				Les accompagnements proposés ne relèvent pas de la médecine et ne se substituent en aucun
-				cas à un avis, un diagnostic ou un traitement médical.
+				{reglages.mentionLegale}
 			</span>
-			<span>© {new Date().getFullYear()} {site.name} Consultant</span>
+			<span>© {new Date().getFullYear()} {site.name} {reglages.sousTitreLogo}</span>
 		</div>
 	</div>
 </footer>
