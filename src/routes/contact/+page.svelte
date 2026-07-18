@@ -16,20 +16,20 @@
 </svelte:head>
 
 <section class="mx-auto max-w-xl">
-	<h1 class="text-3xl font-bold tracking-tight text-gray-900">Contact</h1>
-	<p class="mt-3 text-gray-600">
+	<h1 class="text-4xl text-ink">Contact</h1>
+	<p class="mt-3 text-ink-soft">
 		Une question, un projet ? Envoyez-moi un message, je vous répondrai rapidement.
 	</p>
 
 	{#if $message}
-		<p role="status" class="mt-6 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800">
+		<p role="status" class="mt-6 rounded-lg bg-halo px-4 py-3 text-sm text-plum">
 			{$message}
 		</p>
 	{/if}
 
 	<form method="POST" use:enhance class="mt-8 space-y-6" novalidate>
 		<div>
-			<label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+			<label for="name" class="block text-sm font-medium text-ink-soft">Nom</label>
 			<input
 				type="text"
 				id="name"
@@ -38,15 +38,15 @@
 				aria-invalid={$errors.name ? 'true' : undefined}
 				aria-describedby={$errors.name ? 'name-error' : undefined}
 				autocomplete="name"
-				class="mt-1 w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500"
+				class="mt-1 w-full rounded-lg border-line-2 focus:border-coral focus:ring-coral"
 			/>
 			{#if $errors.name}
-				<p id="name-error" class="mt-1 text-sm text-red-600">{$errors.name[0]}</p>
+				<p id="name-error" class="mt-1 text-sm text-ember">{$errors.name[0]}</p>
 			{/if}
 		</div>
 
 		<div>
-			<label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
+			<label for="email" class="block text-sm font-medium text-ink-soft">Adresse e-mail</label>
 			<input
 				type="email"
 				id="email"
@@ -55,15 +55,15 @@
 				aria-invalid={$errors.email ? 'true' : undefined}
 				aria-describedby={$errors.email ? 'email-error' : undefined}
 				autocomplete="email"
-				class="mt-1 w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500"
+				class="mt-1 w-full rounded-lg border-line-2 focus:border-coral focus:ring-coral"
 			/>
 			{#if $errors.email}
-				<p id="email-error" class="mt-1 text-sm text-red-600">{$errors.email[0]}</p>
+				<p id="email-error" class="mt-1 text-sm text-ember">{$errors.email[0]}</p>
 			{/if}
 		</div>
 
 		<div>
-			<label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+			<label for="message" class="block text-sm font-medium text-ink-soft">Message</label>
 			<textarea
 				id="message"
 				name="message"
@@ -71,17 +71,16 @@
 				bind:value={$form.message}
 				aria-invalid={$errors.message ? 'true' : undefined}
 				aria-describedby={$errors.message ? 'message-error' : undefined}
-				class="mt-1 w-full rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500"
-			></textarea>
+				class="mt-1 w-full rounded-lg border-line-2 focus:border-coral focus:ring-coral"></textarea>
 			{#if $errors.message}
-				<p id="message-error" class="mt-1 text-sm text-red-600">{$errors.message[0]}</p>
+				<p id="message-error" class="mt-1 text-sm text-ember">{$errors.message[0]}</p>
 			{/if}
 		</div>
 
 		<button
 			type="submit"
 			disabled={$delayed}
-			class="rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60"
+			class="rounded-lg bg-coral px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ember disabled:cursor-not-allowed disabled:opacity-60"
 		>
 			{$delayed ? 'Envoi en cours…' : 'Envoyer'}
 		</button>

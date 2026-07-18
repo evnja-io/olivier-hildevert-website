@@ -31,17 +31,17 @@ Exemple d'usage dans une load function : voir le docblock de `src/lib/server/str
 
 ## Commandes
 
-| Commande | Description |
-| --- | --- |
-| `pnpm dev` | Serveur de développement |
-| `pnpm build` | Build de production (adapter Vercel) |
-| `pnpm preview` | Prévisualisation du build |
-| `pnpm check` | svelte-check + TypeScript |
-| `pnpm lint` | Prettier + ESLint |
-| `pnpm format` | Formatage Prettier |
-| `pnpm test:unit` | Tests Vitest (`--run` pour un seul passage) |
-| `pnpm test:e2e` | Tests Playwright (build + preview automatiques) |
-| `pnpm test` | Tous les tests |
+| Commande         | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| `pnpm dev`       | Serveur de développement                        |
+| `pnpm build`     | Build de production (adapter Vercel)            |
+| `pnpm preview`   | Prévisualisation du build                       |
+| `pnpm check`     | svelte-check + TypeScript                       |
+| `pnpm lint`      | Prettier + ESLint                               |
+| `pnpm format`    | Formatage Prettier                              |
+| `pnpm test:unit` | Tests Vitest (`--run` pour un seul passage)     |
+| `pnpm test:e2e`  | Tests Playwright (build + preview automatiques) |
+| `pnpm test`      | Tous les tests                                  |
 
 ## Structure
 

@@ -1,14 +1,248 @@
+/* Polices auto-hébergées (RGPD — pas de CDN Google Fonts) */
+@import '@fontsource/marcellus';
+@import '@fontsource/mulish/300.css';
+@import '@fontsource/mulish/400.css';
+@import '@fontsource/mulish/500.css';
+@import '@fontsource/mulish/600.css';
+@import '@fontsource/mulish/700.css';
+@import '@fontsource/mulish/400-italic.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource-variable/caveat';
+
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
 @theme {
-	/* Tokens de design (Tailwind v4, config CSS-first) — à ajuster avec la charte graphique */
-	--font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-	--color-primary-50: oklch(0.97 0.015 250);
-	--color-primary-100: oklch(0.93 0.03 250);
-	--color-primary-500: oklch(0.55 0.15 250);
-	--color-primary-600: oklch(0.48 0.16 250);
-	--color-primary-700: oklch(0.42 0.15 250);
-	--color-primary-900: oklch(0.28 0.1 250);
+	/* Palette « Aurore » (aube & corail) — source : aurore.css du handoff Claude Design.
+	   La palette Tailwind par défaut est volontairement désactivée : tout le site
+	   utilise exclusivement ces tokens. */
+	--color-*: initial;
+	--color-white: #ffffff;
+
+	--color-sky: #fff6ec; /* crème d'aube — fond principal */
+	--color-sky-2: #ffeedb; /* parchemin chaud */
+	--color-blush: #fbdfc9; /* pêche — panneau */
+	--color-blush-2: #fad3b6;
+	--color-halo: #ffe7cb;
+
+	--color-ink: #3a2114; /* espresso chaud — texte */
+	--color-ink-soft: #7a5644;
+	--color-mute: #ac8b73; /* gris chaud */
+	--color-line: #f1d9c0; /* hairline clair */
+	--color-line-2: #e7c7a6;
+
+	--color-amber: #f2a03d; /* or solaire */
+	--color-amber-soft: #fbc074;
+	--color-coral: #f0653a; /* corail — accent principal */
+	--color-coral-soft: #f79b79;
+	--color-ember: #d8431f; /* vermillon profond */
+	--color-rose: #e85d78; /* rose d'aurore */
+	--color-plum: #7a2a2f; /* prune chaude — ancrage */
+
+	/* footer / bandeau profond chaud */
+	--color-dusk: #4a1b12;
+	--color-on-dusk: #fbe4d2;
+	--color-on-dusk-soft: #d6a98f;
+
+	/* surfaces claires (modale, formulaires) */
+	--color-surface: #fff8ee;
+	--color-surface-2: #fdebd8;
+
+	--font-sans: 'Mulish', system-ui, sans-serif;
+	--font-display: 'Marcellus', 'Cormorant Garamond', Georgia, serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+	--font-script: 'Caveat Variable', 'Marcellus', cursive;
+
+	--radius-card: 10px;
+	--radius-btn: 6px;
+	--container-wrap: 1180px;
+}
+
+@layer base {
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+	body {
+		background: var(--color-sky);
+		color: var(--color-ink);
+		line-height: 1.7;
+		-webkit-font-smoothing: antialiased;
+		overflow-x: hidden;
+		position: relative;
+	}
+	/* voile d'aube — lavis lumineux fixe sous les sections */
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		z-index: 0;
+		background:
+			radial-gradient(
+				60% 50% at 80% -8%,
+				color-mix(in oklab, var(--color-amber) 26%, transparent),
+				transparent 60%
+			),
+			radial-gradient(
+				70% 60% at -6% 0%,
+				color-mix(in oklab, var(--color-rose) 14%, transparent),
+				transparent 55%
+			);
+		opacity: 0.7;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-display);
+		font-weight: 400;
+		line-height: 1.04;
+		letter-spacing: 0.004em;
+	}
+	::selection {
+		background: var(--color-coral);
+		color: #fff;
+	}
+}
+
+/* ---------- Conteneur du design ---------- */
+@utility wrap {
+	width: min(var(--container-wrap), 90vw);
+	margin-inline: auto;
+}
+
+/* ---------- Boutons ---------- */
+@utility btn {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-size: 12.5px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	cursor: pointer;
+	border: none;
+	padding: 16px 28px;
+	border-radius: var(--radius-btn);
+	transition:
+		transform 0.3s,
+		background 0.3s,
+		color 0.3s,
+		box-shadow 0.3s,
+		border-color 0.3s;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: 11px;
+	& svg {
+		width: 15px;
+		height: 15px;
+	}
+}
+@utility btn-sun {
+	background: var(--color-coral);
+	color: #fff;
+	box-shadow: 0 16px 36px -16px var(--color-coral);
+	&:hover {
+		background: var(--color-ember);
+		transform: translateY(-2px);
+		box-shadow: 0 20px 44px -14px var(--color-coral);
+	}
+}
+@utility btn-line {
+	background: transparent;
+	border: 1px solid color-mix(in oklab, var(--color-coral) 50%, transparent);
+	color: var(--color-ink);
+	&:hover {
+		border-color: var(--color-coral);
+		color: var(--color-coral);
+		transform: translateY(-2px);
+	}
+}
+/* inversion sur fond chaud (bandes immersives) */
+@layer components {
+	.on-warm .btn-line {
+		border-color: color-mix(in oklab, #fff 55%, transparent);
+		color: #fff;
+	}
+	.on-warm .btn-line:hover {
+		border-color: #fff;
+		background: color-mix(in oklab, #fff 12%, transparent);
+	}
+}
+
+/* ---------- Eyebrow (surtitre mono avec filet) ---------- */
+@utility eyebrow {
+	font-family: var(--font-mono);
+	font-size: 11.5px;
+	letter-spacing: 0.34em;
+	text-transform: uppercase;
+	color: var(--color-coral);
+	font-weight: 500;
+	display: inline-flex;
+	align-items: center;
+	gap: 13px;
+	&::before {
+		content: '';
+		width: 26px;
+		height: 1px;
+		background: currentColor;
+		opacity: 0.7;
+	}
+}
+@utility eyebrow-center {
+	justify-content: center;
+	&::after {
+		content: '';
+		width: 26px;
+		height: 1px;
+		background: currentColor;
+		opacity: 0.7;
+	}
+}
+
+/* ---------- Filet ornemental à nœud central ---------- */
+@layer components {
+	.rule {
+		display: flex;
+		align-items: center;
+	}
+	.rule i {
+		height: 1px;
+		flex: 1;
+		background: currentColor;
+		opacity: 0.4;
+	}
+	.rule b {
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--color-coral);
+		margin: 0 12px;
+		flex: none;
+	}
+}
+
+/* ---------- Révélation au scroll (classe posée en SSR, `in` ajoutée par l'attachment) ---------- */
+@layer components {
+	.reveal {
+		opacity: 0;
+		transform: translateY(30px);
+		transition:
+			opacity 0.9s ease,
+			transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	.reveal.in {
+		opacity: 1;
+		transform: none;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
 }

@@ -11,9 +11,9 @@
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
 <div class="flex min-h-dvh flex-col">
-	<header class="border-b border-gray-200">
+	<header class="border-b border-line">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
-			<a href={resolve('/')} class="text-lg font-semibold text-gray-900">{site.name}</a>
+			<a href={resolve('/')} class="text-lg font-semibold text-ink">{site.name}</a>
 			<nav aria-label="Navigation principale">
 				<ul class="flex gap-6">
 					{#each nav as item (item.href)}
@@ -21,7 +21,7 @@
 							<a
 								href={resolve(item.href)}
 								aria-current={page.url.pathname === item.href ? 'page' : undefined}
-								class="text-sm text-gray-600 transition-colors hover:text-primary-600 aria-[current=page]:font-medium aria-[current=page]:text-primary-700"
+								class="text-sm text-ink-soft transition-colors hover:text-coral aria-[current=page]:font-medium aria-[current=page]:text-coral"
 							>
 								{item.label}
 							</a>
@@ -36,8 +36,8 @@
 		{@render children()}
 	</main>
 
-	<footer class="border-t border-gray-200">
-		<div class="mx-auto max-w-4xl px-4 py-6 text-sm text-gray-500">
+	<footer class="border-t border-line">
+		<div class="mx-auto max-w-4xl px-4 py-6 text-sm text-mute">
 			© {new Date().getFullYear()}
 			{site.name}. Tous droits réservés.
 		</div>

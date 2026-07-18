@@ -10,13 +10,13 @@
 </svelte:head>
 
 <section class="py-12">
-	<h1 class="text-4xl font-bold tracking-tight text-gray-900">{site.name}</h1>
-	<p class="mt-4 max-w-2xl text-lg text-gray-600">
+	<h1 class="text-5xl text-ink">{site.name}</h1>
+	<p class="mt-4 max-w-2xl text-lg text-ink-soft">
 		{site.description}
 	</p>
 	<a
 		href={resolve('/contact')}
-		class="mt-8 inline-block rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+		class="mt-8 inline-block rounded-lg bg-coral px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ember"
 	>
 		Me contacter
 	</a>
