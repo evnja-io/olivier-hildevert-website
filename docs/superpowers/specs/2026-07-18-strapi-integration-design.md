@@ -5,6 +5,7 @@
 Le site vitrine (SvelteKit 2 / Svelte 5 runes, Vercel) a tout son contenu éditorial codé en dur dans les composants. Le client Strapi (`src/lib/server/strapi.ts`) est écrit mais consommé nulle part. Objectif : rendre tout le contenu éditorial administrable par Olivier via un CMS Strapi v5, sans dégrader la robustesse (le site doit vivre sans Strapi) ni la performance (ISR).
 
 **Décisions actées avec l'utilisateur :**
+
 1. Tout le contenu éditorial est administrable (sections home + footer/mentions/coordonnées) ; la structure/ordre des sections et le design restent dans le code.
 2. Nouveau projet Strapi v5 dans un dépôt séparé : `/home/sephi/olivier-hildevert-cms` (SQLite en dev, schémas versionnés).
 3. Fallback : le contenu en dur actuel devient le contenu par défaut si Strapi est indisponible/non configuré. Le build passe toujours sans `.env`.

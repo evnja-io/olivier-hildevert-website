@@ -33,11 +33,13 @@
 ### Task 1: Types de contenu + contenu par défaut
 
 **Files:**
+
 - Create: `src/lib/content/types.ts`
 - Create: `src/lib/content/defaults.ts`
 - Test: `src/lib/content/defaults.test.ts` (projet Vitest `server`)
 
 **Interfaces:**
+
 - Consumes: `PrestationId` depuis `../booking/prestations` (type inchangé à ce stade).
 - Produces: tous les types de contenu (`PageAccueilContent`, `HeroContent`, `ApprocheContent`, `EspritAmeContent`, `AProposContent`, `IntroSection`, `PourQuiContent`, `BoutiqueContent`, `TarifsContent`, `MantraContent`, `ContactCtaContent`, `PrestationContent`, `ReglagesSite`, `StatHero`, `Strate`, `ColonneEspritAme`, `ProduitBoutique`, `CarteTarif`, `CleImageBoutique`) et les constantes `defaultAccueil: PageAccueilContent`, `defaultPrestations: PrestationContent[]`, `defaultReglages: ReglagesSite`.
 
@@ -225,25 +227,25 @@ export const defaultAccueil: PageAccueilContent = {
 	hero: {
 		eyebrow: 'Sophrologie · Thérapie psycho énergétique',
 		titreLigne1: 'Décoder le visible,',
-		titreLigne2: "grâce à l’invisible",
+		titreLigne2: 'grâce à l’invisible',
 		paragraphe:
-			"Un accompagnement psycho-spirituel qui relie l’esprit et l’âme pour révéler le sens profond de ce que vous traversez, et faire lever en vous l’élan de la transformation.",
+			'Un accompagnement psycho-spirituel qui relie l’esprit et l’âme pour révéler le sens profond de ce que vous traversez, et faire lever en vous l’élan de la transformation.',
 		ligneMono: 'Accompagnement non médical · Particuliers, groupes & entreprises',
 		boutonPrincipal: 'Réserver une séance',
-		boutonSecondaire: "Découvrir l’approche",
+		boutonSecondaire: 'Découvrir l’approche',
 		stats: [
-			{ valeur: '1992', legende: "Praticien en relation d’aide" },
+			{ valeur: '1992', legende: 'Praticien en relation d’aide' },
 			{ valeur: '1 h 30', legende: 'Par séance individuelle' },
-			{ valeur: '+30 ans', legende: "D’accompagnements" }
+			{ valeur: '+30 ans', legende: 'D’accompagnements' }
 		]
 	},
 	approche: {
-		eyebrow: "L’approche",
-		titre: "Sept niveaux de lecture de l’être",
+		eyebrow: 'L’approche',
+		titre: 'Sept niveaux de lecture de l’être',
 		paragraphe1:
 			'Comprendre ne suffit pas. Chaque situation de vie se lit à plusieurs profondeurs de la surface du mental jusqu’au sens symbolique de l’expérience.',
 		paragraphe2:
-			"L’accompagnement parcourt cette échelle pour révéler ce qui se joue vraiment, et favoriser la réparation, la transformation et l’évolution.",
+			'L’accompagnement parcourt cette échelle pour révéler ce qui se joue vraiment, et favoriser la réparation, la transformation et l’évolution.',
 		strates: [
 			{
 				num: 'I',
@@ -272,19 +274,19 @@ export const defaultAccueil: PageAccueilContent = {
 			{
 				num: 'V',
 				titre: 'Énergétique',
-				desc: "Les équilibres subtils, vibratoires et fréquentiels de l’être.",
+				desc: 'Les équilibres subtils, vibratoires et fréquentiels de l’être.',
 				profondeur: 'Subtil · vibratoire'
 			},
 			{
 				num: 'VI',
 				titre: 'Spirituel',
-				desc: "La dimension de l’âme, sans dogme ni appartenance religieuse.",
+				desc: 'La dimension de l’âme, sans dogme ni appartenance religieuse.',
 				profondeur: 'Âme'
 			},
 			{
 				num: 'VII',
 				titre: 'Symbolique',
-				desc: "Le langage des images, métaphores et signes de l’expérience.",
+				desc: 'Le langage des images, métaphores et signes de l’expérience.',
 				profondeur: 'Profondeur · sens'
 			}
 		],
@@ -293,9 +295,9 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	espritAme: {
 		eyebrow: 'Deux logiques, une même personne',
-		titre: "États d’esprit & états d’âme",
+		titre: 'États d’esprit & états d’âme',
 		colonneEsprit: {
-			tag: "États d’esprit",
+			tag: 'États d’esprit',
 			titre: 'La logique humaine',
 			desc: 'Le terrain du mental : raison, analyse, synthèse. Ce que l’on peut nommer, structurer et comprendre par le raisonnement.',
 			points: [
@@ -306,7 +308,7 @@ export const defaultAccueil: PageAccueilContent = {
 			]
 		},
 		colonneAme: {
-			tag: "États d’âme",
+			tag: 'États d’âme',
 			titre: 'La logique subtile',
 			desc: 'Le terrain de l’invisible : intuition, énergie, extra-sensorialité. Ce qui se perçoit au-delà du mental et oriente nos profondeurs.',
 			points: [
@@ -320,13 +322,13 @@ export const defaultAccueil: PageAccueilContent = {
 	aPropos: {
 		eyebrow: 'À propos',
 		titre: 'Olivier Hildevert',
-		sousTitre: "Sophrologue · praticien en relation d’aide",
+		sousTitre: 'Sophrologue · praticien en relation d’aide',
 		paragraphe1:
 			'Sophrologue social et praticien en relation d’aide depuis 1992, formé au Collège International de Sophrologie de Paris et membre professionnel de la Chambre Syndicale de la Sophrologie.',
 		paragraphe2:
-			"Initié aux techniques d’éveil énergétique, il met en évidence les interactions fondamentales entre les dimensions psychologique, émotionnelle, vibratoire, philosophique et spirituelle de l’être humain.",
+			'Initié aux techniques d’éveil énergétique, il met en évidence les interactions fondamentales entre les dimensions psychologique, émotionnelle, vibratoire, philosophique et spirituelle de l’être humain.',
 		paragraphe3:
-			"Conseiller en entreprise spécialisé en psycho-recrutement, préparateur mental des sportifs et des artistes, auteur d’audios de sophrologie, d’articles et de pièces de théâtre.",
+			'Conseiller en entreprise spécialisé en psycho-recrutement, préparateur mental des sportifs et des artistes, auteur d’audios de sophrologie, d’articles et de pièces de théâtre.',
 		citation:
 			'Révéler le sens des expériences dans lesquelles chacun est en quête de construction, de réparation et de transformation.',
 		qualifications: [
@@ -336,7 +338,7 @@ export const defaultAccueil: PageAccueilContent = {
 			'Préparation mentale',
 			'Psycho-recrutement'
 		],
-		legendePortrait: "Cabinet — relation d’aide"
+		legendePortrait: 'Cabinet — relation d’aide'
 	},
 	prestationsIntro: {
 		eyebrow: 'Prestations',
@@ -363,13 +365,13 @@ export const defaultAccueil: PageAccueilContent = {
 		eyebrow: 'Boutique',
 		titre: 'Prolonger le chemin',
 		paragraphe:
-			"Un roman thérapeutique et les veilleuses LUMINÂME, pensées pour la réharmonisation vibratoire des lieux et des états d’être.",
+			'Un roman thérapeutique et les veilleuses LUMINÂME, pensées pour la réharmonisation vibratoire des lieux et des états d’être.',
 		produits: [
 			{
 				cleImage: 'livre',
 				tag: 'Roman fantastique & thérapeutique',
-				titre: "Angela, l’ange est là !",
-				desc: "Un récit où le merveilleux soigne; premier roman d’Olivier Hildevert, paru chez BoD.",
+				titre: 'Angela, l’ange est là !',
+				desc: 'Un récit où le merveilleux soigne; premier roman d’Olivier Hildevert, paru chez BoD.',
 				prixTexte: 'Disponible à la commande',
 				boutonLabel: 'Commander'
 			},
@@ -377,7 +379,7 @@ export const defaultAccueil: PageAccueilContent = {
 				cleImage: 'veilleuses',
 				tag: 'Veilleuses thérapeutiques',
 				titre: 'LUMINÂME',
-				desc: "Inspirées de motifs sacrés, pour l’harmonisation vibratoire des lieux, le bien-être énergétique et les pratiques méditatives.",
+				desc: 'Inspirées de motifs sacrés, pour l’harmonisation vibratoire des lieux, le bien-être énergétique et les pratiques méditatives.',
 				prixTexte: 'Catalogue en ligne',
 				boutonLabel: 'Découvrir'
 			}
@@ -416,8 +418,8 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	mantra: {
 		citation:
-			"Relier les *états d’esprit* et les *états d’âme*, pour révéler le sens des expériences où chacun se construit, se répare et se transforme.",
-		auteur: "La vocation de l’accompagnement"
+			'Relier les *états d’esprit* et les *états d’âme*, pour révéler le sens des expériences où chacun se construit, se répare et se transforme.',
+		auteur: 'La vocation de l’accompagnement'
 	},
 	contactCta: {
 		eyebrow: 'Contact',
@@ -451,7 +453,7 @@ export const defaultPrestations: PrestationContent[] = [
 		metaReservation: 'Sur mesure · plusieurs séances',
 		descReservation: 'Parcours d’éveil, de réorientation et de transformation.',
 		descCarte:
-			"Parcours d’éveil et de transformation : éveil de conscience, réorientation de vie, développement intuitif et rééquilibrage psycho-énergétique.",
+			'Parcours d’éveil et de transformation : éveil de conscience, réorientation de vie, développement intuitif et rééquilibrage psycho-énergétique.',
 		prixCarte: 'Sur mesure',
 		actionCarte: 'En savoir plus →'
 	},
@@ -461,7 +463,7 @@ export const defaultPrestations: PrestationContent[] = [
 		metaReservation: 'Sur devis',
 		descReservation: 'Psycho-recrutement, préparation mentale, cohésion.',
 		descCarte:
-			"Psycho-recrutement, analyse comportementale, préparation mentale, cohésion d’équipe et optimisation des ressources humaines.",
+			'Psycho-recrutement, analyse comportementale, préparation mentale, cohésion d’équipe et optimisation des ressources humaines.',
 		prixCarte: 'Sur devis',
 		actionCarte: 'Demander un devis →'
 	},
@@ -478,13 +480,13 @@ export const defaultPrestations: PrestationContent[] = [
 ];
 
 export const defaultReglages: ReglagesSite = {
-	tagline: "Décoder le visible grâce à l’invisible",
+	tagline: 'Décoder le visible grâce à l’invisible',
 	descriptionSeo:
-		"Accompagnement psycho-spirituel et psycho énergétique — décoder le visible grâce à l’invisible. Particuliers, groupes et entreprises.",
+		'Accompagnement psycho-spirituel et psycho énergétique — décoder le visible grâce à l’invisible. Particuliers, groupes et entreprises.',
 	mentionLegale:
 		'Les accompagnements proposés ne relèvent pas de la médecine et ne se substituent en aucun cas à un avis, un diagnostic ou un traitement médical.',
 	footerIntro:
-		"Décoder le visible grâce à l’invisible. Accompagnement psycho-spirituel et psycho énergétique pour particuliers, groupes et entreprises.",
+		'Décoder le visible grâce à l’invisible. Accompagnement psycho-spirituel et psycho énergétique pour particuliers, groupes et entreprises.',
 	sousTitreLogo: 'Consultant',
 	siteExterne: 'olivierhildevert.com'
 };
@@ -522,7 +524,7 @@ describe('contenu par défaut', () => {
 
 	it('porte les réglages du site (mention légale, tagline)', () => {
 		expect(defaultReglages.mentionLegale).toContain('ne relèvent pas de la médecine');
-		expect(defaultReglages.tagline).toBe("Décoder le visible grâce à l’invisible");
+		expect(defaultReglages.tagline).toBe('Décoder le visible grâce à l’invisible');
 	});
 });
 ```
@@ -544,11 +546,13 @@ git commit -m "feat(contenu): types et contenu par défaut extraits dans \$lib/c
 ### Task 2: Clés de prestations statiques + modale et page /reservation sur PrestationContent
 
 **Files:**
+
 - Modify: `src/lib/booking/prestations.ts` (réécriture complète)
 - Modify: `src/lib/components/BookingModal.svelte`
 - Modify: `src/routes/reservation/+page.svelte`
 
 **Interfaces:**
+
 - Consumes: `PrestationContent`, `defaultPrestations` (Task 1).
 - Produces: `PRESTATION_IDS` (readonly tuple) et `PrestationId` inchangés pour `booking/schema.ts` (`z.enum(PRESTATION_IDS)` — ne pas toucher au schéma) ; `BookingModal` accepte une prop optionnelle `prestations?: PrestationContent[]`.
 
@@ -569,10 +573,13 @@ export type PrestationId = (typeof PRESTATION_IDS)[number];
 - [ ] **Step 2: Adapter `src/lib/components/BookingModal.svelte`** — dans le `<script lang="ts">` (pas le bloc `module`) :
 
 Remplacer :
+
 ```ts
 import { PRESTATIONS, type PrestationId } from '$lib/booking/prestations';
 ```
+
 par :
+
 ```ts
 import type { PrestationId } from '$lib/booking/prestations';
 import type { PrestationContent } from '$lib/content/types';
@@ -582,6 +589,7 @@ let { prestations = defaultPrestations }: { prestations?: PrestationContent[] } 
 ```
 
 Puis dans le composant :
+
 - `const prestationChoisie = $derived(PRESTATIONS.find((p) => p.id === $form.prestation));` → `const prestationChoisie = $derived(prestations.find((p) => p.cle === $form.prestation));`
 - `{#each PRESTATIONS as p (p.id)}` → `{#each prestations as p (p.cle)}`
 - dans le bouton de choix : `{p.titre}` inchangé, `{p.meta}` → `{p.metaReservation}`, `{p.desc}` → `{p.descReservation}`, `onclick={() => choisir(p.id)}` → `onclick={() => choisir(p.cle)}`
@@ -589,13 +597,17 @@ Puis dans le composant :
 - [ ] **Step 3: Adapter `src/routes/reservation/+page.svelte`**
 
 Remplacer :
+
 ```ts
 import { PRESTATIONS } from '$lib/booking/prestations';
 ```
+
 par :
+
 ```ts
 import { defaultPrestations } from '$lib/content/defaults';
 ```
+
 Et dans le fieldset : `{#each PRESTATIONS as p (p.id)}` → `{#each defaultPrestations as p (p.cle)}`, `value={p.id}` → `value={p.cle}`, `{p.meta}` → `{p.metaReservation}`, `{p.desc}` → `{p.descReservation}`. (`data.prestations` remplacera `defaultPrestations` en Task 12.)
 
 - [ ] **Step 4: Vérifier (le z.enum et les e2e modale doivent rester intacts)**
@@ -615,12 +627,14 @@ git commit -m "refactor(prestations): clés statiques, textes portés par Presta
 ### Task 3: Hero, Approche, EspritAme, APropos pilotés par props
 
 **Files:**
+
 - Modify: `src/lib/components/home/Hero.svelte`
 - Modify: `src/lib/components/home/Approche.svelte`
 - Modify: `src/lib/components/home/EspritAme.svelte`
 - Modify: `src/lib/components/home/APropos.svelte`
 
 **Interfaces:**
+
 - Consumes: `defaultAccueil` + types (Task 1).
 - Produces: chaque composant expose `content?: <SectionContent>` avec défaut — `<Hero />` sans prop rend exactement le site actuel.
 
@@ -641,6 +655,7 @@ $effect(() => {
 	requestAnimationFrame(() => (ready = true));
 });
 ```
+
 (la constante `stats` disparaît). Markup : eyebrow → `{content.eyebrow}` ; h1 → `{content.titreLigne1}<br /> <em class="…">{content.titreLigne2}</em>` ; paragraphe → `{content.paragraphe}` ; ligne mono → `{content.ligneMono}` ; boutons → `{content.boutonPrincipal}` (le SVG flèche reste dans le `<a>`) et `{content.boutonSecondaire}` ; `{#each stats as stat (stat.valeur)}` → `{#each content.stats as stat (stat.valeur)}`.
 
 - [ ] **Step 2: `Approche.svelte`** — script :
@@ -652,6 +667,7 @@ import { defaultAccueil } from '$lib/content/defaults';
 
 let { content = defaultAccueil.approche }: { content?: ApprocheContent } = $props();
 ```
+
 Markup : eyebrow/h2/2 paragraphes → `{content.…}` ; `{#each strates …}` → `{#each content.strates as strate, i (strate.num)}` ; les deux légendes mono du bas → `{content.legendeGauche}` / `{content.legendeDroite}`.
 
 - [ ] **Step 3: `EspritAme.svelte`** — script :
@@ -668,6 +684,7 @@ const colonnes = $derived([
 	{ variante: 'soul' as const, ...content.colonneAme }
 ]);
 ```
+
 Markup inchangé (il consomme déjà `colonnes`), sauf l’en-tête de section : eyebrow → `{content.eyebrow}`, h2 → `{content.titre}` (le `&amp;` littéral devient le texte de `content.titre`).
 
 - [ ] **Step 4: `APropos.svelte`** — script :
@@ -679,6 +696,7 @@ import { defaultAccueil } from '$lib/content/defaults';
 
 let { content = defaultAccueil.aPropos }: { content?: AProposContent } = $props();
 ```
+
 Markup : eyebrow/h2/sous-titre/3 paragraphes/blockquote → `{content.…}` (`paragraphe1..3`, `citation`) ; `{#each creds …}` → `{#each content.qualifications as cred (cred)}` ; légende sous le portrait → `{content.legendePortrait}`. L'`alt` du portrait reste en dur.
 
 - [ ] **Step 5: Vérifier puis committer**
@@ -696,12 +714,14 @@ git commit -m "refactor(home): Hero, Approche, EspritAme et APropos pilotés par
 ### Task 4: Prestations, PourQui, Mantra, ContactCta pilotés par props
 
 **Files:**
+
 - Modify: `src/lib/components/home/Prestations.svelte`
 - Modify: `src/lib/components/home/PourQui.svelte`
 - Modify: `src/lib/components/home/Mantra.svelte`
 - Modify: `src/lib/components/home/ContactCta.svelte`
 
 **Interfaces:**
+
 - Produces: `Prestations` accepte `intro?: IntroSection` et `prestations?: PrestationContent[]` ; les autres `content?: <SectionContent>`.
 
 - [ ] **Step 1: `Prestations.svelte`** — script complet :
@@ -737,7 +757,7 @@ const IMAGES_PRESTATIONS: Record<
 		num: '01',
 		image: cardIndividuelle,
 		position: 'center 60%',
-		alt: "Silhouette en méditation, énergie lumineuse reliant l’esprit et le cœur"
+		alt: 'Silhouette en méditation, énergie lumineuse reliant l’esprit et le cœur'
 	},
 	programme: {
 		num: '02',
@@ -755,12 +775,13 @@ const IMAGES_PRESTATIONS: Record<
 		num: '04',
 		image: cardStages,
 		position: 'center 48%',
-		alt: "Cercle de sphères lumineuses gravitant autour d’un soleil central"
+		alt: 'Cercle de sphères lumineuses gravitant autour d’un soleil central'
 	}
 };
 
 const cartes = $derived(prestations.map((p) => ({ ...p, ...IMAGES_PRESTATIONS[p.cle] })));
 ```
+
 Markup : en-tête → `{intro.eyebrow}` / `{intro.titre}` / `{intro.paragraphe}` ; `{#each cartes as carte, i (carte.id)}` → `{#each cartes as carte, i (carte.cle)}` ; `href="{reservation}?prestation={carte.id}"` → `…{carte.cle}` ; `openBooking(carte.id)` → `openBooking(carte.cle)` ; `{carte.desc}` → `{carte.descCarte}` ; `{carte.prix}` → `{carte.prixCarte}` ; `{carte.action}` → `{carte.actionCarte}` ; `{carte.num}`, `{carte.titre}`, `src={carte.image}`, `alt={carte.alt}`, `carte.position` inchangés.
 
 - [ ] **Step 2: `PourQui.svelte`** — script :
@@ -772,6 +793,7 @@ import { defaultAccueil } from '$lib/content/defaults';
 
 let { content = defaultAccueil.pourQui }: { content?: PourQuiContent } = $props();
 ```
+
 Markup : eyebrow → `{content.eyebrow}`, h2 → `{content.titre}`, `{#each publics …}` → `{#each content.publics as public_ (public_)}`.
 
 - [ ] **Step 3: `Mantra.svelte`** — fichier complet :
@@ -794,7 +816,8 @@ Markup : eyebrow → `{content.eyebrow}`, h2 → `{content.titre}`, `{#each publ
 			class="font-display text-[clamp(28px,4.3vw,52px)] leading-[1.22] tracking-[0.004em] [text-shadow:0_2px_30px_rgba(74,27,18,0.4)]"
 		>
 			{#each segments as segment, i (i)}
-				{#if i % 2 === 1}<b class="font-normal text-amber-soft italic">{segment}</b>{:else}{segment}{/if}
+				{#if i % 2 === 1}<b class="font-normal text-amber-soft italic">{segment}</b
+					>{:else}{segment}{/if}
 			{/each}
 		</p>
 		<div class="rule mx-auto mt-7.5 max-w-[200px] text-white [&>b]:bg-amber-soft">
@@ -820,6 +843,7 @@ import { defaultAccueil } from '$lib/content/defaults';
 
 let { content = defaultAccueil.contactCta }: { content?: ContactCtaContent } = $props();
 ```
+
 Markup : eyebrow/h2/paragraphe → `{content.…}` ; libellé du bouton → `{content.boutonLabel}` (le SVG flèche reste) ; `{#each modes …}` → `{#each content.modes as mode (mode)}`.
 
 - [ ] **Step 5: Test client de composant `src/lib/components/home/Prestations.svelte.test.ts`** (projet Vitest `client` — Chromium requis : `pnpm exec playwright install chromium` si absent)
@@ -876,6 +900,7 @@ git commit -m "refactor(home): Prestations, PourQui, Mantra et ContactCta pilot�
 ### Task 5: Boutique et Tarifs factorisés en listes de contenu
 
 **Files:**
+
 - Modify: `src/lib/components/home/Boutique.svelte` (réécriture)
 - Modify: `src/lib/components/home/Tarifs.svelte` (réécriture)
 
@@ -905,7 +930,7 @@ git commit -m "refactor(home): Prestations, PourQui, Mantra et ContactCta pilot�
 	> = {
 		livre: {
 			image: bookCover,
-			alt: "Couverture du roman Angela, l’ange est là !",
+			alt: 'Couverture du roman Angela, l’ange est là !',
 			ratio: 'aspect-3/4'
 		},
 		veilleuses: {
@@ -1041,9 +1066,7 @@ git commit -m "refactor(home): Prestations, PourQui, Mantra et ContactCta pilot�
 							{carte.label}
 						</span>
 						<div class="my-1.5 font-display text-[56px] leading-none text-ink">
-							{carte.montant}{#if carte.suffixe}<small class="text-xl">
-									{carte.suffixe}</small
-								>{/if}
+							{carte.montant}{#if carte.suffixe}<small class="text-xl"> {carte.suffixe}</small>{/if}
 						</div>
 						<p class="mb-3 text-[13.5px] leading-[1.55] text-ink-soft">{carte.sousTexte}</p>
 						<a
@@ -1076,10 +1099,12 @@ git commit -m "refactor(home): Boutique et Tarifs factorisés en listes de conte
 ### Task 6: Header et Footer pilotés par ReglagesSite
 
 **Files:**
+
 - Modify: `src/lib/components/Header.svelte`
 - Modify: `src/lib/components/Footer.svelte`
 
 **Interfaces:**
+
 - Produces: `Header` et `Footer` acceptent `reglages?: ReglagesSite` (défaut `defaultReglages`).
 
 - [ ] **Step 1: `Header.svelte`** — ajouter au script :
@@ -1090,6 +1115,7 @@ import { defaultReglages } from '$lib/content/defaults';
 
 let { reglages = defaultReglages }: { reglages?: ReglagesSite } = $props();
 ```
+
 Dans le markup, remplacer le texte `Consultant` du `<small>` par `{reglages.sousTitreLogo}`.
 
 - [ ] **Step 2: `Footer.svelte`** — ajouter au script :
@@ -1100,7 +1126,9 @@ import { defaultReglages } from '$lib/content/defaults';
 
 let { reglages = defaultReglages }: { reglages?: ReglagesSite } = $props();
 ```
+
 Markup :
+
 - `<small>…Consultant…</small>` → `{reglages.sousTitreLogo}`
 - le paragraphe `{site.tagline}. Accompagnement psycho-spirituel…` → `{reglages.footerIntro}`
 - la mention légale (« Les accompagnements proposés ne relèvent pas… ») → `{reglages.mentionLegale}`
@@ -1124,6 +1152,7 @@ git commit -m "refactor(layout): Header et Footer pilotés par ReglagesSite"
 ### Task 7: Initialisation du projet Strapi v5
 
 **Files:**
+
 - Create: dépôt `/home/sephi/olivier-hildevert-cms` (généré par create-strapi-app)
 
 - [ ] **Step 1: Scaffolder**
@@ -1132,6 +1161,7 @@ git commit -m "refactor(layout): Header et Footer pilotés par ReglagesSite"
 cd /home/sephi
 npx create-strapi-app@latest olivier-hildevert-cms --typescript --no-run --skip-cloud
 ```
+
 Si le CLI pose des questions : base **SQLite**, pas de données d’exemple, pas d’hébergement cloud, installation des dépendances **oui**. (Les flags exacts varient selon la version du CLI — l’objectif est : Strapi 5, TypeScript, SQLite, sans exemple.)
 
 - [ ] **Step 2: Vérifier le démarrage**
@@ -1139,6 +1169,7 @@ Si le CLI pose des questions : base **SQLite**, pas de données d’exemple, pas
 ```bash
 cd /home/sephi/olivier-hildevert-cms && npm run develop
 ```
+
 Expected: l’admin s’ouvre sur `http://localhost:1337/admin` et propose la création du premier administrateur. Créer le compte admin (ou `npx strapi admin:create-user`), puis arrêter le serveur (Ctrl-C).
 
 - [ ] **Step 3: Commit initial**
@@ -1148,6 +1179,7 @@ cd /home/sephi/olivier-hildevert-cms
 git init && git add -A
 git commit -m "chore: initialisation Strapi v5 (TypeScript, SQLite)"
 ```
+
 Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_modules/`, `public/uploads`.
 
 ---
@@ -1155,16 +1187,19 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ### Task 8: Content model complet (schémas versionnés)
 
 **Files (dépôt CMS):**
+
 - Create: `src/components/elements/stat.json`, `strate.json`, `item-texte.json`, `colonne-esprit-ame.json`, `produit.json`, `carte-tarif.json`
 - Create: `src/components/sections/hero.json`, `approche.json`, `esprit-ame.json`, `a-propos.json`, `intro.json`, `pour-qui.json`, `boutique.json`, `tarifs.json`, `mantra.json`, `contact-cta.json`
 - Create: `src/api/<api>/content-types/<api>/schema.json` + `routes/<api>.ts` + `controllers/<api>.ts` + `services/<api>.ts` pour : `page-accueil`, `reglages-site`, `prestation`, `message-contact`, `demande-reservation`, `inscrit-newsletter`
 
 **Interfaces:**
+
 - Produces: API REST `GET /api/page-accueil`, `GET /api/reglages-site`, `GET /api/prestations`, `POST /api/messages-contact`, `POST /api/demandes-reservation`, `POST /api/inscrits-newsletter`. Les noms d’attributs sont IDENTIQUES aux types front (Task 1) ; seules les listes `string[]` deviennent des composants répétables `elements.item-texte` (`{ texte }`).
 
 - [ ] **Step 1: Composants `elements`**
 
 `src/components/elements/stat.json` :
+
 ```json
 {
 	"collectionName": "components_elements_stats",
@@ -1177,6 +1212,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/elements/strate.json` :
+
 ```json
 {
 	"collectionName": "components_elements_strates",
@@ -1191,6 +1227,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/elements/item-texte.json` :
+
 ```json
 {
 	"collectionName": "components_elements_item_textes",
@@ -1202,6 +1239,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/elements/colonne-esprit-ame.json` :
+
 ```json
 {
 	"collectionName": "components_elements_colonne_esprit_ames",
@@ -1222,6 +1260,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/elements/produit.json` :
+
 ```json
 {
 	"collectionName": "components_elements_produits",
@@ -1238,6 +1277,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/elements/carte-tarif.json` :
+
 ```json
 {
 	"collectionName": "components_elements_carte_tarifs",
@@ -1261,6 +1301,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 - [ ] **Step 2: Composants `sections`**
 
 `src/components/sections/hero.json` :
+
 ```json
 {
 	"collectionName": "components_sections_heros",
@@ -1286,6 +1327,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/approche.json` :
+
 ```json
 {
 	"collectionName": "components_sections_approches",
@@ -1309,6 +1351,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/esprit-ame.json` :
+
 ```json
 {
 	"collectionName": "components_sections_esprit_ames",
@@ -1331,6 +1374,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/a-propos.json` :
+
 ```json
 {
 	"collectionName": "components_sections_a_propos",
@@ -1356,6 +1400,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/intro.json` :
+
 ```json
 {
 	"collectionName": "components_sections_intros",
@@ -1369,6 +1414,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/pour-qui.json` :
+
 ```json
 {
 	"collectionName": "components_sections_pour_quis",
@@ -1388,6 +1434,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/boutique.json` :
+
 ```json
 {
 	"collectionName": "components_sections_boutiques",
@@ -1408,6 +1455,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/tarifs.json` :
+
 ```json
 {
 	"collectionName": "components_sections_tarifs",
@@ -1427,6 +1475,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/mantra.json` :
+
 ```json
 {
 	"collectionName": "components_sections_mantras",
@@ -1439,6 +1488,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/components/sections/contact-cta.json` :
+
 ```json
 {
 	"collectionName": "components_sections_contact_ctas",
@@ -1462,6 +1512,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 - [ ] **Step 3: Content types**
 
 `src/api/page-accueil/content-types/page-accueil/schema.json` :
+
 ```json
 {
 	"kind": "singleType",
@@ -1488,6 +1539,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/api/reglages-site/content-types/reglages-site/schema.json` :
+
 ```json
 {
 	"kind": "singleType",
@@ -1513,6 +1565,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/api/prestation/content-types/prestation/schema.json` (l’unicité de `cle` n’est pas applicable sur une énumération — le seed et le mapping front la garantissent) :
+
 ```json
 {
 	"kind": "collectionType",
@@ -1541,6 +1594,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/api/message-contact/content-types/message-contact/schema.json` :
+
 ```json
 {
 	"kind": "collectionType",
@@ -1560,6 +1614,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/api/demande-reservation/content-types/demande-reservation/schema.json` :
+
 ```json
 {
 	"kind": "collectionType",
@@ -1585,6 +1640,7 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 ```
 
 `src/api/inscrit-newsletter/content-types/inscrit-newsletter/schema.json` :
+
 ```json
 {
 	"kind": "collectionType",
@@ -1604,18 +1660,23 @@ Vérifier que `.gitignore` (généré) couvre `.env`, `.tmp/`, `dist/`, `node_mo
 - [ ] **Step 4: Boilerplate routes/controllers/services** — pour chacun des 6 apis, créer 3 fichiers avec les factories. Modèle (ici `page-accueil`) :
 
 `src/api/page-accueil/routes/page-accueil.ts` :
+
 ```ts
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreRouter('api::page-accueil.page-accueil');
 ```
+
 `src/api/page-accueil/controllers/page-accueil.ts` :
+
 ```ts
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::page-accueil.page-accueil');
 ```
+
 `src/api/page-accueil/services/page-accueil.ts` :
+
 ```ts
 import { factories } from '@strapi/strapi';
 
@@ -1623,6 +1684,7 @@ export default factories.createCoreService('api::page-accueil.page-accueil');
 ```
 
 Répéter à l’identique avec les uid suivants (chemin `src/api/<nom>/{routes,controllers,services}/<nom>.ts`) :
+
 - `api::reglages-site.reglages-site`
 - `api::prestation.prestation`
 - `api::message-contact.message-contact`
@@ -1634,6 +1696,7 @@ Répéter à l’identique avec les uid suivants (chemin `src/api/<nom>/{routes,
 ```bash
 cd /home/sephi/olivier-hildevert-cms && npm run develop
 ```
+
 Expected: démarrage sans erreur de schéma ; dans l’admin, le Content Manager liste « Page d’accueil », « Réglages du site », « Prestation », « Message de contact », « Demande de réservation », « Inscrit newsletter » ; le Content-Type Builder montre les composants `sections.*` et `elements.*`. Arrêter le serveur.
 
 - [ ] **Step 6: Commit**
@@ -1649,11 +1712,12 @@ git commit -m "feat: content model complet (page-accueil, réglages, prestations
 ### Task 9: README CMS — admin, token API, permissions
 
 **Files (dépôt CMS):**
+
 - Modify: `README.md` (remplacer le contenu généré)
 
 - [ ] **Step 1: Écrire `README.md`**
 
-```markdown
+````markdown
 # olivier-hildevert-cms
 
 CMS Strapi v5 (TypeScript, SQLite en dev) du site vitrine
@@ -1662,10 +1726,10 @@ réglages du site et collecte des formulaires.
 
 ## Démarrage
 
-​```sh
+​`sh
 npm install
 npm run develop        # admin sur http://localhost:1337/admin
-​```
+​`
 
 Premier lancement : créer le compte administrateur, puis lancer le seed
 (voir ci-dessous) pour peupler le contenu initial.
@@ -1715,7 +1779,8 @@ prestations) et publie directement (`?status=published`).
 La base SQLite (`.tmp/`) n’est pas versionnée. Pour un déploiement,
 configurer `DATABASE_CLIENT=postgres` et les variables associées
 (`config/database.ts` généré les lit déjà), puis rejouer le seed.
-```
+````
+
 (Retirer les zero-width `​` devant les fences imbriquées lors de l’écriture réelle.)
 
 - [ ] **Step 2: Créer le token custom `site-web`** en suivant le README (manuel, admin UI), et reporter `STRAPI_URL=http://localhost:1337` + le token dans le `.env` du dépôt **site** (ne pas committer).
@@ -1735,10 +1800,12 @@ git commit -m "docs: README (démarrage, token API, seed, éditorial)"
 ### Task 10: `isStrapiConfigured` dans le client Strapi
 
 **Files:**
+
 - Modify: `src/lib/server/strapi.ts`
 - Test: `src/lib/server/strapi.test.ts` (nouveau, projet `server`)
 
 **Interfaces:**
+
 - Produces: `export function isStrapiConfigured(): boolean`.
 
 - [ ] **Step 1: Écrire le test (échec attendu)**
@@ -1797,11 +1864,13 @@ git commit -m "feat(strapi): isStrapiConfigured pour le mode dégradé sans CMS"
 ### Task 11: Couche de lecture `content.ts` (mapping zod + fallback) et format de seed partagé
 
 **Files:**
+
 - Create: `src/lib/content/seed-format.ts`
 - Create: `src/lib/server/content.ts`
 - Test: `src/lib/server/content.test.ts`
 
 **Interfaces:**
+
 - Consumes: `fetchEntries`, `fetchSingle`, `isStrapiConfigured` (strapi.ts) ; défauts et types (Task 1).
 - Produces:
   - `getPageAccueil(fetcher: typeof fetch): Promise<PageAccueilContent>`
@@ -1827,7 +1896,10 @@ export function accueilVersStrapi(c: PageAccueilContent) {
 		...c,
 		espritAme: {
 			...c.espritAme,
-			colonneEsprit: { ...c.espritAme.colonneEsprit, points: items(c.espritAme.colonneEsprit.points) },
+			colonneEsprit: {
+				...c.espritAme.colonneEsprit,
+				points: items(c.espritAme.colonneEsprit.points)
+			},
 			colonneAme: { ...c.espritAme.colonneAme, points: items(c.espritAme.colonneAme.points) }
 		},
 		aPropos: { ...c.aPropos, qualifications: items(c.aPropos.qualifications) },
@@ -2112,7 +2184,11 @@ const POPULATE_ACCUEIL = {
 export async function getPageAccueil(fetcher: typeof fetch): Promise<PageAccueilContent> {
 	if (!isStrapiConfigured()) return defaultAccueil;
 	try {
-		const data = await fetchSingle<Record<string, unknown>>('page-accueil', POPULATE_ACCUEIL, fetcher);
+		const data = await fetchSingle<Record<string, unknown>>(
+			'page-accueil',
+			POPULATE_ACCUEIL,
+			fetcher
+		);
 		if (!data) throw new Error('page-accueil non publiée');
 		const contenu: PageAccueilContent = accueilSchema.parse(data);
 		return contenu;
@@ -2182,6 +2258,7 @@ git commit -m "feat(contenu): couche de lecture Strapi avec validation zod et fa
 ### Task 12: Load functions, ISR et branchement des props
 
 **Files:**
+
 - Create: `src/routes/+layout.server.ts`
 - Create: `src/routes/+page.server.ts`
 - Modify: `src/routes/+layout.svelte`
@@ -2189,6 +2266,7 @@ git commit -m "feat(contenu): couche de lecture Strapi avec validation zod et fa
 - Modify: `src/routes/reservation/+page.svelte`
 
 **Interfaces:**
+
 - Consumes: `getPageAccueil`, `getPrestations`, `getReglages` (Task 11).
 - Produces: `data.reglages` + `data.prestations` sur toutes les routes (layout), `data.accueil` sur la home.
 
@@ -2225,7 +2303,9 @@ export const load: PageServerLoad = async ({ fetch }) => {
 ```ts
 let { data, children } = $props();
 ```
+
 et :
+
 ```svelte
 <Header reglages={data.reglages} />
 …
@@ -2241,7 +2321,9 @@ import { site } from '$lib/config';
 
 let { data } = $props();
 ```
+
 Head :
+
 ```svelte
 <svelte:head>
 	<title>{site.name} — {data.reglages.tagline}</title>
@@ -2249,7 +2331,9 @@ Head :
 	<link rel="canonical" href={site.url} />
 </svelte:head>
 ```
+
 Sections :
+
 ```svelte
 <Hero content={data.accueil.hero} />
 …
@@ -2267,6 +2351,7 @@ Sections :
 …
 <ContactCta content={data.accueil.contactCta} />
 ```
+
 (les `<ImmersiveBand>` et leurs `<enhanced:img>` ne changent pas.)
 
 - [ ] **Step 5: Brancher `src/routes/reservation/+page.svelte`** — remplacer l’import et l’usage de `defaultPrestations` (Task 2) par `data.prestations` :
@@ -2274,6 +2359,7 @@ Sections :
 ```ts
 // supprimer : import { defaultPrestations } from '$lib/content/defaults';
 ```
+
 et `{#each defaultPrestations as p (p.cle)}` → `{#each data.prestations as p (p.cle)}`.
 
 - [ ] **Step 6: Vérifier**
@@ -2295,10 +2381,12 @@ git commit -m "feat(routes): contenu servi par Strapi (layout + home), ISR 5 min
 ### Task 13: `createEntry` dans le client Strapi
 
 **Files:**
+
 - Modify: `src/lib/server/strapi.ts`
 - Test: `src/lib/server/strapi.test.ts` (compléter)
 
 **Interfaces:**
+
 - Produces: `createEntry<T>(collection: string, data: Record<string, unknown>, fetcher?: typeof fetch): Promise<T>` — POST `{ data }`, lève `StrapiError` si `!res.ok`.
 
 - [ ] **Step 1: Compléter le test (échec attendu)** — ajouter à `src/lib/server/strapi.test.ts` :
@@ -2310,8 +2398,9 @@ describe('createEntry', () => {
 	it('poste { data } sur la collection avec le token', async () => {
 		vi.stubEnv('STRAPI_URL', 'http://cms.test');
 		vi.stubEnv('STRAPI_API_TOKEN', 'jeton');
-		const fetcher = vi.fn(async () =>
-			new Response(JSON.stringify({ data: { id: 1, documentId: 'abc' } }), { status: 201 })
+		const fetcher = vi.fn(
+			async () =>
+				new Response(JSON.stringify({ data: { id: 1, documentId: 'abc' } }), { status: 201 })
 		) as unknown as typeof fetch;
 
 		await createEntry('messages-contact', { nom: 'Jeanne' }, fetcher);
@@ -2326,7 +2415,9 @@ describe('createEntry', () => {
 
 	it('lève StrapiError sur une réponse en échec', async () => {
 		vi.stubEnv('STRAPI_URL', 'http://cms.test');
-		const fetcher = vi.fn(async () => new Response('nope', { status: 500 })) as unknown as typeof fetch;
+		const fetcher = vi.fn(
+			async () => new Response('nope', { status: 500 })
+		) as unknown as typeof fetch;
 		await expect(createEntry('messages-contact', {}, fetcher)).rejects.toBeInstanceOf(StrapiError);
 	});
 });
@@ -2364,6 +2455,7 @@ async function strapiFetch<T>(
 	return res.json() as Promise<T>;
 }
 ```
+
 puis, après `fetchSingle` :
 
 ```ts
@@ -2395,6 +2487,7 @@ git commit -m "feat(strapi): createEntry pour l’écriture dans les collections
 ### Task 14: Enregistrement des formulaires + messages typés succès/erreur
 
 **Files:**
+
 - Modify: `src/app.d.ts`
 - Create: `src/lib/server/forms.ts`
 - Test: `src/lib/server/forms.test.ts`
@@ -2402,6 +2495,7 @@ git commit -m "feat(strapi): createEntry pour l’écriture dans les collections
 - Modify: `src/routes/contact/+page.svelte`, `src/routes/reservation/+page.svelte`, `src/routes/newsletter/+page.svelte`, `src/lib/components/BookingModal.svelte`, `src/lib/components/NewsletterModal.svelte`
 
 **Interfaces:**
+
 - Produces: `App.Superforms.Message = { type: 'succes' | 'erreur'; texte: string }` (type global — Superforms type alors `$message` partout) ; `enregistrerContact`, `enregistrerReservation`, `inscrireNewsletter` dans `forms.ts` (résolvent en silence en mode dégradé, lèvent `StrapiError` en échec réel, newsletter idempotente sur 400).
 
 - [ ] **Step 1: Typer le message dans `src/app.d.ts`**
@@ -2589,12 +2683,12 @@ export const actions: Actions = {
 		try {
 			await enregistrerReservation(form.data, fetch);
 		} catch (err) {
-			console.error("Échec de l’enregistrement de la demande de rendez-vous :", err);
+			console.error('Échec de l’enregistrement de la demande de rendez-vous :', err);
 			return message(
 				form,
 				{
 					type: 'erreur',
-					texte: "Votre demande n’a pas pu être enregistrée. Réessayez dans un instant."
+					texte: 'Votre demande n’a pas pu être enregistrée. Réessayez dans un instant.'
 				},
 				{ status: 500 }
 			);
@@ -2607,6 +2701,7 @@ export const actions: Actions = {
 	}
 };
 ```
+
 avec l’import `import { enregistrerReservation } from '$lib/server/forms';` (le TODO et le `console.log` disparaissent).
 
 `contact/+page.server.ts` : même motif avec `enregistrerContact(form.data, fetch)`, erreur `"Votre message n’a pas pu être envoyé. Réessayez dans un instant."`, succès `'Merci ! Votre message a bien été envoyé.'`.
@@ -2616,6 +2711,7 @@ avec l’import `import { enregistrerReservation } from '$lib/server/forms';` (l
 - [ ] **Step 5: Adapter les 5 gabarits au message typé.**
 
 `contact/+page.svelte` :
+
 ```svelte
 {#if $message}
 	<p
@@ -2632,6 +2728,7 @@ avec l’import `import { enregistrerReservation } from '$lib/server/forms';` (l
 `reservation/+page.svelte` : même remplacement (mêmes classes conditionnelles, `{$message.texte}`).
 
 `newsletter/+page.svelte` — le formulaire doit rester visible en cas d’erreur :
+
 ```svelte
 {#if $message?.type === 'succes'}
 	<p role="status" class="mt-6 rounded-lg bg-halo px-4 py-3 text-sm text-plum">
@@ -2653,18 +2750,24 @@ avec l’import `import { enregistrerReservation } from '$lib/server/forms';` (l
 ```
 
 `BookingModal.svelte` :
+
 - barre de progression : `{#if !$message}` → `{#if $message?.type !== 'succes'}`
 - panneau de succès : `{#if $message}` → `{#if $message?.type === 'succes'}` et `{$message}` → `{$message.texte}`
 - dans la branche formulaire (step 1), juste avant le bloc récapitulatif, ajouter :
+
 ```svelte
 {#if $message?.type === 'erreur'}
-	<p role="alert" class="mb-4 rounded-[11px] bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] px-4 py-3 text-sm text-ember">
+	<p
+		role="alert"
+		class="mb-4 rounded-[11px] bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] px-4 py-3 text-sm text-ember"
+	>
 		{$message.texte}
 	</p>
 {/if}
 ```
 
 `NewsletterModal.svelte` :
+
 - `$effect(() => { if ($message) marquerInscrit(); });` → `$effect(() => { if ($message?.type === 'succes') marquerInscrit(); });`
 - `onclose` : `if (!$message) snoozer();` → `if ($message?.type !== 'succes') snoozer();`
 - panneau de succès : `{#if $message}` → `{#if $message?.type === 'succes'}` et `{$message}` → `{$message.texte}`
@@ -2689,9 +2792,11 @@ git commit -m "feat(formulaires): enregistrement Strapi des 3 formulaires, messa
 ### Task 15: Export du contenu par défaut au format Strapi (site)
 
 **Files:**
+
 - Create: `scripts/export-defaults.ts`
 
 **Interfaces:**
+
 - Consumes: `defaults.ts` + `seed-format.ts` (imports relatifs, exécutables par tsx).
 - Produces: `seed-data.json` — `{ pageAccueil, reglagesSite, prestations }` au format d’écriture Strapi.
 
@@ -2740,6 +2845,7 @@ git commit -m "feat(seed): export du contenu par défaut au format Strapi"
 ### Task 16: Script de seed idempotent (CMS)
 
 **Files (dépôt CMS):**
+
 - Create: `scripts/seed.mjs`
 - Create: `scripts/seed-data.json` (généré en Task 15 — le committer comme instantané)
 
@@ -2808,6 +2914,7 @@ npm run develop   # dans un terminal
 # créer un token Full access dans l’admin, puis :
 STRAPI_SEED_TOKEN=<token> node scripts/seed.mjs
 ```
+
 Expected: `✔ page-accueil`, `✔ reglages-site`, `✔ prestation ×4`, `Seed terminé.` — relancer le script : mêmes ✔ sans doublon (vérifier dans l’admin : 4 prestations, publiées). Puis côté site (`.env` renseigné, `pnpm dev`) : la home affiche le contenu seedé — identique au fallback. Supprimer le token full access.
 
 - [ ] **Step 3: Commit (CMS)**
@@ -2825,6 +2932,7 @@ git commit -m "feat: seed idempotent du contenu initial"
 ### Task 17: Documentation, sitemap/README et parcours final
 
 **Files:**
+
 - Modify: `README.md` (site)
 - Modify: `CLAUDE.md` (site)
 
