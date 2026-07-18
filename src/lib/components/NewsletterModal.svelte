@@ -26,6 +26,8 @@
 	$effect(() => {
 		if (newsletter.open) {
 			dlg?.showModal();
+			// focus direct sur le champ e-mail plutôt que sur le bouton « Fermer »
+			dlg?.querySelector('input')?.focus();
 		} else {
 			dlg?.close();
 		}
