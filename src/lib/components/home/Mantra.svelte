@@ -1,5 +1,9 @@
+<script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
+</script>
+
 <div class="wrap">
-	<div class="mx-auto max-w-[900px] text-center">
+	<div class="reveal mx-auto max-w-[900px] text-center" {@attach reveal()}>
 		<p
 			class="font-display text-[clamp(28px,4.3vw,52px)] leading-[1.22] tracking-[0.004em] [text-shadow:0_2px_30px_rgba(74,27,18,0.4)]"
 		>

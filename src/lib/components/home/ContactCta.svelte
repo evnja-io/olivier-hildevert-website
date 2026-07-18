@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import { reveal } from '$lib/attachments/reveal';
 
 	const modes = ['En présentiel', 'En visioconférence', 'Par téléphone'];
 </script>
 
 <div class="wrap">
-	<div class="relative mx-auto max-w-[760px] text-center text-white">
+	<div class="reveal relative mx-auto max-w-[760px] text-center text-white" {@attach reveal()}>
 		<span class="eyebrow eyebrow-center text-amber-soft!">Contact</span>
 		<h2 class="mt-4.5 mb-4.5 text-[clamp(38px,5.4vw,68px)] tracking-[0.005em]">
 			Faisons lever votre chemin

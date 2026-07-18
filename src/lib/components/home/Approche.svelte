@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
+
 	const strates = [
 		{
 			num: 'I',
@@ -50,7 +52,7 @@
 	class="relative z-1 scroll-mt-24 bg-linear-to-b from-blush to-blush-2 py-[clamp(86px,11vw,148px)]"
 >
 	<div class="wrap grid items-start gap-16 lg:grid-cols-[0.82fr_1.18fr]">
-		<div>
+		<div class="reveal" {@attach reveal()}>
 			<span class="eyebrow">L'approche</span>
 			<h2 class="mt-5 mb-5.5 text-[clamp(34px,4.6vw,56px)]">Sept niveaux de lecture de l'être</h2>
 			<p class="mb-4 text-[16.5px] leading-[1.66] text-ink-soft">
@@ -82,9 +84,10 @@
 			</svg>
 		</div>
 		<div class="echelle relative mt-2">
-			{#each strates as strate (strate.num)}
+			{#each strates as strate, i (strate.num)}
 				<div
-					class="group relative z-1 grid grid-cols-[48px_1fr] items-center gap-4 border-b border-[color-mix(in_oklab,var(--color-ink)_12%,transparent)] px-2 py-5.5 transition-colors last-of-type:border-b-0 hover:bg-[color-mix(in_oklab,#fff_45%,transparent)] sm:grid-cols-[64px_1fr_auto] sm:gap-6.5"
+					class="reveal group relative z-1 grid grid-cols-[48px_1fr] items-center gap-4 border-b border-[color-mix(in_oklab,var(--color-ink)_12%,transparent)] px-2 py-5.5 transition-colors last-of-type:border-b-0 hover:bg-[color-mix(in_oklab,#fff_45%,transparent)] sm:grid-cols-[64px_1fr_auto] sm:gap-6.5"
+					{@attach reveal(i * 60)}
 				>
 					<span
 						class="relative z-1 grid h-10 w-10 place-items-center rounded-full border border-coral bg-sky font-mono text-xs font-medium tracking-[0.04em] text-coral transition group-hover:scale-108 group-hover:bg-coral group-hover:text-white"
@@ -105,7 +108,8 @@
 				</div>
 			{/each}
 			<div
-				class="mt-8.5 flex flex-wrap justify-between gap-5 font-mono text-[10.5px] tracking-[0.16em] text-mute uppercase"
+				class="reveal mt-8.5 flex flex-wrap justify-between gap-5 font-mono text-[10.5px] tracking-[0.16em] text-mute uppercase"
+				{@attach reveal()}
 			>
 				<span>De la surface à la profondeur</span>
 				<span>Sept portes — une même lumière</span>

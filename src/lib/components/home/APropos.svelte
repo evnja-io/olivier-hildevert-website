@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
+
 	const creds = [
 		'Praticien depuis 1992',
 		'Collège International de Sophrologie de Paris',
@@ -13,7 +15,10 @@
 	class="relative z-1 scroll-mt-24 bg-linear-to-b from-blush to-blush-2 py-[clamp(86px,11vw,148px)]"
 >
 	<div class="wrap grid items-center gap-16 lg:grid-cols-[0.84fr_1.16fr]">
-		<div class="relative aspect-4/5 w-full max-lg:mx-auto max-lg:max-w-[380px]">
+		<div
+			class="reveal relative aspect-4/5 w-full max-lg:mx-auto max-lg:max-w-[380px]"
+			{@attach reveal()}
+		>
 			<div
 				class="absolute -inset-y-4 -right-4 left-4 -z-1 rounded-card border border-coral opacity-55"
 				aria-hidden="true"
@@ -35,7 +40,7 @@
 				Cabinet — relation d'aide
 			</span>
 		</div>
-		<div>
+		<div class="reveal" {@attach reveal()}>
 			<span class="eyebrow">À propos</span>
 			<h2 class="mt-3.5 mb-2 text-[clamp(34px,4.6vw,56px)]">Olivier Hildevert</h2>
 			<p class="mb-6 font-mono text-[11px] tracking-[0.2em] text-coral uppercase">

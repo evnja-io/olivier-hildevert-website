@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import { reveal } from '$lib/attachments/reveal';
 	import type { PrestationId } from '$lib/booking/prestations';
 
 	import cardIndividuelle from '$lib/assets/card-individuelle.jpg?enhanced';
@@ -72,7 +73,7 @@
 
 <section id="prestations" class="relative z-1 scroll-mt-24 bg-sky py-[clamp(86px,11vw,148px)]">
 	<div class="wrap">
-		<div class="mb-16 max-w-[640px]">
+		<div class="reveal mb-16 max-w-[640px]" {@attach reveal()}>
 			<span class="eyebrow">Prestations</span>
 			<h2 class="mt-5 mb-4.5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
 				Des accompagnements pour chaque chemin
@@ -83,10 +84,11 @@
 			</p>
 		</div>
 		<div class="grid gap-5.5 lg:grid-cols-2">
-			{#each cartes as carte (carte.id)}
+			{#each cartes as carte, i (carte.id)}
 				<a
 					href="{reservation}?prestation={carte.id}"
-					class="group relative flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition-all duration-400 hover:-translate-y-1.5 hover:border-[color-mix(in_oklab,var(--color-coral)_45%,transparent)] hover:shadow-[0_40px_74px_-44px_color-mix(in_oklab,var(--color-ember)_58%,transparent)]"
+					class="reveal group relative flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition-all duration-400 hover:-translate-y-1.5 hover:border-[color-mix(in_oklab,var(--color-coral)_45%,transparent)] hover:shadow-[0_40px_74px_-44px_color-mix(in_oklab,var(--color-ember)_58%,transparent)]"
+					{@attach reveal(i * 85)}
 					onclick={(e) => {
 						e.preventDefault();
 						openBooking(carte.id);

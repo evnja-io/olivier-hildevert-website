@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
+
 	const colonnes = [
 		{
 			variante: 'mind' as const,
@@ -29,19 +31,20 @@
 
 <section class="relative z-1 bg-sky py-[clamp(86px,11vw,148px)]">
 	<div class="wrap">
-		<div class="mx-auto mb-16 max-w-[640px] text-center">
+		<div class="reveal mx-auto mb-16 max-w-[640px] text-center" {@attach reveal()}>
 			<span class="eyebrow eyebrow-center">Deux logiques, une même personne</span>
 			<h2 class="mt-5 mb-4.5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
 				États d'esprit &amp; états d'âme
 			</h2>
 		</div>
 		<div class="grid gap-5.5 lg:grid-cols-2">
-			{#each colonnes as col (col.variante)}
+			{#each colonnes as col, i (col.variante)}
 				<div
-					class="relative overflow-hidden rounded-card border border-line p-[46px_clamp(28px,3.6vw,46px)] shadow-[0_30px_60px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] {col.variante ===
+					class="reveal relative overflow-hidden rounded-card border border-line p-[46px_clamp(28px,3.6vw,46px)] shadow-[0_30px_60px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] {col.variante ===
 					'soul'
 						? 'bg-linear-165 from-halo to-white'
 						: 'bg-white'}"
+					{@attach reveal(i * 130)}
 				>
 					{#if col.variante === 'mind'}
 						<svg

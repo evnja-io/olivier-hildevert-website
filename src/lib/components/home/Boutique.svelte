@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import { reveal } from '$lib/attachments/reveal';
 
 	const reservation = resolve('/reservation');
 </script>
@@ -10,7 +11,7 @@
 	class="relative z-1 scroll-mt-24 bg-linear-to-b from-blush to-blush-2 py-[clamp(86px,11vw,148px)]"
 >
 	<div class="wrap">
-		<div class="mb-16 max-w-[640px]">
+		<div class="reveal mb-16 max-w-[640px]" {@attach reveal()}>
 			<span class="eyebrow">Boutique</span>
 			<h2 class="mt-5 mb-4.5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
 				Prolonger le chemin
@@ -22,7 +23,8 @@
 		</div>
 		<div class="grid gap-5.5 lg:grid-cols-2">
 			<div
-				class="grid items-center gap-6 rounded-card border border-line bg-white p-6 shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition hover:-translate-y-[5px] hover:shadow-[0_38px_76px_-46px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] sm:grid-cols-[0.82fr_1.18fr]"
+				class="reveal grid items-center gap-6 rounded-card border border-line bg-white p-6 shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition hover:-translate-y-[5px] hover:shadow-[0_38px_76px_-46px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] sm:grid-cols-[0.82fr_1.18fr]"
+				{@attach reveal()}
 			>
 				<div
 					class="aspect-3/4 overflow-hidden rounded-btn shadow-[0_16px_38px_-22px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] max-sm:mx-auto max-sm:max-w-[200px]"
@@ -61,7 +63,8 @@
 				</div>
 			</div>
 			<div
-				class="grid items-center gap-6 rounded-card border border-line bg-white p-6 shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition hover:-translate-y-[5px] hover:shadow-[0_38px_76px_-46px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] sm:grid-cols-[0.82fr_1.18fr]"
+				class="reveal grid items-center gap-6 rounded-card border border-line bg-white p-6 shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition hover:-translate-y-[5px] hover:shadow-[0_38px_76px_-46px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] sm:grid-cols-[0.82fr_1.18fr]"
+				{@attach reveal()}
 			>
 				<div
 					class="aspect-square overflow-hidden rounded-btn shadow-[0_16px_38px_-22px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] max-sm:mx-auto max-sm:max-w-[200px]"

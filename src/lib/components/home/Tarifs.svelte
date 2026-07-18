@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import { reveal } from '$lib/attachments/reveal';
 	import type { PrestationId } from '$lib/booking/prestations';
 
 	const reservation = resolve('/reservation');
@@ -13,13 +14,14 @@
 
 <section id="tarifs" class="relative z-1 scroll-mt-24 bg-sky py-[clamp(86px,11vw,148px)]">
 	<div class="wrap">
-		<div class="mx-auto mb-16 max-w-[640px] text-center">
+		<div class="reveal mx-auto mb-16 max-w-[640px] text-center" {@attach reveal()}>
 			<span class="eyebrow eyebrow-center">Tarifs</span>
 			<h2 class="mt-5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">Une tarification claire</h2>
 		</div>
 		<div class="grid items-stretch gap-4.5 lg:grid-cols-3">
 			<div
-				class="flex flex-col items-center gap-2 rounded-card border border-line bg-white px-7.5 py-11 text-center shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_36%,transparent)]"
+				class="reveal flex flex-col items-center gap-2 rounded-card border border-line bg-white px-7.5 py-11 text-center shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_36%,transparent)]"
+				{@attach reveal()}
 			>
 				<span class="font-mono text-[10.5px] tracking-[0.2em] text-coral uppercase">Groupes</span>
 				<div class="my-1.5 font-display text-[56px] leading-none text-ink">Devis</div>
@@ -35,7 +37,8 @@
 				</a>
 			</div>
 			<div
-				class="flex flex-col items-center gap-2 rounded-card bg-linear-165 from-coral to-ember px-7.5 py-11 text-center text-white shadow-[0_34px_70px_-38px_color-mix(in_oklab,var(--color-ember)_80%,transparent)] lg:-translate-y-2.5"
+				class="reveal flex flex-col items-center gap-2 rounded-card bg-linear-165 from-coral to-ember px-7.5 py-11 text-center text-white shadow-[0_34px_70px_-38px_color-mix(in_oklab,var(--color-ember)_80%,transparent)] lg:-translate-y-2.5"
+				{@attach reveal(90)}
 			>
 				<span class="font-mono text-[10.5px] tracking-[0.2em] text-amber-soft uppercase">
 					Particuliers
@@ -55,7 +58,8 @@
 				</a>
 			</div>
 			<div
-				class="flex flex-col items-center gap-2 rounded-card border border-line bg-white px-7.5 py-11 text-center shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_36%,transparent)]"
+				class="reveal flex flex-col items-center gap-2 rounded-card border border-line bg-white px-7.5 py-11 text-center shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_36%,transparent)]"
+				{@attach reveal(180)}
 			>
 				<span class="font-mono text-[10.5px] tracking-[0.2em] text-coral uppercase">
 					Entreprises
