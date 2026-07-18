@@ -1,17 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import type { HeroContent } from '$lib/content/types';
+	import { defaultAccueil } from '$lib/content/defaults';
+
+	let { content = defaultAccueil.hero }: { content?: HeroContent } = $props();
 
 	let ready = $state(false);
 	$effect(() => {
 		requestAnimationFrame(() => (ready = true));
 	});
-
-	const stats = [
-		{ valeur: '1992', legende: "Praticien en relation d'aide" },
-		{ valeur: '1 h 30', legende: 'Par séance individuelle' },
-		{ valeur: '+30 ans', legende: "D'accompagnements" }
-	];
 </script>
 
 <section class="relative overflow-hidden pt-28 pb-21 max-sm:pt-[138px]">
@@ -30,23 +28,22 @@
 			class="hero-copy max-w-[600px] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
 			class:ready
 		>
-			<span class="eyebrow text-[#A55A43]!">Sophrologie · Thérapie psycho énergétique</span>
+			<span class="eyebrow text-[#A55A43]!">{content.eyebrow}</span>
 			<h1
 				class="mt-6.5 mb-7 font-rubik text-[34px] leading-[1.3] tracking-[0.006em] text-[#396CB2]"
 			>
-				Décoder le visible,<br />
+				{content.titreLigne1}<br />
 				<em
 					class="mt-[0.06em] inline-block font-merriweather text-[32px] leading-[0.9] font-bold text-coral not-italic"
 				>
-					grâce à l'invisible
+					{content.titreLigne2}
 				</em>
 			</h1>
 			<p class="mb-3.5 max-w-[25em] text-[18.5px] leading-[1.7] text-ink">
-				Un accompagnement psycho-spirituel qui relie l'esprit et l'âme pour révéler le sens profond
-				de ce que vous traversez, et faire lever en vous l'élan de la transformation.
+				{content.paragraphe}
 			</p>
 			<p class="mb-9 font-mono text-[11px] tracking-[0.16em] text-[#5E4108] uppercase">
-				Accompagnement non médical · Particuliers, groupes &amp; entreprises
+				{content.ligneMono}
 			</p>
 			<div class="flex items-center gap-[13px]">
 				<a
@@ -57,17 +54,17 @@
 						openBooking();
 					}}
 				>
-					Réserver une séance
+					{content.boutonPrincipal}
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</a>
-				<a class="btn btn-line" href="{resolve('/')}#approche">Découvrir l'approche</a>
+				<a class="btn btn-line" href="{resolve('/')}#approche">{content.boutonSecondaire}</a>
 			</div>
 			<div
 				class="mt-10.5 flex max-w-[560px] border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 max-sm:flex-wrap max-sm:gap-y-3.5"
 			>
-				{#each stats as stat (stat.valeur)}
+				{#each content.stats as stat (stat.valeur)}
 					<div
 						class="mr-6.5 border-r border-[color-mix(in_oklab,var(--color-ink)_22%,transparent)] pr-6.5 last:mr-0 last:border-r-0 last:pr-0 max-sm:mr-5 max-sm:pr-5"
 					>

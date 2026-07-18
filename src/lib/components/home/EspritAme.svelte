@@ -1,40 +1,22 @@
 <script lang="ts">
 	import { reveal } from '$lib/attachments/reveal';
+	import type { EspritAmeContent } from '$lib/content/types';
+	import { defaultAccueil } from '$lib/content/defaults';
 
-	const colonnes = [
-		{
-			variante: 'mind' as const,
-			tag: "États d'esprit",
-			titre: 'La logique humaine',
-			desc: 'Le terrain du mental : raison, analyse, synthèse. Ce que l’on peut nommer, structurer et comprendre par le raisonnement.',
-			points: [
-				'Rationalité & clarté',
-				'Analyse des situations',
-				'Synthèse & mise en sens',
-				'Lecture comportementale'
-			]
-		},
-		{
-			variante: 'soul' as const,
-			tag: "États d'âme",
-			titre: 'La logique subtile',
-			desc: 'Le terrain de l’invisible : intuition, énergie, extra-sensorialité. Ce qui se perçoit au-delà du mental et oriente nos profondeurs.',
-			points: [
-				'Intuition & clair-connaissance',
-				'Dimension vibratoire',
-				'Mondes subtils & fréquentiels',
-				'Sens spirituel de l’expérience'
-			]
-		}
-	];
+	let { content = defaultAccueil.espritAme }: { content?: EspritAmeContent } = $props();
+
+	const colonnes = $derived([
+		{ variante: 'mind' as const, ...content.colonneEsprit },
+		{ variante: 'soul' as const, ...content.colonneAme }
+	]);
 </script>
 
 <section class="relative z-1 bg-sky py-[clamp(86px,11vw,148px)]">
 	<div class="wrap">
 		<div class="reveal mx-auto mb-16 max-w-[640px] text-center" {@attach reveal()}>
-			<span class="eyebrow eyebrow-center">Deux logiques, une même personne</span>
+			<span class="eyebrow eyebrow-center">{content.eyebrow}</span>
 			<h2 class="mt-5 mb-4.5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
-				États d'esprit &amp; états d'âme
+				{content.titre}
 			</h2>
 		</div>
 		<div class="grid gap-5.5 lg:grid-cols-2">
