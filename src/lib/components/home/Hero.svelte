@@ -30,11 +30,13 @@
 			class="hero-copy max-w-[600px] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
 			class:ready
 		>
-			<span class="eyebrow">Sophrologie · Thérapie psycho énergétique</span>
-			<h1 class="mt-6.5 mb-7 text-[clamp(46px,7vw,94px)] leading-[0.99] tracking-[0.006em]">
+			<span class="eyebrow text-[#A55A43]!">Sophrologie · Thérapie psycho énergétique</span>
+			<h1
+				class="mt-6.5 mb-7 font-rubik text-[34px] leading-[1.3] tracking-[0.006em] text-[#396CB2]"
+			>
 				Décoder le visible,<br />
 				<em
-					class="mt-[0.06em] inline-block font-script text-[1.18em] leading-[0.9] font-semibold text-coral not-italic"
+					class="mt-[0.06em] inline-block font-merriweather text-[32px] leading-[0.9] font-bold text-coral not-italic"
 				>
 					grâce à l'invisible
 				</em>
@@ -43,7 +45,7 @@
 				Un accompagnement psycho-spirituel qui relie l'esprit et l'âme pour révéler le sens profond
 				de ce que vous traversez, et faire lever en vous l'élan de la transformation.
 			</p>
-			<p class="mb-9 font-mono text-[11px] tracking-[0.16em] text-mute uppercase">
+			<p class="mb-9 font-mono text-[11px] tracking-[0.16em] text-[#5E4108] uppercase">
 				Accompagnement non médical · Particuliers, groupes &amp; entreprises
 			</p>
 			<div class="flex items-center gap-[13px]">

@@ -27,7 +27,13 @@ importers:
       '@fontsource/marcellus':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource/merriweather':
+        specifier: ^5.2.11
+        version: 5.2.11
       '@fontsource/mulish':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/rubik':
         specifier: ^5.2.8
         version: 5.2.8
       '@playwright/test':
@@ -340,8 +346,14 @@ packages:
   '@fontsource/marcellus@5.2.8':
     resolution: {integrity: sha512-JHn6y1lz5IBjwqmwy4JSOIg2OV8X5UnbB4hGRUDaSlfViXghS6/4pX4CoRzFtQDIkH7axGCS+6kbdTVuYxBKDw==}
 
+  '@fontsource/merriweather@5.2.11':
+    resolution: {integrity: sha512-ZiIMeUh5iT8d73o6xlSF8GKgjV5pgiFrufYc5jZTVAfExtWKqM2vQHnsqXSFMv4ELhAcjt6Vf+5T3oVGXhAizQ==}
+
   '@fontsource/mulish@5.2.8':
     resolution: {integrity: sha512-pAqO7fkpGHd0Zjr5ieiWrr9kJiZWbaADaZWOlMERTsSqNsRUsg5y0jv4n6/VjWhd4LUfkYpiQBhP0yLDpbPNiw==}
+
+  '@fontsource/rubik@5.2.8':
+    resolution: {integrity: sha512-PIc8QR7FqWPcYhbdRiGff56vQlKqg/ytES1YqecSq1GkgxiH4TBshrFvDEOZ9JonUF9m1qQ+qXxJj7wD5zgXEw==}
 
   '@hapi/hoek@9.3.0':
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
@@ -2206,7 +2218,11 @@ snapshots:
 
   '@fontsource/marcellus@5.2.8': {}
 
+  '@fontsource/merriweather@5.2.11': {}
+
   '@fontsource/mulish@5.2.8': {}
+
+  '@fontsource/rubik@5.2.8': {}
 
   '@hapi/hoek@9.3.0':
     optional: true

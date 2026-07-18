@@ -31,7 +31,9 @@
 					stroke-linecap="round"
 				/>
 			</svg>
-			<span class="font-display text-[22px] leading-none tracking-[0.04em] whitespace-nowrap">
+			<span
+				class="font-display text-[22px] leading-none tracking-[0.04em] whitespace-nowrap text-[#5E4108]"
+			>
 				{site.name}
 				<small
 					class="mt-1.5 block font-mono text-[8.5px] font-medium tracking-[0.36em] text-mute uppercase"
@@ -45,7 +47,7 @@
 				{#if item.pill}
 					<a
 						href="{home}#{item.anchor}"
-						class="rounded-full bg-amber-soft px-4 py-2 font-mono text-[11.5px] font-semibold tracking-[0.14em] text-plum uppercase shadow-[0_3px_10px_rgba(242,160,61,0.22)] transition hover:-translate-y-px hover:bg-amber hover:shadow-[0_5px_14px_rgba(242,160,61,0.34)]"
+						class="rounded-full bg-amber-soft px-4 py-2 font-mono text-[11.5px] font-semibold tracking-[0.14em] text-white uppercase shadow-[0_3px_10px_rgba(242,160,61,0.22)] transition hover:-translate-y-px hover:bg-amber hover:shadow-[0_5px_14px_rgba(242,160,61,0.34)]"
 					>
 						{item.label}
 					</a>
