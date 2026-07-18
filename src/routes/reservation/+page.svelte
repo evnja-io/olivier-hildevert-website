@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import { site } from '$lib/config';
-	import { defaultPrestations } from '$lib/content/defaults';
 
 	let { data } = $props();
 
@@ -39,7 +38,7 @@
 				Quel accompagnement ?
 			</legend>
 			<div class="grid gap-3 sm:grid-cols-2">
-				{#each defaultPrestations as p (p.cle)}
+				{#each data.prestations as p (p.cle)}
 					<label
 						class="flex cursor-pointer flex-col gap-1 rounded-card border border-line-2 bg-white p-4 transition-colors hover:border-coral has-checked:border-coral has-checked:bg-surface-2 has-checked:shadow-[inset_0_0_0_1px_var(--color-coral)]"
 					>

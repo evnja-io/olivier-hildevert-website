@@ -11,15 +11,17 @@
 	import Boutique from '$lib/components/home/Boutique.svelte';
 	import Tarifs from '$lib/components/home/Tarifs.svelte';
 	import ContactCta from '$lib/components/home/ContactCta.svelte';
+
+	let { data } = $props();
 </script>
 
 <svelte:head>
-	<title>{site.name} — {site.tagline}</title>
-	<meta name="description" content={site.description} />
+	<title>{site.name} — {data.reglages.tagline}</title>
+	<meta name="description" content={data.reglages.descriptionSeo} />
 	<link rel="canonical" href={site.url} />
 </svelte:head>
 
-<Hero />
+<Hero content={data.accueil.hero} />
 
 <ImmersiveBand tight>
 	{#snippet image()}
@@ -31,16 +33,16 @@
 			style="object-position: center 42%"
 		/>
 	{/snippet}
-	<Mantra />
+	<Mantra content={data.accueil.mantra} />
 </ImmersiveBand>
 
-<Approche />
+<Approche content={data.accueil.approche} />
 
-<EspritAme />
+<EspritAme content={data.accueil.espritAme} />
 
-<APropos />
+<APropos content={data.accueil.aPropos} />
 
-<Prestations />
+<Prestations intro={data.accueil.prestationsIntro} prestations={data.prestations} />
 
 <ImmersiveBand>
 	{#snippet image()}
@@ -51,12 +53,12 @@
 			sizes="100vw"
 		/>
 	{/snippet}
-	<PourQui />
+	<PourQui content={data.accueil.pourQui} />
 </ImmersiveBand>
 
-<Boutique />
+<Boutique content={data.accueil.boutique} />
 
-<Tarifs />
+<Tarifs content={data.accueil.tarifs} />
 
 <ImmersiveBand id="contact" onWarm>
 	{#snippet image()}
@@ -67,5 +69,5 @@
 			sizes="100vw"
 		/>
 	{/snippet}
-	<ContactCta />
+	<ContactCta content={data.accueil.contactCta} />
 </ImmersiveBand>
