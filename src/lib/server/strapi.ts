@@ -70,6 +70,11 @@ function config() {
 	return { url: env.STRAPI_URL.replace(/\/$/, ''), token: env.STRAPI_API_TOKEN };
 }
 
+/** Vrai si STRAPI_URL est renseigné — sinon le site vit sur son contenu par défaut. */
+export function isStrapiConfigured(): boolean {
+	return Boolean(env.STRAPI_URL);
+}
+
 async function strapiFetch<T>(
 	path: string,
 	query?: Query,
