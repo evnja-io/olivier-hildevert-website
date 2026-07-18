@@ -5,6 +5,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import ScrollProgress from '$lib/components/ScrollProgress.svelte';
 	import BookingModal from '$lib/components/BookingModal.svelte';
+	import NewsletterModal from '$lib/components/NewsletterModal.svelte';
 
 	let { children } = $props();
 </script>
@@ -21,6 +22,7 @@
 
 <Footer />
 <BookingModal />
+<NewsletterModal />
 
 <noscript>
 	<!-- Sans JavaScript, les sections .reveal doivent rester visibles. -->
