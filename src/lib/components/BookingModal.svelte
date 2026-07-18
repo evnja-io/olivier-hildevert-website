@@ -68,7 +68,7 @@
 		<span class="font-mono text-xs font-semibold tracking-[0.28em] text-coral uppercase">
 			Prendre rendez-vous
 		</span>
-		{#if !$message}
+		{#if $message?.type !== 'succes'}
 			<div class="flex gap-2" aria-hidden="true">
 				{#each [0, 1] as i (i)}
 					<span
@@ -83,7 +83,7 @@
 		{/if}
 	</div>
 
-	{#if $message}
+	{#if $message?.type === 'succes'}
 		<div class="px-0 pt-3.5 pb-1.5 text-center">
 			<div class="mb-4 flex justify-center text-coral" aria-hidden="true">
 				<svg viewBox="0 0 64 64" width="64" height="64">
@@ -108,7 +108,7 @@
 			</div>
 			<h3 class="font-display text-[clamp(24px,4vw,30px)]">Demande transmise</h3>
 			<p role="status" class="mx-auto mt-2 mb-6 max-w-[380px] text-[15px] text-ink-soft">
-				{$message}
+				{$message.texte}
 			</p>
 			<button type="button" class="mx-auto btn btn-sun" onclick={closeBooking}>Fermer</button>
 		</div>
@@ -138,6 +138,15 @@
 			Les séances se déroulent par téléphone. Je vous recontacte pour convenir ensemble d'une date
 			et d'un horaire.
 		</p>
+
+		{#if $message?.type === 'erreur'}
+			<p
+				role="alert"
+				class="mb-4 rounded-[11px] bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] px-4 py-3 text-sm text-ember"
+			>
+				{$message.texte}
+			</p>
+		{/if}
 
 		<div
 			class="mb-5 rounded-[14px] border border-[color-mix(in_oklab,var(--color-ink)_12%,transparent)] bg-surface-2 px-4.5 py-1.5"

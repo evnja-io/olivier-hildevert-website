@@ -34,7 +34,7 @@
 	});
 
 	$effect(() => {
-		if ($message) marquerInscrit();
+		if ($message?.type === 'succes') marquerInscrit();
 	});
 </script>
 
@@ -43,7 +43,7 @@
 	aria-label="Newsletter"
 	class="m-auto w-[min(440px,calc(100%-32px))] rounded-card bg-surface p-[34px_clamp(24px,6vw,40px)_32px] text-ink shadow-[0_40px_120px_-30px_rgba(40,20,10,0.4)] backdrop:bg-[color-mix(in_oklab,var(--color-ink)_35%,transparent)] backdrop:backdrop-blur-[4px]"
 	onclose={() => {
-		if (!$message) snoozer();
+		if ($message?.type !== 'succes') snoozer();
 		if (newsletter.open) closeNewsletter();
 	}}
 	onmousedown={(e) => {
@@ -62,7 +62,7 @@
 			&times;
 		</button>
 
-		{#if $message}
+		{#if $message?.type === 'succes'}
 			<div class="pt-2 pb-1 text-center">
 				<div class="mb-4 flex justify-center text-coral" aria-hidden="true">
 					<svg viewBox="0 0 64 64" width="56" height="56">
@@ -87,7 +87,7 @@
 				</div>
 				<h3 class="font-display text-[clamp(22px,4vw,27px)]">Inscription confirmée</h3>
 				<p role="status" class="mx-auto mt-2 mb-6 max-w-[320px] text-[14.5px] text-ink-soft">
-					{$message}
+					{$message.texte}
 				</p>
 				<button type="button" class="mx-auto btn btn-sun" onclick={closeNewsletter}>Fermer</button>
 			</div>
@@ -119,6 +119,14 @@
 					class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-[15px] focus:border-coral focus:ring-coral"
 				/>
 				{#if $errors.email}<p class="mt-1 text-sm text-ember">{$errors.email[0]}</p>{/if}
+				{#if $message?.type === 'erreur'}
+					<p
+						role="alert"
+						class="mt-3 rounded-[11px] bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] px-4 py-3 text-sm text-ember"
+					>
+						{$message.texte}
+					</p>
+				{/if}
 
 				<div class="mt-4 flex items-center justify-between gap-3">
 					<button

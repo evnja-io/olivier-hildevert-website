@@ -26,11 +26,19 @@
 		Pas de spam, promis.
 	</p>
 
-	{#if $message}
+	{#if $message?.type === 'succes'}
 		<p role="status" class="mt-6 rounded-lg bg-halo px-4 py-3 text-sm text-plum">
-			{$message}
+			{$message.texte}
 		</p>
 	{:else}
+		{#if $message?.type === 'erreur'}
+			<p
+				role="alert"
+				class="mt-6 rounded-lg bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] px-4 py-3 text-sm text-ember"
+			>
+				{$message.texte}
+			</p>
+		{/if}
 		<form method="POST" use:enhance class="mt-8 space-y-6" novalidate>
 			<div>
 				<label for="email" class="block text-sm font-medium text-ink-soft">Adresse e-mail</label>
