@@ -78,17 +78,21 @@ export function isStrapiConfigured(): boolean {
 async function strapiFetch<T>(
 	path: string,
 	query?: Query,
-	fetcher: typeof fetch = fetch
+	fetcher: typeof fetch = fetch,
+	init?: { method: string; body: unknown }
 ): Promise<T> {
 	const { url, token } = config();
 	const params = new URLSearchParams(query);
 	const search = params.size > 0 ? `?${params}` : '';
 
 	const res = await fetcher(`${url}/api${path}${search}`, {
+		method: init?.method ?? 'GET',
 		headers: {
 			Accept: 'application/json',
+			...(init ? { 'Content-Type': 'application/json' } : {}),
 			...(token ? { Authorization: `Bearer ${token}` } : {})
-		}
+		},
+		body: init ? JSON.stringify(init.body) : undefined
 	});
 
 	if (!res.ok) {
@@ -128,4 +132,17 @@ export async function fetchEntry<T>(
 export async function fetchSingle<T>(singleType: string, query?: Query, fetcher?: typeof fetch) {
 	const { data } = await strapiFetch<StrapiSingleResponse<T>>(`/${singleType}`, query, fetcher);
 	return data;
+}
+
+/** Crée une entrée dans une collection (ex. `createEntry('messages-contact', {...})`). */
+export async function createEntry<T = unknown>(
+	collection: string,
+	data: Record<string, unknown>,
+	fetcher?: typeof fetch
+): Promise<T> {
+	const res = await strapiFetch<{ data: T }>(`/${collection}`, undefined, fetcher, {
+		method: 'POST',
+		body: { data }
+	});
+	return res.data;
 }
