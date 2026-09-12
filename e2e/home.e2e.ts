@@ -130,6 +130,7 @@ test.describe('liens externes', () => {
 			.getByRole('link', { name: 'olivierhildevert.com', exact: true });
 		await expect(lien).toHaveAttribute('href', /^https:\/\//);
 		await expect(lien).toHaveAttribute('target', '_blank');
+		await expect(lien).toHaveAttribute('rel', /noopener/);
 	});
 });
 
