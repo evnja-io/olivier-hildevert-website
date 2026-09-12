@@ -22,8 +22,13 @@
 	</p>
 
 	{#if $message}
-		<p role="status" class="mt-6 rounded-lg bg-halo px-4 py-3 text-sm text-plum">
-			{$message}
+		<p
+			role="status"
+			class="mt-6 rounded-lg px-4 py-3 text-sm {$message.type === 'erreur'
+				? 'bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] text-ember'
+				: 'bg-halo text-plum'}"
+		>
+			{$message.texte}
 		</p>
 	{/if}
 

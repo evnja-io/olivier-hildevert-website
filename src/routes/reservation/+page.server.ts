@@ -3,6 +3,7 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
 import { bookingSchema } from '$lib/booking/schema';
 import { PRESTATION_IDS, type PrestationId } from '$lib/booking/prestations';
+import { enregistrerReservation } from '$lib/server/forms';
 import type { Actions, PageServerLoad } from './$types';
 
 // Portée module : permet à Superforms de mettre l'adapter en cache.
@@ -20,17 +21,30 @@ export const load: PageServerLoad = async ({ url }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request }) => {
+	default: async ({ request, fetch }) => {
 		const form = await superValidate(request, adapter);
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		// TODO : brancher l'envoi réel — e-mail (Resend, …) ou POST vers une
-		// collection Strapi « demandes de rendez-vous » via $lib/server/strapi.
-		console.log('Demande de rendez-vous reçue :', form.data);
+		try {
+			await enregistrerReservation(form.data, fetch);
+		} catch (err) {
+			console.error('Échec de l’enregistrement de la demande de rendez-vous :', err);
+			return message(
+				form,
+				{
+					type: 'erreur',
+					texte: 'Votre demande n’a pas pu être enregistrée. Réessayez dans un instant.'
+				},
+				{ status: 500 }
+			);
+		}
 
-		return message(form, 'Demande transmise. Vous recevrez une confirmation personnelle sous peu.');
+		return message(form, {
+			type: 'succes',
+			texte: 'Demande transmise. Vous recevrez une confirmation personnelle sous peu.'
+		});
 	}
 };

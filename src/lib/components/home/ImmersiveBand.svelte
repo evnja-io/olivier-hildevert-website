@@ -34,15 +34,17 @@
 </section>
 
 <style>
-	/* lumière chaude : voile radial corail → vermillon en multiply, puis vignette crépuscule */
+	/* lumière chaude : voile radial corail → vermillon en multiply, puis
+	   vignette crépuscule. Renforcé : le blanc et l'ambre se noyaient dans les
+	   zones claires des photos (sable, feuillage). */
 	.band-bg::after {
 		content: '';
 		position: absolute;
 		inset: 0;
 		background: radial-gradient(
 			120% 120% at 50% 50%,
-			color-mix(in oklab, var(--color-coral) 30%, transparent),
-			color-mix(in oklab, var(--color-ember) 80%, transparent)
+			color-mix(in oklab, var(--color-coral) 46%, transparent),
+			color-mix(in oklab, var(--color-ember) 96%, transparent)
 		);
 		mix-blend-mode: multiply;
 	}
@@ -53,15 +55,15 @@
 		z-index: 1;
 		pointer-events: none;
 		background: radial-gradient(
-			120% 120% at 50% 50%,
-			transparent 30%,
-			color-mix(in oklab, var(--color-dusk) 42%, transparent)
+			125% 125% at 50% 45%,
+			color-mix(in oklab, var(--color-dusk) 18%, transparent) 0%,
+			color-mix(in oklab, var(--color-dusk) 66%, transparent) 100%
 		);
 	}
 	.band-bg :global(img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		filter: saturate(1.05) contrast(1.02);
+		filter: saturate(1.08) brightness(0.86);
 	}
 </style>

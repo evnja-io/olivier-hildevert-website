@@ -7,12 +7,12 @@
 	import BookingModal from '$lib/components/BookingModal.svelte';
 	import NewsletterModal from '$lib/components/NewsletterModal.svelte';
 
-	let { children } = $props();
+	let { data, children } = $props();
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<Header />
+<Header reglages={data.reglages} />
 <ScrollProgress />
 
 <!-- Full-bleed : chaque page gère son wrapper et son padding sous le header fixe. -->
@@ -20,8 +20,8 @@
 	{@render children()}
 </main>
 
-<Footer />
-<BookingModal />
+<Footer reglages={data.reglages} />
+<BookingModal prestations={data.prestations} />
 <NewsletterModal />
 
 <noscript>

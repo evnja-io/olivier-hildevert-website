@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import { site } from '$lib/config';
-	import { PRESTATIONS } from '$lib/booking/prestations';
 
 	let { data } = $props();
 
@@ -28,8 +27,13 @@
 	</p>
 
 	{#if $message}
-		<p role="status" class="mt-8 rounded-card bg-halo px-5 py-4 text-plum">
-			{$message}
+		<p
+			role="status"
+			class="mt-8 rounded-card px-5 py-4 {$message.type === 'erreur'
+				? 'bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] text-ember'
+				: 'bg-halo text-plum'}"
+		>
+			{$message.texte}
 		</p>
 	{/if}
 
@@ -39,20 +43,20 @@
 				Quel accompagnement ?
 			</legend>
 			<div class="grid gap-3 sm:grid-cols-2">
-				{#each PRESTATIONS as p (p.id)}
+				{#each data.prestations as p (p.cle)}
 					<label
 						class="flex cursor-pointer flex-col gap-1 rounded-card border border-line-2 bg-white p-4 transition-colors hover:border-coral has-checked:border-coral has-checked:bg-surface-2 has-checked:shadow-[inset_0_0_0_1px_var(--color-coral)]"
 					>
 						<input
 							type="radio"
 							name="prestation"
-							value={p.id}
+							value={p.cle}
 							bind:group={$form.prestation}
 							class="sr-only"
 						/>
 						<span class="font-display text-lg text-ink">{p.titre}</span>
-						<span class="text-sm font-semibold text-coral">{p.meta}</span>
-						<span class="text-sm text-ink-soft">{p.desc}</span>
+						<span class="text-sm font-semibold text-coral">{p.metaReservation}</span>
+						<span class="text-sm text-ink-soft">{p.descReservation}</span>
 					</label>
 				{/each}
 			</div>

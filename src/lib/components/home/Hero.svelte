@@ -1,83 +1,82 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { openBooking } from '$lib/booking/booking.svelte';
+	import type { HeroContent } from '$lib/content/types';
+	import { defaultAccueil } from '$lib/content/defaults';
+
+	let { content = defaultAccueil.hero }: { content?: HeroContent } = $props();
 
 	let ready = $state(false);
 	$effect(() => {
 		requestAnimationFrame(() => (ready = true));
 	});
-
-	const stats = [
-		{ valeur: '1992', legende: "Praticien en relation d'aide" },
-		{ valeur: '1 h 30', legende: 'Par séance individuelle' },
-		{ valeur: '+30 ans', legende: "D'accompagnements" }
-	];
 </script>
 
 <section class="relative overflow-hidden pt-28 pb-21 max-sm:pt-[138px]">
 	<enhanced:img
-		src="$lib/assets/hero-bg.jpg"
+		src="$lib/assets/hero-mer.jpg"
 		alt=""
 		fetchpriority="high"
 		loading="eager"
 		sizes="100vw"
-		class="absolute inset-0 h-full w-full object-cover object-right"
+		class="absolute inset-0 h-full w-full object-cover object-[center_58%]"
 	/>
 	<div class="hero-wash absolute inset-0 z-1" aria-hidden="true"></div>
 
 	<div class="relative z-3 wrap">
 		<div
-			class="hero-copy max-w-[600px] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
+			class="hero-copy max-w-[min(1000px,100%)] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
 			class:ready
 		>
-			<span class="eyebrow text-[#A55A43]!">Sophrologie · Thérapie psycho énergétique</span>
-			<h1
-				class="mt-6.5 mb-7 font-rubik text-[34px] leading-[1.3] tracking-[0.006em] text-[#396CB2]"
-			>
-				Décoder le visible,<br />
-				<em
-					class="mt-[0.06em] inline-block font-merriweather text-[32px] leading-[0.9] font-bold text-coral not-italic"
-				>
-					grâce à l'invisible
-				</em>
+			<span class="eyebrow text-[#A55A43]!">{content.eyebrow}</span>
+			<h1 class="hero-titre mt-6.5 mb-7 text-4xl tracking-[0.006em]">
+				<span class="font-rubik text-[#396CB2]">{content.titreLigne1}</span>
+				<em class="font-merriweather font-bold text-coral not-italic">{content.titreLigne2}</em>
 			</h1>
-			<p class="mb-3.5 max-w-[25em] text-[18.5px] leading-[1.7] text-ink">
-				Un accompagnement psycho-spirituel qui relie l'esprit et l'âme pour révéler le sens profond
-				de ce que vous traversez, et faire lever en vous l'élan de la transformation.
+			<p class="mb-3.5 max-w-[34em] text-base text-ink">{content.paragraphe}</p>
+			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-[#5E4108] uppercase">
+				{content.ligneMono}
 			</p>
-			<p class="mb-9 font-mono text-[11px] tracking-[0.16em] text-[#5E4108] uppercase">
-				Accompagnement non médical · Particuliers, groupes &amp; entreprises
-			</p>
-			<div class="flex items-center gap-[13px]">
+			<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-[13px]">
 				<a
-					class="btn btn-sun"
+					class="btn btn-sun justify-center sm:justify-start"
 					href={resolve('/reservation')}
 					onclick={(e) => {
 						e.preventDefault();
 						openBooking();
 					}}
 				>
-					Réserver une séance
+					{content.boutonPrincipal}
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</a>
-				<a class="btn btn-line" href="{resolve('/')}#approche">Découvrir l'approche</a>
+				<a class="btn btn-line justify-center sm:justify-start" href="{resolve('/')}#approche"
+					>{content.boutonSecondaire}</a
+				>
 			</div>
 			<div
-				class="mt-10.5 flex max-w-[560px] border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 max-sm:flex-wrap max-sm:gap-y-3.5"
+				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
 			>
-				{#each stats as stat (stat.valeur)}
+				<!-- La rangée passe à `md` (768 px) et non `sm` : à 640 px les trois
+				     colonnes ne réclamaient que 634 px pour 596 px disponibles, et
+				     « + de 10 000 » se cassait en deux. En dessous, les repères
+				     s'empilent sur toute la largeur.
+				     `max-w-[22ch]` borne la légende et elle seule : posée sur la colonne,
+				     elle se calculait sur la police héritée (~220 px) et cassait les
+				     nombres en deux (« Depuis / 1992 »). Sur la légende, les `ch` se
+				     calculent bien sur la police du texte qu'ils doivent contenir. -->
+				{#each content.stats as stat (stat.valeur)}
 					<div
-						class="mr-6.5 border-r border-[color-mix(in_oklab,var(--color-ink)_22%,transparent)] pr-6.5 last:mr-0 last:border-r-0 last:pr-0 max-sm:mr-5 max-sm:pr-5"
+						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
 					>
 						<strong
-							class="mb-1.5 block font-display text-[27px] leading-none font-normal text-coral"
+							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
 						>
 							{stat.valeur}
 						</strong>
 						<span
-							class="font-mono text-[9.5px] font-medium tracking-[0.12em] whitespace-nowrap text-ink-soft uppercase"
+							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
 						>
 							{stat.legende}
 						</span>
@@ -89,19 +88,50 @@
 </section>
 
 <style>
-	/* dégradé crème : le texte reste lisible sur la photo d'aube */
+	/* dégradé crème : le texte reste lisible sur la photo d'aube.
+	   Horizontal sur grand écran (texte à gauche, mer à droite) ; vertical en
+	   dessous de 900 px, où le texte occupe toute la largeur. */
 	.hero-wash {
 		pointer-events: none;
 		background: linear-gradient(
-			90deg,
-			rgba(255, 246, 236, 0.85) 0%,
-			rgba(255, 246, 236, 0.78) 28%,
-			rgba(255, 246, 236, 0.62) 45%,
-			rgba(255, 246, 236, 0.42) 60%,
-			rgba(255, 246, 236, 0.24) 73%,
-			rgba(255, 246, 236, 0.08) 86%,
-			rgba(255, 246, 236, 0) 96%
+			178deg,
+			rgba(255, 246, 236, 0.92) 0%,
+			rgba(255, 246, 236, 0.86) 46%,
+			rgba(255, 246, 236, 0.66) 74%,
+			rgba(255, 246, 236, 0.4) 100%
 		);
+	}
+	@media (min-width: 900px) {
+		.hero-wash {
+			background: linear-gradient(
+				90deg,
+				rgba(255, 246, 236, 0.88) 0%,
+				rgba(255, 246, 236, 0.82) 34%,
+				rgba(255, 246, 236, 0.66) 52%,
+				rgba(255, 246, 236, 0.44) 68%,
+				rgba(255, 246, 236, 0.2) 84%,
+				rgba(255, 246, 236, 0) 98%
+			);
+		}
+	}
+
+	/* « Décoder le visible, grâce à l'invisible » tient sur une ligne à partir
+	   de 900 px : 38 caractères ≈ 763 px pour 856 px de colonne utile au seuil,
+	   et ≈ 909 px pour 1000 px de bloc à 2560 px. En dessous, il se répartit
+	   sur deux lignes. */
+	.hero-titre {
+		line-height: 1.14;
+	}
+	.hero-titre > :global(span) {
+		display: block;
+	}
+	@media (min-width: 900px) {
+		.hero-titre {
+			white-space: nowrap;
+		}
+		.hero-titre > :global(span) {
+			display: inline;
+		}
 	}
 
 	/* entrée en cascade du bloc texte */

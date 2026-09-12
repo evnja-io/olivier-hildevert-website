@@ -70,3 +70,128 @@ test.describe('réservation', () => {
 		await expect(page.getByRole('status')).toContainText('Demande transmise');
 	});
 });
+
+test.describe('navigation mobile', () => {
+	test.use({ viewport: { width: 390, height: 844 } });
+
+	test('le burger donne accès aux six liens de navigation', async ({ page }) => {
+		await page.goto('/');
+
+		const menu = page.locator('header details');
+		const nav = page.getByRole('navigation', { name: 'Navigation mobile' });
+
+		await expect(nav).toBeHidden();
+		await menu.locator('summary').click();
+		await expect(nav).toBeVisible();
+
+		for (const label of [
+			"L'approche",
+			'À propos',
+			'Prestations',
+			'Tarifs',
+			'Contact',
+			'Boutique'
+		]) {
+			await expect(nav.getByRole('link', { name: label, exact: true })).toBeVisible();
+		}
+
+		await nav.getByRole('link', { name: 'Prestations', exact: true }).click();
+		await expect(page).toHaveURL(/#prestations$/);
+		await expect(page.locator('#prestations')).toBeInViewport();
+	});
+
+	test('l’en-tête ne déborde pas de la fenêtre', async ({ page }) => {
+		await page.goto('/');
+		const debordement = await page.evaluate(() => {
+			const el = document.querySelector('header .wrap') as HTMLElement;
+			return el.scrollWidth - el.clientWidth;
+		});
+		expect(debordement).toBe(0);
+	});
+});
+
+test.describe('liens externes', () => {
+	test('les boutons de la boutique mènent hors du site', async ({ page }) => {
+		await page.goto('/');
+		const boutique = page.locator('#boutique');
+
+		for (const nom of ['Commander', 'Découvrir']) {
+			const lien = boutique.getByRole('link', { name: nom, exact: true });
+			await expect(lien).toHaveAttribute('href', /^https:\/\//);
+			await expect(lien).toHaveAttribute('target', '_blank');
+			await expect(lien).toHaveAttribute('rel', /noopener/);
+		}
+	});
+
+	test('le lien du site personnel mène hors du site', async ({ page }) => {
+		await page.goto('/');
+		const lien = page
+			.getByRole('contentinfo')
+			.getByRole('link', { name: 'olivierhildevert.com', exact: true });
+		await expect(lien).toHaveAttribute('href', /^https:\/\//);
+		await expect(lien).toHaveAttribute('target', '_blank');
+		await expect(lien).toHaveAttribute('rel', /noopener/);
+	});
+});
+
+test.describe('repères chiffrés du hero', () => {
+	test('aucune valeur ne se casse, la légende garde le droit de revenir à la ligne', async ({
+		page
+	}) => {
+		await page.goto('/');
+
+		const releve = [];
+		for (const largeur of [640, 1024, 1280, 1440, 2560]) {
+			await page.setViewportSize({ width: largeur, height: 900 });
+			const mesures = await page.evaluate(() =>
+				[...document.querySelectorAll('.hero-copy strong')].map((el) => {
+					const legende = el.nextElementSibling as HTMLElement;
+					const lignes = (n: Element) =>
+						n.getBoundingClientRect().height / parseFloat(getComputedStyle(n).lineHeight);
+					return {
+						texte: (el.textContent ?? '').trim(),
+						lignesValeur: lignes(el),
+						lignesLegende: lignes(legende),
+						largeurMaxLegende: getComputedStyle(legende).maxWidth
+					};
+				})
+			);
+			expect(mesures.length).toBe(3);
+			releve.push(...mesures.map((m) => ({ ...m, largeur })));
+		}
+
+		// aucun nombre ne se casse en deux, à aucune des cinq largeurs
+		for (const m of releve) {
+			expect(
+				m.lignesValeur,
+				`« ${m.texte} » tient sur ${m.lignesValeur.toFixed(2)} ligne(s) à ${m.largeur} px`
+			).toBeLessThan(1.5);
+		}
+		// la contrainte de largeur appartient à la légende, pas au nombre :
+		// elle est bornée et la plus longue revient bien à la ligne
+		expect(releve.every((m) => m.largeurMaxLegende !== 'none')).toBe(true);
+		expect(releve.some((m) => m.lignesLegende > 1.5)).toBe(true);
+	});
+});
+
+test.describe('échelle typographique', () => {
+	test('les textes grandissent avec la fenêtre, plancher et plafond respectés', async ({
+		page
+	}) => {
+		await page.goto('/');
+		const surtitre = page.locator('.eyebrow').first();
+		const taille = async () =>
+			parseFloat(await surtitre.evaluate((el) => getComputedStyle(el).fontSize));
+
+		await page.setViewportSize({ width: 390, height: 844 });
+		const surMobile = await taille();
+
+		await page.setViewportSize({ width: 2560, height: 1440 });
+		const surGrandEcran = await taille();
+
+		// Le défaut d'origine : 11,5 px figés, quelle que soit la taille de l'écran.
+		expect(surMobile).toBeGreaterThanOrEqual(12.4);
+		expect(surGrandEcran).toBeGreaterThan(surMobile);
+		expect(surGrandEcran).toBeGreaterThanOrEqual(14.9);
+	});
+});

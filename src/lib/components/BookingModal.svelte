@@ -11,7 +11,11 @@
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { resolve } from '$app/paths';
 	import { booking, closeBooking } from '$lib/booking/booking.svelte';
-	import { PRESTATIONS, type PrestationId } from '$lib/booking/prestations';
+	import type { PrestationId } from '$lib/booking/prestations';
+	import type { PrestationContent } from '$lib/content/types';
+	import { defaultPrestations } from '$lib/content/defaults';
+
+	let { prestations = defaultPrestations }: { prestations?: PrestationContent[] } = $props();
 
 	let dlg: HTMLDialogElement | undefined = $state();
 	let step = $state(0);
@@ -22,7 +26,7 @@
 		applyAction: false
 	});
 
-	const prestationChoisie = $derived(PRESTATIONS.find((p) => p.id === $form.prestation));
+	const prestationChoisie = $derived(prestations.find((p) => p.cle === $form.prestation));
 
 	$effect(() => {
 		if (booking.open) {
@@ -53,7 +57,7 @@
 >
 	<button
 		type="button"
-		class="absolute top-4 right-[18px] h-[38px] w-[38px] cursor-pointer rounded-full text-3xl leading-none text-mute transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_14%,transparent)] hover:text-ink"
+		class="absolute top-3 right-3 h-11 w-11 cursor-pointer rounded-full text-3xl leading-none text-mute transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_14%,transparent)] hover:text-ink"
 		aria-label="Fermer"
 		onclick={closeBooking}
 	>
@@ -64,7 +68,7 @@
 		<span class="font-mono text-xs font-semibold tracking-[0.28em] text-coral uppercase">
 			Prendre rendez-vous
 		</span>
-		{#if !$message}
+		{#if $message?.type !== 'succes'}
 			<div class="flex gap-2" aria-hidden="true">
 				{#each [0, 1] as i (i)}
 					<span
@@ -79,7 +83,7 @@
 		{/if}
 	</div>
 
-	{#if $message}
+	{#if $message?.type === 'succes'}
 		<div class="px-0 pt-3.5 pb-1.5 text-center">
 			<div class="mb-4 flex justify-center text-coral" aria-hidden="true">
 				<svg viewBox="0 0 64 64" width="64" height="64">
@@ -102,36 +106,46 @@
 					/>
 				</svg>
 			</div>
-			<h3 class="font-display text-[clamp(24px,4vw,30px)]">Demande transmise</h3>
-			<p role="status" class="mx-auto mt-2 mb-6 max-w-[380px] text-[15px] text-ink-soft">
-				{$message}
+			<h3 class="font-display text-2xl">Demande transmise</h3>
+			<p role="status" class="mx-auto mt-2 mb-6 max-w-[380px] text-base text-ink-soft">
+				{$message.texte}
 			</p>
 			<button type="button" class="mx-auto btn btn-sun" onclick={closeBooking}>Fermer</button>
 		</div>
 	{:else if step === 0}
-		<h3 class="font-display text-[clamp(24px,4vw,30px)]">Quel accompagnement ?</h3>
-		<p class="mt-1.5 mb-5 text-[15px] text-ink-soft">
+		<h3 class="font-display text-2xl">Quel accompagnement ?</h3>
+		<p class="mt-1.5 mb-5 text-base text-ink-soft">
 			Choisissez le type de séance qui vous correspond.
 		</p>
 		<div class="grid gap-3 sm:grid-cols-2">
-			{#each PRESTATIONS as p (p.id)}
+			{#each prestations as p (p.cle)}
 				<button
 					type="button"
 					class="flex cursor-pointer flex-col gap-1 rounded-[14px] border border-[color-mix(in_oklab,var(--color-ink)_12%,transparent)] bg-surface-2 p-[18px_18px_16px] text-left transition hover:-translate-y-px hover:border-coral"
-					onclick={() => choisir(p.id)}
+					onclick={() => choisir(p.cle)}
 				>
 					<span class="font-display text-lg">{p.titre}</span>
-					<span class="text-[12.5px] font-semibold tracking-[0.04em] text-coral">{p.meta}</span>
-					<span class="text-[13.5px] leading-[1.45] text-ink-soft">{p.desc}</span>
+					<span class="text-xs font-semibold tracking-[0.04em] text-coral">{p.metaReservation}</span
+					>
+					<span class="text-sm leading-[1.45] text-ink-soft">{p.descReservation}</span>
 				</button>
 			{/each}
 		</div>
 	{:else}
-		<h3 class="font-display text-[clamp(24px,4vw,30px)]">Vos coordonnées</h3>
-		<p class="mt-1.5 mb-5 text-[15px] text-ink-soft">
+		<h3 class="font-display text-2xl">Vos coordonnées</h3>
+		<p class="mt-1.5 mb-5 text-base text-ink-soft">
 			Les séances se déroulent par téléphone. Je vous recontacte pour convenir ensemble d'une date
 			et d'un horaire.
 		</p>
+
+		{#if $message?.type === 'erreur'}
+			<p
+				role="alert"
+				class="mb-4 rounded-[11px] bg-[color-mix(in_oklab,var(--color-ember)_12%,#fff)] px-4 py-3 text-sm text-ember"
+			>
+				{$message.texte}
+			</p>
+		{/if}
 
 		<div
 			class="mb-5 rounded-[14px] border border-[color-mix(in_oklab,var(--color-ink)_12%,transparent)] bg-surface-2 px-4.5 py-1.5"
@@ -161,7 +175,7 @@
 						autocomplete="name"
 						bind:value={$form.name}
 						aria-invalid={$errors.name ? 'true' : undefined}
-						class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-[15px] focus:border-coral focus:ring-coral"
+						class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-base focus:border-coral focus:ring-coral"
 					/>
 					{#if $errors.name}<p class="mt-1 text-sm text-ember">{$errors.name[0]}</p>{/if}
 				</div>
@@ -175,7 +189,7 @@
 						autocomplete="email"
 						bind:value={$form.email}
 						aria-invalid={$errors.email ? 'true' : undefined}
-						class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-[15px] focus:border-coral focus:ring-coral"
+						class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-base focus:border-coral focus:ring-coral"
 					/>
 					{#if $errors.email}<p class="mt-1 text-sm text-ember">{$errors.email[0]}</p>{/if}
 				</div>
@@ -189,7 +203,7 @@
 						autocomplete="tel"
 						bind:value={$form.phone}
 						aria-invalid={$errors.phone ? 'true' : undefined}
-						class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-[15px] focus:border-coral focus:ring-coral"
+						class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-base focus:border-coral focus:ring-coral"
 					/>
 					{#if $errors.phone}<p class="mt-1 text-sm text-ember">{$errors.phone[0]}</p>{/if}
 				</div>
@@ -204,7 +218,7 @@
 						rows="3"
 						bind:value={$form.message}
 						aria-invalid={$errors.message ? 'true' : undefined}
-						class="min-h-[84px] w-full resize-y rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-[15px] focus:border-coral focus:ring-coral"
+						class="min-h-[84px] w-full resize-y rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-base focus:border-coral focus:ring-coral"
 					></textarea>
 					{#if $errors.message}<p class="mt-1 text-sm text-ember">{$errors.message[0]}</p>{/if}
 				</div>
@@ -213,7 +227,7 @@
 			<div class="mt-6 flex justify-between gap-3">
 				<button
 					type="button"
-					class="cursor-pointer rounded-full border border-[color-mix(in_oklab,var(--color-ink)_18%,transparent)] px-6 py-3 text-[14.5px] font-semibold text-ink-soft transition-colors hover:border-ink hover:text-ink"
+					class="cursor-pointer rounded-full border border-[color-mix(in_oklab,var(--color-ink)_18%,transparent)] px-6 py-3 text-sm font-semibold text-ink-soft transition-colors hover:border-ink hover:text-ink"
 					onclick={() => (step = 0)}
 				>
 					Retour
@@ -221,7 +235,7 @@
 				<button
 					type="submit"
 					disabled={$delayed}
-					class="cursor-pointer rounded-full bg-ink px-6 py-3 text-[14.5px] font-semibold text-surface transition-colors hover:bg-coral disabled:cursor-not-allowed disabled:opacity-40"
+					class="cursor-pointer rounded-full bg-ink px-6 py-3 text-sm font-semibold text-surface transition-colors hover:bg-coral disabled:cursor-not-allowed disabled:opacity-40"
 				>
 					{$delayed ? 'Envoi en cours…' : 'Envoyer ma demande'}
 				</button>
