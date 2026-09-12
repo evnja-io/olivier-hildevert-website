@@ -70,3 +70,42 @@ test.describe('réservation', () => {
 		await expect(page.getByRole('status')).toContainText('Demande transmise');
 	});
 });
+
+test.describe('navigation mobile', () => {
+	test.use({ viewport: { width: 390, height: 844 } });
+
+	test('le burger donne accès aux six liens de navigation', async ({ page }) => {
+		await page.goto('/');
+
+		const menu = page.locator('header details');
+		const nav = page.getByRole('navigation', { name: 'Navigation mobile' });
+
+		await expect(nav).toBeHidden();
+		await menu.locator('summary').click();
+		await expect(nav).toBeVisible();
+
+		for (const label of [
+			"L'approche",
+			'À propos',
+			'Prestations',
+			'Tarifs',
+			'Contact',
+			'Boutique'
+		]) {
+			await expect(nav.getByRole('link', { name: label, exact: true })).toBeVisible();
+		}
+
+		await nav.getByRole('link', { name: 'Prestations', exact: true }).click();
+		await expect(page).toHaveURL(/#prestations$/);
+		await expect(page.locator('#prestations')).toBeInViewport();
+	});
+
+	test('l’en-tête ne déborde pas de la fenêtre', async ({ page }) => {
+		await page.goto('/');
+		const debordement = await page.evaluate(() => {
+			const el = document.querySelector('header .wrap') as HTMLElement;
+			return el.scrollWidth - el.clientWidth;
+		});
+		expect(debordement).toBe(0);
+	});
+});
