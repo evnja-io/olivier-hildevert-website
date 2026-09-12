@@ -28,10 +28,14 @@ Le CMS est un dépôt séparé, cloné en frère de celui-ci : `../olivier-hilde
 (Strapi 5, TypeScript, SQLite en dev).
 
 > **À reporter dans `../olivier-hildevert-cms` avant le premier branchement :**
-> le composant « produit boutique » gagne un champ `lien` (texte, URL), et le
-> composant « mantra » perd son champ `auteur`. Tant que ce n'est pas fait, le
-> mapping de `src/lib/server/content.ts` rejettera la réponse de Strapi et le
-> site retombera sur `defaults.ts` (repli tout-ou-rien par domaine).
+> le composant « produit boutique » gagne un champ `lien` (texte, URL) — il
+> est **obligatoire** côté front (`content.ts`), donc tant qu'il manque côté
+> CMS, le mapping rejette la réponse de Strapi et le site retombe sur
+> `defaults.ts` (repli tout-ou-rien par domaine). Le composant « mantra »
+> perd de son côté son champ `auteur` : à retirer côté CMS pour rester
+> cohérent avec le front, mais son maintien est **sans effet** sur le site —
+> zod (mode « strip » par défaut, sans `.strict()`) l'ignore silencieusement
+> plutôt que de rejeter la réponse.
 
 ```sh
 cp .env.example .env
