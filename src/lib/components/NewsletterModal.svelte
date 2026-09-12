@@ -55,7 +55,7 @@
 	{#if newsletter.open}
 		<button
 			type="button"
-			class="absolute top-3.5 right-4 h-[34px] w-[34px] cursor-pointer rounded-full text-2xl leading-none text-mute transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_14%,transparent)] hover:text-ink"
+			class="absolute top-2.5 right-2.5 h-11 w-11 cursor-pointer rounded-full text-2xl leading-none text-mute transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_14%,transparent)] hover:text-ink"
 			aria-label="Fermer"
 			onclick={closeNewsletter}
 		>
@@ -85,8 +85,8 @@
 						/>
 					</svg>
 				</div>
-				<h3 class="font-display text-[clamp(22px,4vw,27px)]">Inscription confirmée</h3>
-				<p role="status" class="mx-auto mt-2 mb-6 max-w-[320px] text-[14.5px] text-ink-soft">
+				<h3 class="font-display text-2xl">Inscription confirmée</h3>
+				<p role="status" class="mx-auto mt-2 mb-6 max-w-[320px] text-sm text-ink-soft">
 					{$message.texte}
 				</p>
 				<button type="button" class="mx-auto btn btn-sun" onclick={closeNewsletter}>Fermer</button>
@@ -95,13 +95,13 @@
 			<span class="font-mono text-xs font-semibold tracking-[0.28em] text-coral uppercase">
 				Newsletter
 			</span>
-			<h3 class="mt-3 font-display text-[clamp(24px,4.4vw,30px)] leading-[1.15]">
+			<h3 class="mt-3 font-display text-2xl leading-[1.15]">
 				Avant de partir…
 				<em class="block font-script text-[1.2em] leading-[1.1] text-coral not-italic">
 					restons en lien
 				</em>
 			</h3>
-			<p class="mt-3 mb-5 text-[14.5px] leading-[1.6] text-ink-soft">
+			<p class="mt-3 mb-5 text-sm leading-[1.6] text-ink-soft">
 				Une lettre occasionnelle : pratiques à explorer, audios de sophrologie et actualités du
 				cabinet. Rien de plus.
 			</p>
@@ -116,7 +116,7 @@
 					autocomplete="email"
 					bind:value={$form.email}
 					aria-invalid={$errors.email ? 'true' : undefined}
-					class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-[15px] focus:border-coral focus:ring-coral"
+					class="w-full rounded-[11px] border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] bg-white px-4 py-3.5 text-base focus:border-coral focus:ring-coral"
 				/>
 				{#if $errors.email}<p class="mt-1 text-sm text-ember">{$errors.email[0]}</p>{/if}
 				{#if $message?.type === 'erreur'}
@@ -131,7 +131,7 @@
 				<div class="mt-4 flex items-center justify-between gap-3">
 					<button
 						type="button"
-						class="cursor-pointer text-[13.5px] text-mute underline-offset-4 transition-colors hover:text-ink hover:underline"
+						class="cursor-pointer text-sm text-mute underline-offset-4 transition-colors hover:text-ink hover:underline"
 						onclick={closeNewsletter}
 					>
 						Non merci
@@ -140,7 +140,7 @@
 						{$delayed ? 'Envoi…' : "Je m'inscris"}
 					</button>
 				</div>
-				<p class="mt-4 font-mono text-[10.5px] leading-[1.5] tracking-[0.06em] text-mute">
+				<p class="mt-4 font-mono text-xs leading-[1.5] tracking-[0.06em] text-mute">
 					Désinscription possible à tout moment. Votre adresse n'est jamais partagée.
 				</p>
 			</form>

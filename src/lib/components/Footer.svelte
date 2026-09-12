@@ -19,11 +19,11 @@
 		{ label: 'Tarifs', anchor: 'tarifs' }
 	];
 
-	const rdvLinks: { label: string; prestation?: PrestationId }[] = [
+	const rdvLinks: { label: string; prestation?: PrestationId; href?: string }[] = [
 		{ label: 'Séance individuelle', prestation: 'individuelle' },
 		{ label: 'Entreprises', prestation: 'entreprise' },
 		{ label: 'Stages & ateliers', prestation: 'stage' },
-		{ label: 'olivierhildevert.com' }
+		{ label: 'olivierhildevert.com', href: 'https://olivierhildevert.com/' }
 	];
 </script>
 
@@ -34,7 +34,7 @@
 				<span class="font-display text-2xl leading-none tracking-[0.04em]">
 					{site.name}
 					<small
-						class="mt-1.5 block font-mono text-[8.5px] font-medium tracking-[0.36em] text-on-dusk-soft uppercase"
+						class="mt-1.5 block font-mono text-xs font-medium tracking-[0.28em] text-on-dusk-soft uppercase"
 					>
 						{reglages.sousTitreLogo}
 					</small>
@@ -44,9 +44,7 @@
 				</p>
 			</div>
 			<nav aria-label="Plan du site">
-				<h4
-					class="mb-4.5 font-mono text-[10.5px] font-medium tracking-[0.2em] text-amber-soft uppercase"
-				>
+				<h4 class="mb-4.5 font-mono text-xs font-medium tracking-[0.2em] text-amber-soft uppercase">
 					Le site
 				</h4>
 				{#each siteLinks as link (link.anchor)}
@@ -59,27 +57,36 @@
 				{/each}
 			</nav>
 			<nav aria-label="Prendre rendez-vous">
-				<h4
-					class="mb-4.5 font-mono text-[10.5px] font-medium tracking-[0.2em] text-amber-soft uppercase"
-				>
+				<h4 class="mb-4.5 font-mono text-xs font-medium tracking-[0.2em] text-amber-soft uppercase">
 					Rendez-vous
 				</h4>
 				{#each rdvLinks as link (link.label)}
-					<a
-						href="{reservation}{link.prestation ? '?prestation=' + link.prestation : ''}"
-						class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
-						onclick={(e) => {
-							e.preventDefault();
-							openBooking(link.prestation);
-						}}
-					>
-						{link.label}
-					</a>
+					{#if link.href}
+						<a
+							href={link.href}
+							target="_blank"
+							rel="external noopener noreferrer"
+							class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
+						>
+							{link.label}
+						</a>
+					{:else}
+						<a
+							href="{reservation}{link.prestation ? '?prestation=' + link.prestation : ''}"
+							class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
+							onclick={(e) => {
+								e.preventDefault();
+								openBooking(link.prestation);
+							}}
+						>
+							{link.label}
+						</a>
+					{/if}
 				{/each}
 			</nav>
 		</div>
 		<div
-			class="flex flex-wrap justify-between gap-6 border-t border-[color-mix(in_oklab,#fff_14%,transparent)] pt-6.5 font-mono text-[10.5px] leading-[1.7] tracking-[0.04em] text-[color-mix(in_oklab,var(--color-on-dusk-soft)_80%,transparent)] max-sm:flex-col"
+			class="flex flex-wrap justify-between gap-6 border-t border-[color-mix(in_oklab,#fff_14%,transparent)] pt-6.5 font-mono text-xs leading-[1.7] tracking-[0.04em] text-[color-mix(in_oklab,var(--color-on-dusk-soft)_80%,transparent)] max-sm:flex-col"
 		>
 			<span>
 				{reglages.mentionLegale}

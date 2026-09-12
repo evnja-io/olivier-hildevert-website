@@ -122,4 +122,13 @@ test.describe('liens externes', () => {
 			await expect(lien).toHaveAttribute('rel', /noopener/);
 		}
 	});
+
+	test('le lien du site personnel mène hors du site', async ({ page }) => {
+		await page.goto('/');
+		const lien = page
+			.getByRole('contentinfo')
+			.getByRole('link', { name: 'olivierhildevert.com', exact: true });
+		await expect(lien).toHaveAttribute('href', /^https:\/\//);
+		await expect(lien).toHaveAttribute('target', '_blank');
+	});
 });

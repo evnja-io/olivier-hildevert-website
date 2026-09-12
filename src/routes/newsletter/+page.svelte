@@ -61,7 +61,7 @@
 				{$delayed ? 'Envoi en cours…' : "Je m'inscris"}
 			</button>
 
-			<p class="font-mono text-[11px] tracking-[0.06em] text-mute">
+			<p class="font-mono text-xs tracking-[0.06em] text-mute">
 				Désinscription possible à tout moment. Votre adresse n'est jamais partagée.
 			</p>
 		</form>
