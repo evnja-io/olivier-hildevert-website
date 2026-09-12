@@ -97,7 +97,7 @@
 						<div class="flex items-center justify-between border-t border-line pt-4">
 							<b class="font-display text-lg font-normal text-ink">{carte.prixCarte}</b>
 							<span
-								class="font-mono text-xs tracking-[0.1em] text-coral uppercase transition-transform duration-250 group-hover:translate-x-[5px]"
+								class="font-mono text-xs tracking-[0.1em] text-coral-ink uppercase transition-transform duration-250 group-hover:translate-x-[5px]"
 							>
 								{carte.actionCarte}
 							</span>
