@@ -35,30 +35,30 @@ La spec § 3.1 nommait les sept paliers `--text-etiquette`, `--text-courant`, `-
 
 **Créés :**
 
-| Fichier | Responsabilité |
-|---|---|
-| `src/lib/components/SunMark.svelte` | Le soleil, seul SVG de marque du site. Un consommateur par contexte : en-tête, section Approche, favicon. |
-| `src/routes/layout.test.ts` | Garde-fou de contraste : lit `layout.css`, extrait les tokens, calcule les ratios WCAG. Le seul test qui vérifie une décision de design. |
+| Fichier                             | Responsabilité                                                                                                                           |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/lib/components/SunMark.svelte` | Le soleil, seul SVG de marque du site. Un consommateur par contexte : en-tête, section Approche, favicon.                                |
+| `src/routes/layout.test.ts`         | Garde-fou de contraste : lit `layout.css`, extrait les tokens, calcule les ratios WCAG. Le seul test qui vérifie une décision de design. |
 
 **Modifiés :**
 
-| Fichier | Nature du changement |
-|---|---|
-| `src/routes/layout.css` | Échelle `--text-*` fluide, `--container-wrap`, 3 tokens de couleur, `eyebrow`/`btn`/`btn-sun` |
-| `src/lib/content/defaults.ts` | Corrections éditoriales (hero, mantra, espritAme, boutique, prestations) |
-| `src/lib/content/types.ts` | `+ ProduitBoutique.lien`, `− MantraContent.auteur` |
-| `src/lib/server/content.ts` | Schéma zod : `+ lien`, `− auteur` |
-| `src/lib/content/defaults.test.ts` | Verrouille les nouveaux textes |
-| `src/lib/components/Header.svelte` | Soleil agrandi, menu burger `<details>` |
-| `src/lib/components/home/Hero.svelte` | Nouvel asset, dégradé vertical, titre sur une ligne, chiffres en grille |
-| `src/lib/components/home/ImmersiveBand.svelte` | Voile assombri |
-| `src/lib/components/home/{Mantra,EspritAme,PourQui,ContactCta,Approche,APropos,Prestations,Boutique,Tarifs}.svelte` | Échelle + corrections ponctuelles |
-| `src/lib/components/Footer.svelte` | Lien externe, échelle |
-| `src/lib/components/{BookingModal,NewsletterModal}.svelte` | Champs 16 px, fermeture 44 px |
-| `src/lib/assets/favicon.svg` | Remplace le logo Svelte par le soleil |
-| `src/lib/assets/hero-mer.jpg` *(nouveau binaire)* | Hero recadré sans portrait |
-| `e2e/home.e2e.ts` | Menu mobile, échelle fluide, liens externes |
-| `README.md` | Commande de génération de `hero-mer.jpg`, changements du modèle CMS |
+| Fichier                                                                                                             | Nature du changement                                                                          |
+| ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `src/routes/layout.css`                                                                                             | Échelle `--text-*` fluide, `--container-wrap`, 3 tokens de couleur, `eyebrow`/`btn`/`btn-sun` |
+| `src/lib/content/defaults.ts`                                                                                       | Corrections éditoriales (hero, mantra, espritAme, boutique, prestations)                      |
+| `src/lib/content/types.ts`                                                                                          | `+ ProduitBoutique.lien`, `− MantraContent.auteur`                                            |
+| `src/lib/server/content.ts`                                                                                         | Schéma zod : `+ lien`, `− auteur`                                                             |
+| `src/lib/content/defaults.test.ts`                                                                                  | Verrouille les nouveaux textes                                                                |
+| `src/lib/components/Header.svelte`                                                                                  | Soleil agrandi, menu burger `<details>`                                                       |
+| `src/lib/components/home/Hero.svelte`                                                                               | Nouvel asset, dégradé vertical, titre sur une ligne, chiffres en grille                       |
+| `src/lib/components/home/ImmersiveBand.svelte`                                                                      | Voile assombri                                                                                |
+| `src/lib/components/home/{Mantra,EspritAme,PourQui,ContactCta,Approche,APropos,Prestations,Boutique,Tarifs}.svelte` | Échelle + corrections ponctuelles                                                             |
+| `src/lib/components/Footer.svelte`                                                                                  | Lien externe, échelle                                                                         |
+| `src/lib/components/{BookingModal,NewsletterModal}.svelte`                                                          | Champs 16 px, fermeture 44 px                                                                 |
+| `src/lib/assets/favicon.svg`                                                                                        | Remplace le logo Svelte par le soleil                                                         |
+| `src/lib/assets/hero-mer.jpg` _(nouveau binaire)_                                                                   | Hero recadré sans portrait                                                                    |
+| `e2e/home.e2e.ts`                                                                                                   | Menu mobile, échelle fluide, liens externes                                                   |
+| `README.md`                                                                                                         | Commande de génération de `hero-mer.jpg`, changements du modèle CMS                           |
 
 **Ordre des dépendances :** Tâche 1 (fondations) → Tâche 2 (contenu/modèle) → Tâche 3 (SunMark) → Tâches 4-10 (composants, parallélisables après 3) → Tâche 11 (vérification).
 
@@ -67,10 +67,12 @@ La spec § 3.1 nommait les sept paliers `--text-etiquette`, `--text-courant`, `-
 ## Task 1 : Fondations — échelle fluide, conteneur, contraste
 
 **Files:**
+
 - Modify: `src/routes/layout.css`
-- Test: `src/routes/layout.test.ts` *(créé)*
+- Test: `src/routes/layout.test.ts` _(créé)_
 
 **Interfaces:**
+
 - Consomme : rien.
 - Produit : les tokens `--text-xs` … `--text-5xl` (utilisables comme `text-xs` … `text-5xl`), `--container-wrap: 1440px`, et les tokens de couleur `--color-mute` (corrigé), `--color-coral-ink`, `--color-coral-deep` (nouveaux). Toutes les tâches suivantes en dépendent.
 
@@ -156,31 +158,31 @@ Expected: FAIL — `token --color-coral-ink introuvable dans layout.css`, et les
 Dans `src/routes/layout.css`, à l'intérieur du bloc `@theme`, juste après le bloc `--font-*` (avant `--radius-card`) :
 
 ```css
-	/* ---------- Échelle typographique fluide ----------
+/* ---------- Échelle typographique fluide ----------
 	   On redéfinit les noms d'échelle de Tailwind eux-mêmes : tout `text-sm`,
 	   `text-4xl`… déjà écrit dans le projet devient fluide sans toucher au site
 	   d'appel — y compris sur /contact, /reservation, /newsletter et +error.
 	   Chaque palier : plancher (mobile) · rem + vw · plafond (grands écrans).
 	   Le `rem` fait respecter la taille de police choisie dans le navigateur ;
 	   le `vw` fait suivre l'écran. */
-	--text-xs: clamp(12.5px, 0.72rem + 0.18vw, 15px);
-	--text-xs--line-height: 1.5;
-	--text-sm: clamp(14px, 0.8rem + 0.25vw, 17px);
-	--text-sm--line-height: 1.6;
-	--text-base: clamp(16.5px, 0.95rem + 0.35vw, 21px);
-	--text-base--line-height: 1.65;
-	--text-lg: clamp(19px, 1.05rem + 0.5vw, 25px);
-	--text-lg--line-height: 1.5;
-	--text-xl: clamp(21px, 1.1rem + 0.7vw, 28px);
-	--text-xl--line-height: 1.4;
-	--text-2xl: clamp(24px, 1.2rem + 1vw, 34px);
-	--text-2xl--line-height: 1.25;
-	--text-3xl: clamp(27px, 1.3rem + 1.4vw, 40px);
-	--text-3xl--line-height: 1.2;
-	--text-4xl: clamp(30px, 1.4rem + 1.8vw, 46px);
-	--text-4xl--line-height: 1.12;
-	--text-5xl: clamp(36px, 1.6rem + 2.6vw, 62px);
-	--text-5xl--line-height: 1.08;
+--text-xs: clamp(12.5px, 0.72rem + 0.18vw, 15px);
+--text-xs--line-height: 1.5;
+--text-sm: clamp(14px, 0.8rem + 0.25vw, 17px);
+--text-sm--line-height: 1.6;
+--text-base: clamp(16.5px, 0.95rem + 0.35vw, 21px);
+--text-base--line-height: 1.65;
+--text-lg: clamp(19px, 1.05rem + 0.5vw, 25px);
+--text-lg--line-height: 1.5;
+--text-xl: clamp(21px, 1.1rem + 0.7vw, 28px);
+--text-xl--line-height: 1.4;
+--text-2xl: clamp(24px, 1.2rem + 1vw, 34px);
+--text-2xl--line-height: 1.25;
+--text-3xl: clamp(27px, 1.3rem + 1.4vw, 40px);
+--text-3xl--line-height: 1.2;
+--text-4xl: clamp(30px, 1.4rem + 1.8vw, 46px);
+--text-4xl--line-height: 1.12;
+--text-5xl: clamp(36px, 1.6rem + 2.6vw, 62px);
+--text-5xl--line-height: 1.08;
 ```
 
 - [ ] **Step 4 : Corriger les trois tokens de couleur**
@@ -188,13 +190,13 @@ Dans `src/routes/layout.css`, à l'intérieur du bloc `@theme`, juste après le 
 Toujours dans `@theme`, remplacer la ligne `--color-mute` et ajouter deux tokens après `--color-coral` :
 
 ```css
-	--color-mute: #8a6a53; /* gris chaud — assombri pour atteindre 4,7:1 sur --color-sky */
+--color-mute: #8a6a53; /* gris chaud — assombri pour atteindre 4,7:1 sur --color-sky */
 ```
 
 ```css
-	--color-coral: #f0653a; /* corail — accent décoratif : filets, pastilles, ornements */
-	--color-coral-ink: #b93a18; /* corail en TEXTE sur fond clair — 5,4:1 */
-	--color-coral-deep: #d03c19; /* corail en FOND de bouton, texte blanc dessus — 4,8:1 */
+--color-coral: #f0653a; /* corail — accent décoratif : filets, pastilles, ornements */
+--color-coral-ink: #b93a18; /* corail en TEXTE sur fond clair — 5,4:1 */
+--color-coral-deep: #d03c19; /* corail en FOND de bouton, texte blanc dessus — 4,8:1 */
 ```
 
 - [ ] **Step 5 : Élargir le conteneur**
@@ -202,7 +204,7 @@ Toujours dans `@theme`, remplacer la ligne `--color-mute` et ajouter deux tokens
 Remplacer `--container-wrap: 1180px;` par :
 
 ```css
-	--container-wrap: 1440px;
+--container-wrap: 1440px;
 ```
 
 et l'utilitaire `wrap` :
@@ -272,10 +274,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 2 : Contenu éditorial et modèle
 
 **Files:**
+
 - Modify: `src/lib/content/defaults.ts`, `src/lib/content/types.ts`, `src/lib/server/content.ts`
 - Test: `src/lib/content/defaults.test.ts`
 
 **Interfaces:**
+
 - Consomme : rien.
 - Produit :
   - `ProduitBoutique.lien: string` — consommé par la tâche 9 (`Boutique.svelte`).
@@ -343,9 +347,9 @@ describe('corrections éditoriales validées le 2026-09-12', () => {
 Et dans le `describe('contenu par défaut', …)` existant, ajouter :
 
 ```ts
-	it('n’attribue plus le mantra à une formule signature', () => {
-		expect(defaultAccueil.mantra).not.toHaveProperty('auteur');
-	});
+it('n’attribue plus le mantra à une formule signature', () => {
+	expect(defaultAccueil.mantra).not.toHaveProperty('auteur');
+});
 ```
 
 - [ ] **Step 2 : Lancer les tests pour vérifier qu'ils échouent**
@@ -384,15 +388,15 @@ export interface MantraContent {
 Dans `src/lib/server/content.ts`, ajouter `lien` à l'objet produit du schéma `boutique` :
 
 ```ts
-				z.object({
-					cleImage: z.enum(['livre', 'veilleuses']),
-					tag: z.string(),
-					titre: z.string(),
-					desc: z.string(),
-					prixTexte: z.string(),
-					boutonLabel: z.string(),
-					lien: z.string()
-				})
+z.object({
+	cleImage: z.enum(['livre', 'veilleuses']),
+	tag: z.string(),
+	titre: z.string(),
+	desc: z.string(),
+	prixTexte: z.string(),
+	boutonLabel: z.string(),
+	lien: z.string()
+});
 ```
 
 et simplifier le schéma `mantra` :
@@ -414,12 +418,12 @@ Dans `src/lib/content/defaults.ts` :
 `hero.stats` :
 
 ```ts
-		stats: [
-			{ valeur: 'Depuis 1992', legende: "Praticien en relation d'aide" },
-			{ valeur: '+ de 10 000', legende: 'Séances animées' },
-			// « 34 ans » est du texte, pas un calcul : à corriger dans le CMS en 2027.
-			{ valeur: '34 ans', legende: "D'accompagnements individuels et collectifs" }
-		]
+stats: [
+	{ valeur: 'Depuis 1992', legende: "Praticien en relation d'aide" },
+	{ valeur: '+ de 10 000', legende: 'Séances animées' },
+	// « 34 ans » est du texte, pas un calcul : à corriger dans le CMS en 2027.
+	{ valeur: '34 ans', legende: "D'accompagnements individuels et collectifs" }
+];
 ```
 
 `espritAme.eyebrow` :
@@ -481,11 +485,11 @@ Dans `src/lib/content/defaults.ts` :
 `src/lib/components/home/Mantra.svelte` référence encore `content.auteur` : sans ce pas, la tâche laisserait le dépôt non compilable. Supprimer le bloc `<cite>` en entier :
 
 ```svelte
-		<cite
-			class="mt-4.5 block font-mono text-[11px] tracking-[0.26em] text-white/80 uppercase not-italic"
-		>
-			{content.auteur}
-		</cite>
+<cite
+	class="mt-4.5 block font-mono text-[11px] tracking-[0.26em] text-white/80 uppercase not-italic"
+>
+	{content.auteur}
+</cite>
 ```
 
 Le filet ornemental qui le précède est conservé. La mise en forme du mantra est reprise en tâche 6.
@@ -516,10 +520,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 3 : Le soleil — composant partagé et favicon
 
 **Files:**
+
 - Create: `src/lib/components/SunMark.svelte`
 - Modify: `src/lib/assets/favicon.svg`, `src/lib/components/Header.svelte`
 
 **Interfaces:**
+
 - Consomme : rien.
 - Produit : `SunMark.svelte`, dont la signature est `{ class?: string }` — la classe reçue est appliquée au `<svg>` racine, qui porte déjà `aria-hidden="true"`, `fill="none"`, `stroke="currentColor"`, `stroke-width="1.1"` et `viewBox="0 0 40 40"`. La couleur se pilote depuis le parent via une classe `text-*`. Consommé par la tâche 4 (`Header.svelte`) et la tâche 8 (`Approche.svelte`).
 
@@ -568,16 +574,16 @@ L'épaisseur passe de 1,1 à 1,8 : à 16 × 16 px dans un onglet, un trait de 1,
 Dans `src/lib/components/Header.svelte`, ajouter l'import après les autres :
 
 ```ts
-	import SunMark from '$lib/components/SunMark.svelte';
+import SunMark from '$lib/components/SunMark.svelte';
 ```
 
 et remplacer le bloc `<svg class="h-[38px] w-[38px] flex-none text-coral" …>…</svg>` (les 14 lignes du SVG inline) par :
 
 ```svelte
-			<SunMark class="h-[38px] w-[38px] flex-none text-coral" />
+<SunMark class="h-[38px] w-[38px] flex-none text-coral" />
 ```
 
-*(la taille définitive est fixée en tâche 4 ; ici on ne fait que déplacer le SVG sans changer le rendu)*
+_(la taille définitive est fixée en tâche 4 ; ici on ne fait que déplacer le SVG sans changer le rendu)_
 
 - [ ] **Step 4 : Vérifier que rien n'a bougé visuellement**
 
@@ -602,10 +608,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 4 : En-tête — soleil agrandi et menu mobile sans JavaScript
 
 **Files:**
+
 - Modify: `src/lib/components/Header.svelte`
 - Test: `e2e/home.e2e.ts`
 
 **Interfaces:**
+
 - Consomme : `SunMark` (tâche 3) ; `nav` et `site` de `$lib/config` (inchangés : `nav` est un tableau de `{ label, anchor, pill? }`).
 - Produit : un `<nav aria-label="Navigation mobile">` dans le DOM sous 1024 px, et un `<summary aria-label="Ouvrir le menu">` dans le `<header>`. Le e2e de la tâche 11 s'appuie sur ces deux sélecteurs.
 
@@ -666,92 +674,91 @@ Expected: FAIL — `header details` n'existe pas ; le test de débordement écho
 Remplacer l'intégralité du bloc `<div class="wrap …">…</div>` de `src/lib/components/Header.svelte` par :
 
 ```svelte
-	<div class="wrap relative flex items-center justify-between gap-4">
-		<a class="flex min-w-0 items-center gap-3.5 text-ink" href={home} aria-label="Accueil">
-			<SunMark class="h-[clamp(46px,3.6vw,62px)] w-[clamp(46px,3.6vw,62px)] flex-none text-coral" />
-			<span
-				class="font-display text-[clamp(24px,1.9vw,34px)] leading-none tracking-[0.04em] whitespace-nowrap text-[#5E4108]"
-			>
-				{site.name}
-				<small
-					class="mt-2 block font-mono text-xs font-medium tracking-[0.28em] text-mute uppercase"
-				>
-					{reglages.sousTitreLogo}
-				</small>
-			</span>
-		</a>
-
-		<nav class="hidden items-center gap-[30px] lg:flex" aria-label="Navigation principale">
-			{#each nav as item (item.anchor)}
-				{#if item.pill}
-					<a
-						href="{home}#{item.anchor}"
-						class="rounded-full bg-amber-soft px-4 py-2 font-mono text-xs font-semibold tracking-[0.14em] text-white uppercase shadow-[0_3px_10px_rgba(242,160,61,0.22)] transition hover:-translate-y-px hover:bg-amber hover:shadow-[0_5px_14px_rgba(242,160,61,0.34)]"
-					>
-						{item.label}
-					</a>
-				{:else}
-					<a
-						href="{home}#{item.anchor}"
-						class="relative font-mono text-xs tracking-[0.14em] whitespace-nowrap text-ink-soft uppercase transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-coral after:transition-[width] after:duration-300 hover:text-coral-ink hover:after:w-full"
-					>
-						{item.label}
-					</a>
-				{/if}
-			{/each}
-		</nav>
-
-		<a
-			class="btn btn-sun hidden lg:inline-flex"
-			href={resolve('/reservation')}
-			onclick={(e) => {
-				e.preventDefault();
-				openBooking();
-			}}
+<div class="relative wrap flex items-center justify-between gap-4">
+	<a class="flex min-w-0 items-center gap-3.5 text-ink" href={home} aria-label="Accueil">
+		<SunMark class="h-[clamp(46px,3.6vw,62px)] w-[clamp(46px,3.6vw,62px)] flex-none text-coral" />
+		<span
+			class="font-display text-[clamp(24px,1.9vw,34px)] leading-none tracking-[0.04em] whitespace-nowrap text-[#5E4108]"
 		>
-			Prendre rendez-vous
-		</a>
+			{site.name}
+			<small class="mt-2 block font-mono text-xs font-medium tracking-[0.28em] text-mute uppercase">
+				{reglages.sousTitreLogo}
+			</small>
+		</span>
+	</a>
 
-		<!-- Menu mobile : <details> plutôt qu'un état Svelte, pour qu'il
-		     fonctionne sans JavaScript comme le reste des parcours du site. -->
-		<details class="lg:hidden">
-			<summary
-				class="grid h-12 w-12 cursor-pointer list-none place-items-center gap-[5px] rounded-btn border border-[color-mix(in_oklab,var(--color-coral)_40%,transparent)] bg-[color-mix(in_oklab,#fff_55%,transparent)] [&::-webkit-details-marker]:hidden"
-				aria-label="Ouvrir le menu"
-			>
-				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
-				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
-				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
-			</summary>
-
-			<nav
-				class="absolute top-[calc(100%+14px)] right-0 flex w-[min(320px,calc(100vw-2.75rem))] flex-col gap-1 rounded-card border border-line bg-[color-mix(in_oklab,var(--color-sky)_97%,transparent)] p-4 shadow-[0_30px_60px_-30px_color-mix(in_oklab,var(--color-ember)_45%,transparent)] backdrop-blur-[14px]"
-				aria-label="Navigation mobile"
-			>
-				{#each nav as item (item.anchor)}
-					<a
-						href="{home}#{item.anchor}"
-						class="rounded-btn px-3 py-3 font-mono text-xs tracking-[0.14em] text-ink-soft uppercase transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_10%,transparent)] hover:text-coral-ink"
-					>
-						{item.label}
-					</a>
-				{/each}
+	<nav class="hidden items-center gap-[30px] lg:flex" aria-label="Navigation principale">
+		{#each nav as item (item.anchor)}
+			{#if item.pill}
 				<a
-					class="btn btn-sun mt-2 justify-center"
-					href={resolve('/reservation')}
-					onclick={(e) => {
-						e.preventDefault();
-						openBooking();
-					}}
+					href="{home}#{item.anchor}"
+					class="rounded-full bg-amber-soft px-4 py-2 font-mono text-xs font-semibold tracking-[0.14em] text-white uppercase shadow-[0_3px_10px_rgba(242,160,61,0.22)] transition hover:-translate-y-px hover:bg-amber hover:shadow-[0_5px_14px_rgba(242,160,61,0.34)]"
 				>
-					Prendre rendez-vous
+					{item.label}
 				</a>
-			</nav>
-		</details>
-	</div>
+			{:else}
+				<a
+					href="{home}#{item.anchor}"
+					class="relative font-mono text-xs tracking-[0.14em] whitespace-nowrap text-ink-soft uppercase transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-coral after:transition-[width] after:duration-300 hover:text-coral-ink hover:after:w-full"
+				>
+					{item.label}
+				</a>
+			{/if}
+		{/each}
+	</nav>
+
+	<a
+		class="btn hidden btn-sun lg:inline-flex"
+		href={resolve('/reservation')}
+		onclick={(e) => {
+			e.preventDefault();
+			openBooking();
+		}}
+	>
+		Prendre rendez-vous
+	</a>
+
+	<!-- Menu mobile : <details> plutôt qu'un état Svelte, pour qu'il
+		     fonctionne sans JavaScript comme le reste des parcours du site. -->
+	<details class="lg:hidden">
+		<summary
+			class="grid h-12 w-12 cursor-pointer list-none place-items-center gap-[5px] rounded-btn border border-[color-mix(in_oklab,var(--color-coral)_40%,transparent)] bg-[color-mix(in_oklab,#fff_55%,transparent)] [&::-webkit-details-marker]:hidden"
+			aria-label="Ouvrir le menu"
+		>
+			<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
+			<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
+			<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
+		</summary>
+
+		<nav
+			class="absolute top-[calc(100%+14px)] right-0 flex w-[min(320px,calc(100vw-2.75rem))] flex-col gap-1 rounded-card border border-line bg-[color-mix(in_oklab,var(--color-sky)_97%,transparent)] p-4 shadow-[0_30px_60px_-30px_color-mix(in_oklab,var(--color-ember)_45%,transparent)] backdrop-blur-[14px]"
+			aria-label="Navigation mobile"
+		>
+			{#each nav as item (item.anchor)}
+				<a
+					href="{home}#{item.anchor}"
+					class="rounded-btn px-3 py-3 font-mono text-xs tracking-[0.14em] text-ink-soft uppercase transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_10%,transparent)] hover:text-coral-ink"
+				>
+					{item.label}
+				</a>
+			{/each}
+			<a
+				class="mt-2 btn btn-sun justify-center"
+				href={resolve('/reservation')}
+				onclick={(e) => {
+					e.preventDefault();
+					openBooking();
+				}}
+			>
+				Prendre rendez-vous
+			</a>
+		</nav>
+	</details>
+</div>
 ```
 
 Trois points à ne pas rater :
+
 - `min-w-0` sur le lien du logo : sans lui, le `whitespace-nowrap` du nom empêche toute compression et le débordement persiste.
 - `list-none` **et** `[&::-webkit-details-marker]:hidden` : le premier supprime le triangle sur Firefox et Chrome, le second sur Safari.
 - `relative` sur le `.wrap` : le panneau se positionne par rapport à lui, pas par rapport au `<header>` qui est `fixed`.
@@ -787,10 +794,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 5 : Hero — recadrage sans portrait, titre sur une ligne, repères en grille
 
 **Files:**
-- Create: `src/lib/assets/hero-mer.jpg` *(binaire généré)*
+
+- Create: `src/lib/assets/hero-mer.jpg` _(binaire généré)_
 - Modify: `src/lib/components/home/Hero.svelte`, `README.md`
 
 **Interfaces:**
+
 - Consomme : `defaultAccueil.hero.stats` (tâche 2) ; les tokens de la tâche 1.
 - Produit : rien que d'autres tâches consomment.
 
@@ -848,74 +857,74 @@ déclarée dans `package.json` et se résout depuis le magasin pnpm.
 Dans `src/lib/components/home/Hero.svelte`, remplacer le `<enhanced:img>` et tout le bloc `.hero-copy` par :
 
 ```svelte
-	<enhanced:img
-		src="$lib/assets/hero-mer.jpg"
-		alt=""
-		fetchpriority="high"
-		loading="eager"
-		sizes="100vw"
-		class="absolute inset-0 h-full w-full object-cover object-[center_58%]"
-	/>
-	<div class="hero-wash absolute inset-0 z-1" aria-hidden="true"></div>
+<enhanced:img
+	src="$lib/assets/hero-mer.jpg"
+	alt=""
+	fetchpriority="high"
+	loading="eager"
+	sizes="100vw"
+	class="absolute inset-0 h-full w-full object-cover object-[center_58%]"
+/>
+<div class="hero-wash absolute inset-0 z-1" aria-hidden="true"></div>
 
-	<div class="relative z-3 wrap">
-		<div
-			class="hero-copy max-w-[min(1000px,100%)] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
-			class:ready={ready}
-		>
-			<span class="eyebrow text-[#A55A43]!">{content.eyebrow}</span>
-			<h1 class="hero-titre mt-6.5 mb-7 text-4xl tracking-[0.006em]">
-				<span class="font-rubik text-[#396CB2]">{content.titreLigne1}</span>
-				<em class="font-merriweather font-bold text-coral not-italic">{content.titreLigne2}</em>
-			</h1>
-			<p class="mb-3.5 max-w-[34em] text-base text-ink">{content.paragraphe}</p>
-			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-[#5E4108] uppercase">
-				{content.ligneMono}
-			</p>
-			<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-[13px]">
-				<a
-					class="btn btn-sun justify-center sm:justify-start"
-					href={resolve('/reservation')}
-					onclick={(e) => {
-						e.preventDefault();
-						openBooking();
-					}}
-				>
-					{content.boutonPrincipal}
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-					</svg>
-				</a>
-				<a
-					class="btn btn-line justify-center sm:justify-start"
-					href="{resolve('/')}#approche">{content.boutonSecondaire}</a
-				>
-			</div>
-			<div
-				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 sm:flex"
+<div class="relative z-3 wrap">
+	<div
+		class="hero-copy max-w-[min(1000px,100%)] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
+		class:ready
+	>
+		<span class="eyebrow text-[#A55A43]!">{content.eyebrow}</span>
+		<h1 class="hero-titre mt-6.5 mb-7 text-4xl tracking-[0.006em]">
+			<span class="font-rubik text-[#396CB2]">{content.titreLigne1}</span>
+			<em class="font-merriweather font-bold text-coral not-italic">{content.titreLigne2}</em>
+		</h1>
+		<p class="mb-3.5 max-w-[34em] text-base text-ink">{content.paragraphe}</p>
+		<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-[#5E4108] uppercase">
+			{content.ligneMono}
+		</p>
+		<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-[13px]">
+			<a
+				class="btn btn-sun justify-center sm:justify-start"
+				href={resolve('/reservation')}
+				onclick={(e) => {
+					e.preventDefault();
+					openBooking();
+				}}
 			>
-				{#each content.stats as stat (stat.valeur)}
-					<div
-						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 sm:mr-[clamp(24px,2.4vw,40px)] sm:max-w-[22ch] sm:border-r sm:border-b-0 sm:py-0 sm:pr-[clamp(24px,2.4vw,40px)] sm:last:mr-0 sm:last:border-r-0 sm:last:pr-0"
+				{content.boutonPrincipal}
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</a>
+			<a class="btn btn-line justify-center sm:justify-start" href="{resolve('/')}#approche"
+				>{content.boutonSecondaire}</a
+			>
+		</div>
+		<div
+			class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 sm:flex"
+		>
+			{#each content.stats as stat (stat.valeur)}
+				<div
+					class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 sm:mr-[clamp(24px,2.4vw,40px)] sm:max-w-[22ch] sm:border-r sm:border-b-0 sm:py-0 sm:pr-[clamp(24px,2.4vw,40px)] sm:last:mr-0 sm:last:border-r-0 sm:last:pr-0"
+				>
+					<strong
+						class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
 					>
-						<strong
-							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
-						>
-							{stat.valeur}
-						</strong>
-						<span
-							class="block font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
-						>
-							{stat.legende}
-						</span>
-					</div>
-				{/each}
-			</div>
+						{stat.valeur}
+					</strong>
+					<span
+						class="block font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
+					>
+						{stat.legende}
+					</span>
+				</div>
+			{/each}
 		</div>
 	</div>
+</div>
 ```
 
 Quatre changements structurels à comprendre :
+
 - `object-[center_58%]` remplace `object-right` : l'ancienne valeur cadrait sur le portrait, qui n'est plus là.
 - Le titre passe de deux `<span>` séparés par un `<br>` à deux `<span>` en flux : c'est le CSS de l'étape suivante qui décide s'ils tiennent sur une ligne.
 - Le `whitespace-nowrap` des légendes disparaît — « D'accompagnements individuels et collectifs » ne peut pas tenir sur une ligne de téléphone. `sm:max-w-[22ch]` borne la largeur en mode rangée.
@@ -926,51 +935,51 @@ Quatre changements structurels à comprendre :
 Dans le `<style>` du même fichier, remplacer le bloc `.hero-wash` et ajouter `.hero-titre` juste après :
 
 ```css
-	/* dégradé crème : le texte reste lisible sur la photo d'aube.
+/* dégradé crème : le texte reste lisible sur la photo d'aube.
 	   Horizontal sur grand écran (texte à gauche, mer à droite) ; vertical en
 	   dessous de 900 px, où le texte occupe toute la largeur. */
+.hero-wash {
+	pointer-events: none;
+	background: linear-gradient(
+		178deg,
+		rgba(255, 246, 236, 0.92) 0%,
+		rgba(255, 246, 236, 0.86) 46%,
+		rgba(255, 246, 236, 0.66) 74%,
+		rgba(255, 246, 236, 0.4) 100%
+	);
+}
+@media (min-width: 900px) {
 	.hero-wash {
-		pointer-events: none;
 		background: linear-gradient(
-			178deg,
-			rgba(255, 246, 236, 0.92) 0%,
-			rgba(255, 246, 236, 0.86) 46%,
-			rgba(255, 246, 236, 0.66) 74%,
-			rgba(255, 246, 236, 0.4) 100%
+			90deg,
+			rgba(255, 246, 236, 0.88) 0%,
+			rgba(255, 246, 236, 0.82) 34%,
+			rgba(255, 246, 236, 0.66) 52%,
+			rgba(255, 246, 236, 0.44) 68%,
+			rgba(255, 246, 236, 0.2) 84%,
+			rgba(255, 246, 236, 0) 98%
 		);
 	}
-	@media (min-width: 900px) {
-		.hero-wash {
-			background: linear-gradient(
-				90deg,
-				rgba(255, 246, 236, 0.88) 0%,
-				rgba(255, 246, 236, 0.82) 34%,
-				rgba(255, 246, 236, 0.66) 52%,
-				rgba(255, 246, 236, 0.44) 68%,
-				rgba(255, 246, 236, 0.2) 84%,
-				rgba(255, 246, 236, 0) 98%
-			);
-		}
-	}
+}
 
-	/* « Décoder le visible, grâce à l'invisible » tient sur une ligne à partir
+/* « Décoder le visible, grâce à l'invisible » tient sur une ligne à partir
 	   de 900 px : 38 caractères ≈ 763 px pour 856 px de colonne utile au seuil,
 	   et ≈ 909 px pour 1000 px de bloc à 2560 px. En dessous, il se répartit
 	   sur deux lignes. */
+.hero-titre {
+	line-height: 1.14;
+}
+.hero-titre > :global(span) {
+	display: block;
+}
+@media (min-width: 900px) {
 	.hero-titre {
-		line-height: 1.14;
+		white-space: nowrap;
 	}
 	.hero-titre > :global(span) {
-		display: block;
+		display: inline;
 	}
-	@media (min-width: 900px) {
-		.hero-titre {
-			white-space: nowrap;
-		}
-		.hero-titre > :global(span) {
-			display: inline;
-		}
-	}
+}
 ```
 
 - [ ] **Step 5 : Ajuster la cascade d'entrée**
@@ -1005,9 +1014,11 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 6 : Bandes photo assombries, mantra, deux logiques
 
 **Files:**
+
 - Modify: `src/lib/components/home/ImmersiveBand.svelte`, `src/lib/components/home/Mantra.svelte`, `src/lib/components/home/EspritAme.svelte`, `src/lib/components/home/PourQui.svelte`, `src/lib/components/home/ContactCta.svelte`
 
 **Interfaces:**
+
 - Consomme : `MantraContent` sans `auteur` (tâche 2) ; les tokens de la tâche 1.
 - Produit : rien que d'autres tâches consomment.
 
@@ -1018,38 +1029,38 @@ Les trois bandes (sable, papillon, dunes) partagent `ImmersiveBand` : une seule 
 Dans le `<style>` de `src/lib/components/home/ImmersiveBand.svelte`, remplacer les trois règles :
 
 ```css
-	/* lumière chaude : voile radial corail → vermillon en multiply, puis
+/* lumière chaude : voile radial corail → vermillon en multiply, puis
 	   vignette crépuscule. Renforcé : le blanc et l'ambre se noyaient dans les
 	   zones claires des photos (sable, feuillage). */
-	.band-bg::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(
-			120% 120% at 50% 50%,
-			color-mix(in oklab, var(--color-coral) 46%, transparent),
-			color-mix(in oklab, var(--color-ember) 96%, transparent)
-		);
-		mix-blend-mode: multiply;
-	}
-	.band::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		pointer-events: none;
-		background: radial-gradient(
-			125% 125% at 50% 45%,
-			color-mix(in oklab, var(--color-dusk) 18%, transparent) 0%,
-			color-mix(in oklab, var(--color-dusk) 66%, transparent) 100%
-		);
-	}
-	.band-bg :global(img) {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		filter: saturate(1.08) brightness(0.86);
-	}
+.band-bg::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(
+		120% 120% at 50% 50%,
+		color-mix(in oklab, var(--color-coral) 46%, transparent),
+		color-mix(in oklab, var(--color-ember) 96%, transparent)
+	);
+	mix-blend-mode: multiply;
+}
+.band::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background: radial-gradient(
+		125% 125% at 50% 45%,
+		color-mix(in oklab, var(--color-dusk) 18%, transparent) 0%,
+		color-mix(in oklab, var(--color-dusk) 66%, transparent) 100%
+	);
+}
+.band-bg :global(img) {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: saturate(1.08) brightness(0.86);
+}
 ```
 
 - [ ] **Step 2 : Tenir les expressions du mantra d'un seul tenant**
@@ -1082,12 +1093,12 @@ Deux changements : le `<cite>` de l'auteur disparaît, et les segments mis en va
 Dans `src/lib/components/home/EspritAme.svelte`, remplacer le bloc de titre :
 
 ```svelte
-		<div class="reveal mx-auto mb-16 max-w-[820px] text-center" {@attach reveal()}>
-			<span class="eyebrow eyebrow-center">{content.eyebrow}</span>
-			<h2 class="mt-5 mb-4.5 text-4xl tracking-[0.005em] sm:whitespace-nowrap">
-				{content.titre}
-			</h2>
-		</div>
+<div class="reveal mx-auto mb-16 max-w-[820px] text-center" {@attach reveal()}>
+	<span class="eyebrow eyebrow-center">{content.eyebrow}</span>
+	<h2 class="mt-5 mb-4.5 text-4xl tracking-[0.005em] sm:whitespace-nowrap">
+		{content.titre}
+	</h2>
+</div>
 ```
 
 Vérification de largeur — c'est le cas le plus contraint du lot : « États d'esprit & états d'âme » à `text-4xl` mesure ≈ 446 px à 640 px de fenêtre, ≈ 537 px à 1024 px et ≈ 605 px à 2560 px, toujours sous les 820 px du bloc. **Ne pas monter ce titre à `text-5xl`** : il atteindrait 816 px pour 820 px disponibles et déborderait au premier écart de métrique. En dessous de `sm`, il mesurerait 395 px pour 346 px utiles, d'où le retour à la ligne autorisé.
@@ -1126,9 +1137,11 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 7 : Approche — le soleil remplace la fleur de vie
 
 **Files:**
+
 - Modify: `src/lib/components/home/Approche.svelte`
 
 **Interfaces:**
+
 - Consomme : `SunMark` (tâche 3) ; les tokens de la tâche 1.
 - Produit : rien.
 
@@ -1137,7 +1150,7 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 Dans le `<script>` de `src/lib/components/home/Approche.svelte`, après les imports existants :
 
 ```ts
-	import SunMark from '$lib/components/SunMark.svelte';
+import SunMark from '$lib/components/SunMark.svelte';
 ```
 
 - [ ] **Step 2 : Remplacer la fleur de vie**
@@ -1145,7 +1158,7 @@ Dans le `<script>` de `src/lib/components/home/Approche.svelte`, après les impo
 Remplacer l'intégralité du `<svg class="mt-7.5 h-21 w-21 text-coral opacity-90" …>` (les sept `<circle>` de la fleur de vie) par :
 
 ```svelte
-			<SunMark class="mt-7.5 h-21 w-21 text-coral opacity-90" />
+<SunMark class="mt-7.5 h-21 w-21 text-coral opacity-90" />
 ```
 
 - [ ] **Step 3 : Basculer les tailles sur l'échelle**
@@ -1171,9 +1184,11 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 8 : À propos — portrait recentré et largeurs d'image corrigées
 
 **Files:**
+
 - Modify: `src/lib/components/home/APropos.svelte`
 
 **Interfaces:**
+
 - Consomme : les tokens de la tâche 1.
 - Produit : rien.
 
@@ -1184,13 +1199,13 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 Dans `src/lib/components/home/APropos.svelte`, remplacer l'`<enhanced:img>` :
 
 ```svelte
-				<enhanced:img
-					src="$lib/assets/portrait-cabinet.jpg"
-					alt="Olivier Hildevert dans son cabinet"
-					loading="lazy"
-					sizes="(min-width: 1024px) 560px, calc(100vw - 2.75rem)"
-					class="h-full w-full object-cover object-[22%_center]"
-				/>
+<enhanced:img
+	src="$lib/assets/portrait-cabinet.jpg"
+	alt="Olivier Hildevert dans son cabinet"
+	loading="lazy"
+	sizes="(min-width: 1024px) 560px, calc(100vw - 2.75rem)"
+	class="h-full w-full object-cover object-[22%_center]"
+/>
 ```
 
 `object-[22%_center]` décale le recadrage vers la gauche pour ramener le visage au centre du cadre portrait.
@@ -1223,10 +1238,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 9 : Boutique — vrais liens externes
 
 **Files:**
+
 - Modify: `src/lib/components/home/Boutique.svelte`, `src/lib/components/home/Prestations.svelte`, `src/lib/components/home/Tarifs.svelte`
 - Test: `e2e/home.e2e.ts`
 
 **Interfaces:**
+
 - Consomme : `ProduitBoutique.lien` (tâche 2) ; les tokens de la tâche 1.
 - Produit : rien.
 
@@ -1262,22 +1279,17 @@ Expected: FAIL — `href` vaut `/reservation`, pas une URL externe.
 Dans `src/lib/components/home/Boutique.svelte`, remplacer le `<a class="btn btn-line" …>` par :
 
 ```svelte
-							<a
-								class="btn btn-line"
-								href={produit.lien}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{produit.boutonLabel}
-							</a>
+<a class="btn btn-line" href={produit.lien} target="_blank" rel="noopener noreferrer">
+	{produit.boutonLabel}
+</a>
 ```
 
 Puis **supprimer les imports devenus inutiles** en haut du fichier — sans quoi `pnpm lint` échoue :
 
 ```ts
-	import { reveal } from '$lib/attachments/reveal';
-	import type { BoutiqueContent, CleImageBoutique } from '$lib/content/types';
-	import { defaultAccueil } from '$lib/content/defaults';
+import { reveal } from '$lib/attachments/reveal';
+import type { BoutiqueContent, CleImageBoutique } from '$lib/content/types';
+import { defaultAccueil } from '$lib/content/defaults';
 ```
 
 (`resolve` de `$app/paths`, `openBooking` de `$lib/booking/booking.svelte` et la constante locale `const reservation = resolve('/reservation');` disparaissent.)
@@ -1313,10 +1325,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 10 : Pied de page et modales
 
 **Files:**
+
 - Modify: `src/lib/components/Footer.svelte`, `src/lib/components/BookingModal.svelte`, `src/lib/components/NewsletterModal.svelte`, `src/routes/newsletter/+page.svelte`
 - Test: `e2e/home.e2e.ts`
 
 **Interfaces:**
+
 - Consomme : les tokens de la tâche 1.
 - Produit : rien.
 
@@ -1327,14 +1341,14 @@ Le pied de page porte le même bug que la boutique : l'entrée `{ label: 'olivie
 Ajouter dans le `describe('liens externes', …)` créé en tâche 9 :
 
 ```ts
-	test('le lien du site personnel mène hors du site', async ({ page }) => {
-		await page.goto('/');
-		const lien = page
-			.getByRole('contentinfo')
-			.getByRole('link', { name: 'olivierhildevert.com', exact: true });
-		await expect(lien).toHaveAttribute('href', /^https:\/\//);
-		await expect(lien).toHaveAttribute('target', '_blank');
-	});
+test('le lien du site personnel mène hors du site', async ({ page }) => {
+	await page.goto('/');
+	const lien = page
+		.getByRole('contentinfo')
+		.getByRole('link', { name: 'olivierhildevert.com', exact: true });
+	await expect(lien).toHaveAttribute('href', /^https:\/\//);
+	await expect(lien).toHaveAttribute('target', '_blank');
+});
 ```
 
 - [ ] **Step 2 : Lancer le test pour vérifier qu'il échoue**
@@ -1347,40 +1361,40 @@ Expected: FAIL — `href` vaut `/reservation`.
 Dans `src/lib/components/Footer.svelte`, typer le tableau avec un `href` optionnel :
 
 ```ts
-	const rdvLinks: { label: string; prestation?: PrestationId; href?: string }[] = [
-		{ label: 'Séance individuelle', prestation: 'individuelle' },
-		{ label: 'Entreprises', prestation: 'entreprise' },
-		{ label: 'Stages & ateliers', prestation: 'stage' },
-		{ label: 'olivierhildevert.com', href: 'https://olivierhildevert.com/' }
-	];
+const rdvLinks: { label: string; prestation?: PrestationId; href?: string }[] = [
+	{ label: 'Séance individuelle', prestation: 'individuelle' },
+	{ label: 'Entreprises', prestation: 'entreprise' },
+	{ label: 'Stages & ateliers', prestation: 'stage' },
+	{ label: 'olivierhildevert.com', href: 'https://olivierhildevert.com/' }
+];
 ```
 
 et brancher le rendu sur la présence de `href` :
 
 ```svelte
-				{#each rdvLinks as link (link.label)}
-					{#if link.href}
-						<a
-							href={link.href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
-						>
-							{link.label}
-						</a>
-					{:else}
-						<a
-							href="{reservation}{link.prestation ? '?prestation=' + link.prestation : ''}"
-							class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
-							onclick={(e) => {
-								e.preventDefault();
-								openBooking(link.prestation);
-							}}
-						>
-							{link.label}
-						</a>
-					{/if}
-				{/each}
+{#each rdvLinks as link (link.label)}
+	{#if link.href}
+		<a
+			href={link.href}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
+		>
+			{link.label}
+		</a>
+	{:else}
+		<a
+			href="{reservation}{link.prestation ? '?prestation=' + link.prestation : ''}"
+			class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
+			onclick={(e) => {
+				e.preventDefault();
+				openBooking(link.prestation);
+			}}
+		>
+			{link.label}
+		</a>
+	{/if}
+{/each}
 ```
 
 Puis basculer l'échelle : `text-2xl` → inchangé, les trois `text-[10.5px]` → `text-xs`, `text-[8.5px]` → `text-xs` avec `tracking-[0.28em]` (le suivi de 0,36em devient trop large à 12,5 px), les `text-sm` → inchangés.
@@ -1420,10 +1434,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ## Task 11 : Vérification d'ensemble
 
 **Files:**
+
 - Test: `e2e/home.e2e.ts`
 - Modify: `README.md`
 
 **Interfaces:**
+
 - Consomme : tout ce qui précède.
 - Produit : la preuve que le défaut d'origine est corrigé.
 
@@ -1471,6 +1487,7 @@ Puis inspecter à la main ce qu'il reste :
 
 Run: `grep -rn 'text-\[' src/`
 Expected: exactement trois familles, toutes volontaires —
+
 1. **quatre `clamp()` sur mesure**, là où aucun palier ne convenait : le nom du site dans l'en-tête (`Header.svelte`), la valeur des repères du hero (`Hero.svelte`), le montant des tarifs (`Tarifs.svelte`, deux occurrences) et la citation du mantra (`Mantra.svelte`) ;
 2. **trois couleurs** (`text-[#5E4108]`, `text-[#A55A43]`, `text-[#396CB2]`) et un `color-mix` dans le pied de page ;
 3. **deux valeurs relatives** (`text-[0.4em]` dans `Tarifs.svelte`, `text-[1.2em]` dans `NewsletterModal.svelte`).

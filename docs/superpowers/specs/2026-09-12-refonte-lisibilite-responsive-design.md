@@ -25,11 +25,11 @@ S'y ajoutent : une liste de corrections éditoriales, deux bugs de liens, onze d
 
 Trois décisions ont été prises sur maquettes interactives rendues à l'échelle réelle dans son navigateur (compagnon visuel, écrans conservés dans `.superpowers/brainstorm/`) :
 
-| Décision | Choix retenu | Alternatives écartées |
-|---|---|---|
+| Décision                        | Choix retenu                                                                        | Alternatives écartées                                            |
+| ------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | Portrait du client dans le hero | **Recadrage sur la mer seule** — la moitié gauche de `hero-bg.jpg`, sans personnage | autre photo du site ; dégradé sans photo ; portrait en médaillon |
-| Lisibilité des bandes photo | **Voile assombri** — photos plus sombres, aucune couleur de texte modifiée | plaque sombre sous le texte ; texte espresso sur voile crème |
-| Calibre typographique | **L'échelle proposée telle quelle** | un cran plus gros ; un cran plus petit |
+| Lisibilité des bandes photo     | **Voile assombri** — photos plus sombres, aucune couleur de texte modifiée          | plaque sombre sous le texte ; texte espresso sur voile crème     |
+| Calibre typographique           | **L'échelle proposée telle quelle**                                                 | un cran plus gros ; un cran plus petit                           |
 
 Le client a par ailleurs demandé que **les liens de la boutique soient câblés plus tard via Strapi** : des URL de remplacement sont posées en attendant, et le lien devient un champ éditorial.
 
@@ -41,38 +41,38 @@ Sept paliers remplacent toutes les tailles en dur. Chacun est un `clamp()` bâti
 
 ```css
 @theme {
-  --text-etiquette: clamp(12.5px, 0.72rem + 0.18vw, 15px);
-  --text-legende:   clamp(14px,   0.80rem + 0.25vw, 17px);
-  --text-courant:   clamp(16.5px, 0.95rem + 0.35vw, 21px);
-  --text-chapo:     clamp(19px,   1.05rem + 0.50vw, 25px);
-  --text-titre-s:   clamp(24px,   1.20rem + 1.00vw, 34px);
-  --text-titre-m:   clamp(30px,   1.40rem + 1.80vw, 46px);
-  --text-titre-l:   clamp(36px,   1.60rem + 2.60vw, 62px);
+	--text-etiquette: clamp(12.5px, 0.72rem + 0.18vw, 15px);
+	--text-legende: clamp(14px, 0.8rem + 0.25vw, 17px);
+	--text-courant: clamp(16.5px, 0.95rem + 0.35vw, 21px);
+	--text-chapo: clamp(19px, 1.05rem + 0.5vw, 25px);
+	--text-titre-s: clamp(24px, 1.2rem + 1vw, 34px);
+	--text-titre-m: clamp(30px, 1.4rem + 1.8vw, 46px);
+	--text-titre-l: clamp(36px, 1.6rem + 2.6vw, 62px);
 }
 ```
 
 Déclarés sous le préfixe `--text-*` de Tailwind v4, ils s'utilisent dans les composants comme `text-courant`, `text-etiquette`, etc., sans valeur arbitraire.
 
-| Palier | Usage | 390 px | 1440 px | 2560 px |
-|---|---|---|---|---|
-| `etiquette` | étiquettes mono, surtitres, légendes des chiffres | 12,5 px | 14,1 px | 15 px |
-| `legende` | texte secondaire, descriptions de cartes | 14 px | 16,4 px | 17 px |
-| `courant` | texte courant | 16,5 px | 20,2 px | 21 px |
-| `chapo` | chapôs, prix sur les cartes | 19 px | 24,0 px | 25 px |
-| `titre-s` | h3, titres de cartes | 24 px | 33,6 px | 34 px |
-| `titre-m` | h2 de section, titre du hero | 30 px | 46 px | 46 px |
-| `titre-l` | grands titres (appel contact) | 36 px | 62 px | 62 px |
+| Palier      | Usage                                             | 390 px  | 1440 px | 2560 px |
+| ----------- | ------------------------------------------------- | ------- | ------- | ------- |
+| `etiquette` | étiquettes mono, surtitres, légendes des chiffres | 12,5 px | 14,1 px | 15 px   |
+| `legende`   | texte secondaire, descriptions de cartes          | 14 px   | 16,4 px | 17 px   |
+| `courant`   | texte courant                                     | 16,5 px | 20,2 px | 21 px   |
+| `chapo`     | chapôs, prix sur les cartes                       | 19 px   | 24,0 px | 25 px   |
+| `titre-s`   | h3, titres de cartes                              | 24 px   | 33,6 px | 34 px   |
+| `titre-m`   | h2 de section, titre du hero                      | 30 px   | 46 px   | 46 px   |
+| `titre-l`   | grands titres (appel contact)                     | 36 px   | 62 px   | 62 px   |
 
 Les `clamp()` déjà présents dans les composants (`text-[clamp(34px,5vw,58px)]` et consorts) sont remplacés par le palier correspondant. Les espacements verticaux de section (`py-[clamp(86px,11vw,148px)]`) sont conservés tels quels : ils fonctionnent déjà.
 
 ### 3.2 Conteneur
 
 ```css
---container-wrap: 1440px;          /* était 1180px */
+--container-wrap: 1440px; /* était 1180px */
 
 @utility wrap {
-  width: min(var(--container-wrap), 100% - 2.75rem);
-  margin-inline: auto;
+	width: min(var(--container-wrap), 100% - 2.75rem);
+	margin-inline: auto;
 }
 ```
 
@@ -82,11 +82,11 @@ Le passage de `90vw` à `100% - 2.75rem` donne des gouttières fixes de 22 px su
 
 Mesures sur le fond `--color-sky` (`#fff6ec`). Le seuil WCAG AA pour du texte de taille normale est 4,5:1.
 
-| Token | Usage | Avant | Après | Ratio obtenu |
-|---|---|---|---|---|
-| `--color-mute` | sous-titre « Consultant », légendes de section, prix boutique, profondeurs des strates | `#ac8b73` — **2,9:1** | `#8a6a53` | 4,7:1 |
-| `--color-coral-ink` *(nouveau)* | tous les surtitres `eyebrow`, mentions « Réserver → » des cartes | `--color-coral` `#f0653a` — **3,0:1** | `#b93a18` | 5,4:1 |
-| `--color-coral-deep` *(nouveau)* | fond des boutons `btn-sun` (texte blanc dessus) | `--color-coral` `#f0653a` — **3,2:1** | `#d03c19` | 4,8:1 |
+| Token                            | Usage                                                                                  | Avant                                 | Après     | Ratio obtenu |
+| -------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------- | --------- | ------------ |
+| `--color-mute`                   | sous-titre « Consultant », légendes de section, prix boutique, profondeurs des strates | `#ac8b73` — **2,9:1**                 | `#8a6a53` | 4,7:1        |
+| `--color-coral-ink` _(nouveau)_  | tous les surtitres `eyebrow`, mentions « Réserver → » des cartes                       | `--color-coral` `#f0653a` — **3,0:1** | `#b93a18` | 5,4:1        |
+| `--color-coral-deep` _(nouveau)_ | fond des boutons `btn-sun` (texte blanc dessus)                                        | `--color-coral` `#f0653a` — **3,2:1** | `#d03c19` | 4,8:1        |
 
 `--color-coral` reste inchangé et conserve tous ses usages décoratifs : filets, pastilles, ornements SVG, bordures, points de liste. Seuls ses deux usages porteurs de texte migrent.
 
@@ -98,11 +98,11 @@ Le site déployé n'est pas encore branché sur Strapi : `defaults.ts` est à la
 
 ### 4.1 Hero
 
-| Champ | Après |
-|---|---|
-| `eyebrow` | `Sophrologie · Thérapie psycho énergétique et transpersonnelle` |
-| `stats[0]` | `{ valeur: 'Depuis 1992', legende: "Praticien en relation d'aide" }` |
-| `stats[1]` | `{ valeur: '+ de 10 000', legende: 'Séances animées' }` |
+| Champ      | Après                                                                          |
+| ---------- | ------------------------------------------------------------------------------ |
+| `eyebrow`  | `Sophrologie · Thérapie psycho énergétique et transpersonnelle`                |
+| `stats[0]` | `{ valeur: 'Depuis 1992', legende: "Praticien en relation d'aide" }`           |
+| `stats[1]` | `{ valeur: '+ de 10 000', legende: 'Séances animées' }`                        |
 | `stats[2]` | `{ valeur: '34 ans', legende: "D'accompagnements individuels et collectifs" }` |
 
 `titreLigne1` et `titreLigne2` sont inchangés ; c'est la mise en page qui les réunit sur une ligne (§ 5.3).
@@ -116,26 +116,26 @@ Le site déployé n'est pas encore branché sur Strapi : `defaults.ts` est à la
 
 ### 4.3 États d'esprit & états d'âme
 
-| Champ | Après |
-|---|---|
+| Champ               | Après                                   |
+| ------------------- | --------------------------------------- |
 | `espritAme.eyebrow` | `Deux logiques, pour une même personne` |
 
 `titre` inchangé ; il est forcé sur une seule ligne par la mise en page (§ 5.5).
 
 ### 4.4 Boutique
 
-| Champ | Après |
-|---|---|
-| `boutique.titre` | `Prolonger le chemin de l'éveil` |
-| `boutique.paragraphe` | `Un roman thérapeutique pour se réaligner et des veilleuses énergétiques pour réharmoniser les lieux et les êtres.` |
-| `produits[0].prixTexte` | `Disponible à l'achat` |
-| `produits[0].lien` | `https://www.bod.fr/` *(remplacement — à câbler dans Strapi)* |
-| `produits[1].lien` | `https://olivierhildevert.com/` *(remplacement — à câbler dans Strapi)* |
+| Champ                   | Après                                                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `boutique.titre`        | `Prolonger le chemin de l'éveil`                                                                                    |
+| `boutique.paragraphe`   | `Un roman thérapeutique pour se réaligner et des veilleuses énergétiques pour réharmoniser les lieux et les êtres.` |
+| `produits[0].prixTexte` | `Disponible à l'achat`                                                                                              |
+| `produits[0].lien`      | `https://www.bod.fr/` _(remplacement — à câbler dans Strapi)_                                                       |
+| `produits[1].lien`      | `https://olivierhildevert.com/` _(remplacement — à câbler dans Strapi)_                                             |
 
 ### 4.5 Prestations
 
-| Champ | Après |
-|---|---|
+| Champ                         | Après                                         |
+| ----------------------------- | --------------------------------------------- |
 | `defaultPrestations[0].titre` | `Séance individuelle — décodage et solutions` |
 
 Ce titre alimente la carte de l'accueil, la modale de réservation et le CMS : il se lira identiquement aux trois endroits. Le client a été averti et a validé.
@@ -169,17 +169,23 @@ Le SVG du soleil, aujourd'hui écrit en dur dans `Header.svelte`, devient un com
 Voile validé (option A), appliqué en une fois aux trois bandes :
 
 ```css
-.band-bg :global(img) { filter: saturate(1.08) brightness(.86); }   /* était saturate(1.05) contrast(1.02) */
+.band-bg :global(img) {
+	filter: saturate(1.08) brightness(0.86);
+} /* était saturate(1.05) contrast(1.02) */
 .band-bg::after {
-  background: radial-gradient(120% 120% at 50% 50%,
-    color-mix(in oklab, var(--color-coral) 46%, transparent),
-    color-mix(in oklab, var(--color-ember) 96%, transparent));
-  mix-blend-mode: multiply;
+	background: radial-gradient(
+		120% 120% at 50% 50%,
+		color-mix(in oklab, var(--color-coral) 46%, transparent),
+		color-mix(in oklab, var(--color-ember) 96%, transparent)
+	);
+	mix-blend-mode: multiply;
 }
 .band::after {
-  background: radial-gradient(125% 125% at 50% 45%,
-    color-mix(in oklab, var(--color-dusk) 18%, transparent) 0%,
-    color-mix(in oklab, var(--color-dusk) 66%, transparent) 100%);
+	background: radial-gradient(
+		125% 125% at 50% 45%,
+		color-mix(in oklab, var(--color-dusk) 18%, transparent) 0%,
+		color-mix(in oklab, var(--color-dusk) 66%, transparent) 100%
+	);
 }
 ```
 
@@ -206,7 +212,7 @@ Les boutons « Commander » et « Découvrir » appellent aujourd'hui `openBooki
 
 ```svelte
 <a class="btn btn-line" href={produit.lien} target="_blank" rel="noopener noreferrer">
-  {produit.boutonLabel}
+	{produit.boutonLabel}
 </a>
 ```
 
@@ -220,12 +226,12 @@ Le pied de page passe par ailleurs aux paliers (ses mono à 8,5 px et 10,5 px so
 
 Tous calés sur l'ancienne colonne de 1180 px, ils font télécharger au navigateur une image trop petite qu'il étire ensuite — c'est la cause du portrait flou signalé par le client.
 
-| Fichier | Avant | Après |
-|---|---|---|
-| `APropos.svelte` | `(min-width: 1024px) 460px, 90vw` | `(min-width: 1024px) 560px, calc(100vw - 2.75rem)` |
-| `Prestations.svelte` | `(min-width: 1024px) 570px, 90vw` | `(min-width: 1024px) 700px, calc(100vw - 2.75rem)` |
-| `Boutique.svelte` | `(min-width: 640px) 240px, 200px` | `(min-width: 1024px) 290px, (min-width: 640px) 240px, 200px` |
-| `Hero.svelte`, bandes | `100vw` | inchangé — correct |
+| Fichier               | Avant                             | Après                                                        |
+| --------------------- | --------------------------------- | ------------------------------------------------------------ |
+| `APropos.svelte`      | `(min-width: 1024px) 460px, 90vw` | `(min-width: 1024px) 560px, calc(100vw - 2.75rem)`           |
+| `Prestations.svelte`  | `(min-width: 1024px) 570px, 90vw` | `(min-width: 1024px) 700px, calc(100vw - 2.75rem)`           |
+| `Boutique.svelte`     | `(min-width: 640px) 240px, 200px` | `(min-width: 1024px) 290px, (min-width: 640px) 240px, 200px` |
+| `Hero.svelte`, bandes | `100vw`                           | inchangé — correct                                           |
 
 ### 5.11 Modales — `BookingModal.svelte`, `NewsletterModal.svelte`
 
@@ -237,20 +243,20 @@ Tous calés sur l'ancienne colonne de 1180 px, ils font télécharger au navigat
 
 Aucune modification structurelle, mais la migration vers les paliers doit être exhaustive — un seul `text-[13.5px]` oublié rouvre le défaut d'origine. Les valeurs en dur à remplacer :
 
-| Composant | Tailles en dur à migrer |
-|---|---|
-| `Prestations.svelte` | `text-[25px]` (h3), `text-sm` (description), `text-[21px]` (prix), `text-[11px]` et `text-[10.5px]` (mono) |
-| `Tarifs.svelte` | `text-[56px]` (montant) → `clamp(46px, 3.4rem + 2vw, 70px)`, `text-xl` (suffixe €) → `0.4em` du montant, `text-[13.5px]` (sous-texte), `text-[10.5px]` (label) |
-| `Approche.svelte` | `text-[16.5px]`, `text-[25px]`, `text-[14.5px]`, `text-[10px]`, `text-[10.5px]`, `text-xs` |
-| `EspritAme.svelte` | `text-[32px]` (h3), `text-[15px]` (desc), `text-sm` (points), `text-[10.5px]` (tag) |
-| `APropos.svelte` | `text-[15.5px]` ×3, `text-2xl` (citation), `text-[11px]`, `text-[10px]`, `text-[10.5px]` |
-| `Boutique.svelte` | `text-[17.5px]`, `text-[26px]`, `text-[13.5px]`, `text-[11px]`, `text-[10px]` |
-| `PourQui.svelte` | `text-xs` (pastilles) |
-| `ContactCta.svelte` | `text-[17px]`, `text-[11px]` |
-| `Footer.svelte` | `text-2xl`, `text-sm` ×2, `text-[10.5px]` ×3, `text-[8.5px]` |
-| `Header.svelte` | `text-[22px]`, `text-[8.5px]`, `text-[11.5px]` ×2 |
-| `BookingModal.svelte`, `NewsletterModal.svelte` | `text-[15px]` ×n, `text-[13.5px]`, `text-[12.5px]`, `text-xs`, `text-lg`, `text-sm` |
-| `+error.svelte`, `/contact`, `/reservation`, `/newsletter` | héritent des tokens ; leurs tailles en dur sont migrées mais leur mise en page n'est pas revue (§ 10) |
+| Composant                                                  | Tailles en dur à migrer                                                                                                                                        |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Prestations.svelte`                                       | `text-[25px]` (h3), `text-sm` (description), `text-[21px]` (prix), `text-[11px]` et `text-[10.5px]` (mono)                                                     |
+| `Tarifs.svelte`                                            | `text-[56px]` (montant) → `clamp(46px, 3.4rem + 2vw, 70px)`, `text-xl` (suffixe €) → `0.4em` du montant, `text-[13.5px]` (sous-texte), `text-[10.5px]` (label) |
+| `Approche.svelte`                                          | `text-[16.5px]`, `text-[25px]`, `text-[14.5px]`, `text-[10px]`, `text-[10.5px]`, `text-xs`                                                                     |
+| `EspritAme.svelte`                                         | `text-[32px]` (h3), `text-[15px]` (desc), `text-sm` (points), `text-[10.5px]` (tag)                                                                            |
+| `APropos.svelte`                                           | `text-[15.5px]` ×3, `text-2xl` (citation), `text-[11px]`, `text-[10px]`, `text-[10.5px]`                                                                       |
+| `Boutique.svelte`                                          | `text-[17.5px]`, `text-[26px]`, `text-[13.5px]`, `text-[11px]`, `text-[10px]`                                                                                  |
+| `PourQui.svelte`                                           | `text-xs` (pastilles)                                                                                                                                          |
+| `ContactCta.svelte`                                        | `text-[17px]`, `text-[11px]`                                                                                                                                   |
+| `Footer.svelte`                                            | `text-2xl`, `text-sm` ×2, `text-[10.5px]` ×3, `text-[8.5px]`                                                                                                   |
+| `Header.svelte`                                            | `text-[22px]`, `text-[8.5px]`, `text-[11.5px]` ×2                                                                                                              |
+| `BookingModal.svelte`, `NewsletterModal.svelte`            | `text-[15px]` ×n, `text-[13.5px]`, `text-[12.5px]`, `text-xs`, `text-lg`, `text-sm`                                                                            |
+| `+error.svelte`, `/contact`, `/reservation`, `/newsletter` | héritent des tokens ; leurs tailles en dur sont migrées mais leur mise en page n'est pas revue (§ 10)                                                          |
 
 Inventaire de départ : `grep -ro 'text-\[[^]]*\]' src/ | wc -l` renvoie **85** occurrences, dont 4 sont des couleurs (`text-[#5E4108]`, `text-[#A55A43]`, `text-[#396CB2]`, un `color-mix`) et 1 est relative (`text-[1.2em]`). **Critère de complétude de cette étape :** `grep -rnE 'text-\[[0-9.]+px\]|text-\[clamp' src/` ne renvoie plus rien.
 
@@ -261,11 +267,13 @@ Note sur les trois couleurs en dur du hero — elles sortent de la palette « Au
 Trois fichiers bougent de concert : `types.ts`, `defaults.ts`, `server/content.ts`.
 
 **Ajout** — `ProduitBoutique.lien: string` :
+
 - `types.ts` : champ ajouté à l'interface ;
 - `server/content.ts` : `lien: z.string()` dans le schéma zod du tableau `produits` ;
 - `seed-format.ts` : aucune modification — `accueilVersStrapi` propage par `...c`.
 
 **Suppression** — `MantraContent.auteur` :
+
 - `types.ts` : champ retiré ;
 - `defaults.ts` : clé retirée ;
 - `server/content.ts` : `mantra: z.object({ citation: z.string() })` ;
@@ -291,19 +299,19 @@ La commande de génération est consignée dans le README pour être rejouable.
 
 Audit mené à 375, 390 et 768 px. Onze défauts, tous couverts par les sections ci-dessus :
 
-| # | Défaut | Traité en |
-|---|---|---|
-| 1 | En-tête en débordement (logo + bouton `nowrap`) | § 5.2 |
-| 2 | **Aucune navigation sous 1024 px** — six liens inaccessibles sur téléphone et iPad portrait | § 5.2 |
-| 3 | Chiffres du hero qui se bousculent, séparateurs orphelins en fin de ligne | § 5.3 |
-| 4 | Légende de chiffre en `nowrap`, impossible à afficher | § 5.3 |
-| 5 | Boutons du hero serrés et tronqués | § 5.3 |
-| 6 | Dégradé du hero horizontal sur écran étroit | § 5.3 |
-| 7 | Champs de formulaire à 15 px → zoom automatique iOS | § 5.11 |
-| 8 | Croix de fermeture des modales à 38 px | § 5.11 |
-| 9 | Gouttières à 19,5 px | § 3.2 |
-| 10 | `sizes` figés sur l'ancienne grille → images floues | § 5.10 |
-| 11 | Lien « olivierhildevert.com » ouvrant la modale de réservation | § 5.9 |
+| #   | Défaut                                                                                      | Traité en |
+| --- | ------------------------------------------------------------------------------------------- | --------- |
+| 1   | En-tête en débordement (logo + bouton `nowrap`)                                             | § 5.2     |
+| 2   | **Aucune navigation sous 1024 px** — six liens inaccessibles sur téléphone et iPad portrait | § 5.2     |
+| 3   | Chiffres du hero qui se bousculent, séparateurs orphelins en fin de ligne                   | § 5.3     |
+| 4   | Légende de chiffre en `nowrap`, impossible à afficher                                       | § 5.3     |
+| 5   | Boutons du hero serrés et tronqués                                                          | § 5.3     |
+| 6   | Dégradé du hero horizontal sur écran étroit                                                 | § 5.3     |
+| 7   | Champs de formulaire à 15 px → zoom automatique iOS                                         | § 5.11    |
+| 8   | Croix de fermeture des modales à 38 px                                                      | § 5.11    |
+| 9   | Gouttières à 19,5 px                                                                        | § 3.2     |
+| 10  | `sizes` figés sur l'ancienne grille → images floues                                         | § 5.10    |
+| 11  | Lien « olivierhildevert.com » ouvrant la modale de réservation                              | § 5.9     |
 
 Le défaut n° 2 est le plus lourd : la navigation est aujourd'hui purement absente pour tout visiteur sur téléphone ou tablette en portrait.
 
@@ -332,9 +340,9 @@ Aucune affirmation de réussite sans la sortie de commande correspondante.
 
 ## 11. Points signalés au client, tranchés
 
-| Point | Décision |
-|---|---|
-| « 1 h 30 » ailleurs sur le site | conservé — seul le hero le perd |
-| « 34 ans » figé ou calculé depuis 1992 | texte modifiable dans le CMS |
+| Point                                                                     | Décision                              |
+| ------------------------------------------------------------------------- | ------------------------------------- |
+| « 1 h 30 » ailleurs sur le site                                           | conservé — seul le hero le perd       |
+| « 34 ans » figé ou calculé depuis 1992                                    | texte modifiable dans le CMS          |
 | Titre long « Séance individuelle — décodage et solutions » dans la modale | accepté tel quel, pas de champ séparé |
-| Favicon au logo Svelte | remplacé par le soleil |
+| Favicon au logo Svelte                                                    | remplacé par le soleil                |
