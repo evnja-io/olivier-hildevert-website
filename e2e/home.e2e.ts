@@ -109,3 +109,17 @@ test.describe('navigation mobile', () => {
 		expect(debordement).toBe(0);
 	});
 });
+
+test.describe('liens externes', () => {
+	test('les boutons de la boutique mènent hors du site', async ({ page }) => {
+		await page.goto('/');
+		const boutique = page.locator('#boutique');
+
+		for (const nom of ['Commander', 'Découvrir']) {
+			const lien = boutique.getByRole('link', { name: nom, exact: true });
+			await expect(lien).toHaveAttribute('href', /^https:\/\//);
+			await expect(lien).toHaveAttribute('target', '_blank');
+			await expect(lien).toHaveAttribute('rel', /noopener/);
+		}
+	});
+});

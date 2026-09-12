@@ -58,10 +58,10 @@
 	<div class="wrap">
 		<div class="reveal mb-16 max-w-[640px]" {@attach reveal()}>
 			<span class="eyebrow">{intro.eyebrow}</span>
-			<h2 class="mt-5 mb-4.5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
+			<h2 class="mt-5 mb-4.5 text-4xl tracking-[0.005em]">
 				{intro.titre}
 			</h2>
-			<p class="text-[17.5px] leading-[1.66] text-ink-soft">
+			<p class="text-base leading-[1.66] text-ink-soft">
 				{intro.paragraphe}
 			</p>
 		</div>
@@ -78,7 +78,7 @@
 				>
 					<div class="prest-media relative h-[250px] overflow-hidden">
 						<span
-							class="absolute top-3.5 left-4 z-2 rounded-full bg-[color-mix(in_oklab,var(--color-ember)_52%,transparent)] px-2.5 py-[5px] font-mono text-[10.5px] tracking-[0.14em] text-white backdrop-blur-[3px]"
+							class="absolute top-3.5 left-4 z-2 rounded-full bg-[color-mix(in_oklab,var(--color-ember)_52%,transparent)] px-2.5 py-[5px] font-mono text-xs tracking-[0.14em] text-white backdrop-blur-[3px]"
 						>
 							{carte.num}
 						</span>
@@ -86,18 +86,18 @@
 							src={carte.image}
 							alt={carte.alt}
 							loading="lazy"
-							sizes="(min-width: 1024px) 570px, 90vw"
+							sizes="(min-width: 1024px) 700px, calc(100vw - 2.75rem)"
 							class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-106"
 							style="object-position: {carte.position}"
 						/>
 					</div>
 					<div class="flex flex-1 flex-col gap-3 p-[26px_30px]">
-						<h3 class="text-[25px] tracking-[0.01em]">{carte.titre}</h3>
+						<h3 class="text-2xl tracking-[0.01em]">{carte.titre}</h3>
 						<p class="flex-1 text-sm leading-[1.62] text-ink-soft">{carte.descCarte}</p>
 						<div class="flex items-center justify-between border-t border-line pt-4">
-							<b class="font-display text-[21px] font-normal text-ink">{carte.prixCarte}</b>
+							<b class="font-display text-lg font-normal text-ink">{carte.prixCarte}</b>
 							<span
-								class="font-mono text-[11px] tracking-[0.1em] text-coral uppercase transition-transform duration-250 group-hover:translate-x-[5px]"
+								class="font-mono text-xs tracking-[0.1em] text-coral uppercase transition-transform duration-250 group-hover:translate-x-[5px]"
 							>
 								{carte.actionCarte}
 							</span>
