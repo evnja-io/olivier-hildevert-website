@@ -27,6 +27,12 @@ défaut (`src/lib/content/defaults.ts`) — jamais de page cassée.
 Le CMS est un dépôt séparé, cloné en frère de celui-ci : `../olivier-hildevert-cms`
 (Strapi 5, TypeScript, SQLite en dev).
 
+> **À reporter dans `../olivier-hildevert-cms` avant le premier branchement :**
+> le composant « produit boutique » gagne un champ `lien` (texte, URL), et le
+> composant « mantra » perd son champ `auteur`. Tant que ce n'est pas fait, le
+> mapping de `src/lib/server/content.ts` rejettera la réponse de Strapi et le
+> site retombera sur `defaults.ts` (repli tout-ou-rien par domaine).
+
 ```sh
 cp .env.example .env
 # puis renseigner STRAPI_URL et STRAPI_API_TOKEN

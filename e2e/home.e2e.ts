@@ -132,3 +132,25 @@ test.describe('liens externes', () => {
 		await expect(lien).toHaveAttribute('target', '_blank');
 	});
 });
+
+test.describe('échelle typographique', () => {
+	test('les textes grandissent avec la fenêtre, plancher et plafond respectés', async ({
+		page
+	}) => {
+		await page.goto('/');
+		const surtitre = page.locator('.eyebrow').first();
+		const taille = async () =>
+			parseFloat(await surtitre.evaluate((el) => getComputedStyle(el).fontSize));
+
+		await page.setViewportSize({ width: 390, height: 844 });
+		const surMobile = await taille();
+
+		await page.setViewportSize({ width: 2560, height: 1440 });
+		const surGrandEcran = await taille();
+
+		// Le défaut d'origine : 11,5 px figés, quelle que soit la taille de l'écran.
+		expect(surMobile).toBeGreaterThanOrEqual(12.4);
+		expect(surGrandEcran).toBeGreaterThan(surMobile);
+		expect(surGrandEcran).toBeGreaterThanOrEqual(14.9);
+	});
+});
