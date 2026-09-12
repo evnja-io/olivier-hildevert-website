@@ -11,10 +11,10 @@
 <div class="wrap">
 	<div class="reveal relative mx-auto max-w-[760px] text-center text-white" {@attach reveal()}>
 		<span class="eyebrow eyebrow-center text-amber-soft!">{content.eyebrow}</span>
-		<h2 class="mt-4.5 mb-4.5 text-[clamp(38px,5.4vw,68px)] tracking-[0.005em]">
+		<h2 class="mt-4.5 mb-4.5 text-5xl tracking-[0.005em]">
 			{content.titre}
 		</h2>
-		<p class="mx-auto mb-8 max-w-[36em] text-[17px] leading-[1.66] text-white/90">
+		<p class="mx-auto mb-8 max-w-[36em] text-base leading-[1.66] text-white/90">
 			{content.paragraphe}
 		</p>
 		<a
@@ -33,7 +33,7 @@
 		<div class="mt-7.5 flex flex-wrap justify-center gap-6.5">
 			{#each content.modes as mode (mode)}
 				<span
-					class="flex items-center gap-2 font-mono text-[11px] tracking-[0.13em] text-white/84 uppercase"
+					class="flex items-center gap-2 font-mono text-xs tracking-[0.13em] text-white/84 uppercase"
 				>
 					<span class="h-[5px] w-[5px] rounded-full bg-amber-soft" aria-hidden="true"></span>
 					{mode}

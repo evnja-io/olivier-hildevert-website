@@ -13,9 +13,9 @@
 
 <section class="relative z-1 bg-sky py-[clamp(86px,11vw,148px)]">
 	<div class="wrap">
-		<div class="reveal mx-auto mb-16 max-w-[640px] text-center" {@attach reveal()}>
+		<div class="reveal mx-auto mb-16 max-w-[820px] text-center" {@attach reveal()}>
 			<span class="eyebrow eyebrow-center">{content.eyebrow}</span>
-			<h2 class="mt-5 mb-4.5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
+			<h2 class="mt-5 mb-4.5 text-4xl tracking-[0.005em] sm:whitespace-nowrap">
 				{content.titre}
 			</h2>
 		</div>
@@ -55,15 +55,15 @@
 						</svg>
 					{/if}
 					<span
-						class="relative font-mono text-[10.5px] font-medium tracking-[0.22em] uppercase {col.variante ===
+						class="relative font-mono text-xs font-medium tracking-[0.22em] uppercase {col.variante ===
 						'soul'
 							? 'text-amber'
 							: 'text-coral'}"
 					>
 						{col.tag}
 					</span>
-					<h3 class="relative mt-3.5 mb-4 text-[32px] tracking-[0.01em]">{col.titre}</h3>
-					<p class="relative text-[15px] leading-[1.66] text-ink-soft">{col.desc}</p>
+					<h3 class="relative mt-3.5 mb-4 text-2xl tracking-[0.01em]">{col.titre}</h3>
+					<p class="relative text-sm leading-[1.66] text-ink-soft">{col.desc}</p>
 					<div class="relative mt-6.5 flex flex-col">
 						{#each col.points as point, i (point)}
 							<span

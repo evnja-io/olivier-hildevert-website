@@ -9,7 +9,7 @@
 <div class="wrap">
 	<div class="reveal mx-auto mb-10.5 max-w-[640px] text-center" {@attach reveal()}>
 		<span class="eyebrow eyebrow-center text-amber-soft!">{content.eyebrow}</span>
-		<h2 class="mt-5 text-[clamp(34px,5vw,58px)] tracking-[0.005em]">
+		<h2 class="mt-5 text-4xl tracking-[0.005em]">
 			{content.titre}
 		</h2>
 	</div>

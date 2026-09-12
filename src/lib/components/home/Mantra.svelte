@@ -12,10 +12,11 @@
 <div class="wrap">
 	<div class="reveal mx-auto max-w-[900px] text-center" {@attach reveal()}>
 		<p
-			class="font-display text-[clamp(28px,4.3vw,52px)] leading-[1.22] tracking-[0.004em] [text-shadow:0_2px_30px_rgba(74,27,18,0.4)]"
+			class="font-display text-[clamp(26px,1.4rem+2.4vw,52px)] leading-[1.22] tracking-[0.004em] [text-shadow:0_2px_30px_rgba(74,27,18,0.4)]"
 		>
 			{#each segments as segment, i (i)}
-				{#if i % 2 === 1}<b class="font-normal text-amber-soft italic">{segment}</b
+				{#if i % 2 === 1}<b class="font-normal whitespace-nowrap text-amber-soft italic"
+						>{segment}</b
 					>{:else}{segment}{/if}
 			{/each}
 		</p>
