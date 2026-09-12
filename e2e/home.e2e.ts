@@ -133,6 +133,46 @@ test.describe('liens externes', () => {
 	});
 });
 
+test.describe('repères chiffrés du hero', () => {
+	test('aucune valeur ne se casse, la légende garde le droit de revenir à la ligne', async ({
+		page
+	}) => {
+		await page.goto('/');
+
+		const releve = [];
+		for (const largeur of [640, 1024, 1280, 1440, 2560]) {
+			await page.setViewportSize({ width: largeur, height: 900 });
+			const mesures = await page.evaluate(() =>
+				[...document.querySelectorAll('.hero-copy strong')].map((el) => {
+					const legende = el.nextElementSibling as HTMLElement;
+					const lignes = (n: Element) =>
+						n.getBoundingClientRect().height / parseFloat(getComputedStyle(n).lineHeight);
+					return {
+						texte: (el.textContent ?? '').trim(),
+						lignesValeur: lignes(el),
+						lignesLegende: lignes(legende),
+						largeurMaxLegende: getComputedStyle(legende).maxWidth
+					};
+				})
+			);
+			expect(mesures.length).toBe(3);
+			releve.push(...mesures.map((m) => ({ ...m, largeur })));
+		}
+
+		// aucun nombre ne se casse en deux, à aucune des cinq largeurs
+		for (const m of releve) {
+			expect(
+				m.lignesValeur,
+				`« ${m.texte} » tient sur ${m.lignesValeur.toFixed(2)} ligne(s) à ${m.largeur} px`
+			).toBeLessThan(1.5);
+		}
+		// la contrainte de largeur appartient à la légende, pas au nombre :
+		// elle est bornée et la plus longue revient bien à la ligne
+		expect(releve.every((m) => m.largeurMaxLegende !== 'none')).toBe(true);
+		expect(releve.some((m) => m.lignesLegende > 1.5)).toBe(true);
+	});
+});
+
 test.describe('échelle typographique', () => {
 	test('les textes grandissent avec la fenêtre, plancher et plafond respectés', async ({
 		page

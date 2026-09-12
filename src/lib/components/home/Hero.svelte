@@ -56,11 +56,19 @@
 				>
 			</div>
 			<div
-				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 sm:flex"
+				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
 			>
+				<!-- La rangée passe à `md` (768 px) et non `sm` : à 640 px les trois
+				     colonnes ne réclamaient que 634 px pour 596 px disponibles, et
+				     « + de 10 000 » se cassait en deux. En dessous, les repères
+				     s'empilent sur toute la largeur.
+				     `max-w-[22ch]` borne la légende et elle seule : posée sur la colonne,
+				     elle se calculait sur la police héritée (~220 px) et cassait les
+				     nombres en deux (« Depuis / 1992 »). Sur la légende, les `ch` se
+				     calculent bien sur la police du texte qu'ils doivent contenir. -->
 				{#each content.stats as stat (stat.valeur)}
 					<div
-						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 sm:mr-[clamp(24px,2.4vw,40px)] sm:max-w-[22ch] sm:border-r sm:border-b-0 sm:py-0 sm:pr-[clamp(24px,2.4vw,40px)] sm:last:mr-0 sm:last:border-r-0 sm:last:pr-0"
+						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
 					>
 						<strong
 							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
@@ -68,7 +76,7 @@
 							{stat.valeur}
 						</strong>
 						<span
-							class="block font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
+							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
 						>
 							{stat.legende}
 						</span>
