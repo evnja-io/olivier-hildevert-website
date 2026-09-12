@@ -39,29 +39,33 @@ Le client a par ailleurs demandé que **les liens de la boutique soient câblés
 
 Sept paliers remplacent toutes les tailles en dur. Chacun est un `clamp()` bâti sur `rem + vw` : le `rem` respecte la taille de police configurée dans le navigateur (accessibilité), le `vw` fait croître le texte avec l'écran, le plancher protège le mobile, le plafond évite l'effet grotesque sur un 32″.
 
+**Livré :** les paliers ne portent pas de noms français ; ils **redéfinissent les paliers natifs de Tailwind** (`--text-xs` … `--text-5xl`). Raison du choix : les 52 usages `text-xs` / `text-sm` / `text-base` / `text-lg` / `text-2xl` / `text-4xl` déjà écrits dans les composants deviennent fluides sans qu'une seule classe soit touchée, alors que des tokens nommés auraient imposé de réécrire chaque occurrence — et laissé les paliers Tailwind figés en embuscade pour le prochain composant écrit distraitement.
+
 ```css
 @theme {
-	--text-etiquette: clamp(12.5px, 0.72rem + 0.18vw, 15px);
-	--text-legende: clamp(14px, 0.8rem + 0.25vw, 17px);
-	--text-courant: clamp(16.5px, 0.95rem + 0.35vw, 21px);
-	--text-chapo: clamp(19px, 1.05rem + 0.5vw, 25px);
-	--text-titre-s: clamp(24px, 1.2rem + 1vw, 34px);
-	--text-titre-m: clamp(30px, 1.4rem + 1.8vw, 46px);
-	--text-titre-l: clamp(36px, 1.6rem + 2.6vw, 62px);
+	--text-xs: clamp(12.5px, 0.72rem + 0.18vw, 15px); /* étiquette */
+	--text-sm: clamp(14px, 0.8rem + 0.25vw, 17px); /* légende */
+	--text-base: clamp(16.5px, 0.95rem + 0.35vw, 21px); /* courant */
+	--text-lg: clamp(19px, 1.05rem + 0.5vw, 25px); /* chapô */
+	--text-xl: clamp(21px, 1.1rem + 0.7vw, 28px);
+	--text-2xl: clamp(24px, 1.2rem + 1vw, 34px); /* titre-s */
+	--text-3xl: clamp(27px, 1.3rem + 1.4vw, 40px);
+	--text-4xl: clamp(30px, 1.4rem + 1.8vw, 46px); /* titre-m */
+	--text-5xl: clamp(36px, 1.6rem + 2.6vw, 62px); /* titre-l */
 }
 ```
 
-Déclarés sous le préfixe `--text-*` de Tailwind v4, ils s'utilisent dans les composants comme `text-courant`, `text-etiquette`, etc., sans valeur arbitraire.
+Chaque palier reçoit aussi son `--text-*--line-height`. `xl` et `3xl` complètent l'échelle pour qu'aucun palier natif de Tailwind ne reste figé.
 
-| Palier      | Usage                                             | 390 px  | 1440 px | 2560 px |
-| ----------- | ------------------------------------------------- | ------- | ------- | ------- |
-| `etiquette` | étiquettes mono, surtitres, légendes des chiffres | 12,5 px | 14,1 px | 15 px   |
-| `legende`   | texte secondaire, descriptions de cartes          | 14 px   | 16,4 px | 17 px   |
-| `courant`   | texte courant                                     | 16,5 px | 20,2 px | 21 px   |
-| `chapo`     | chapôs, prix sur les cartes                       | 19 px   | 24,0 px | 25 px   |
-| `titre-s`   | h3, titres de cartes                              | 24 px   | 33,6 px | 34 px   |
-| `titre-m`   | h2 de section, titre du hero                      | 30 px   | 46 px   | 46 px   |
-| `titre-l`   | grands titres (appel contact)                     | 36 px   | 62 px   | 62 px   |
+| Palier      | Rôle        | Usage                                             | 390 px  | 1440 px | 2560 px |
+| ----------- | ----------- | ------------------------------------------------- | ------- | ------- | ------- |
+| `text-xs`   | `etiquette` | étiquettes mono, surtitres, légendes des chiffres | 12,5 px | 14,1 px | 15 px   |
+| `text-sm`   | `legende`   | texte secondaire, descriptions de cartes          | 14 px   | 16,4 px | 17 px   |
+| `text-base` | `courant`   | texte courant                                     | 16,5 px | 20,2 px | 21 px   |
+| `text-lg`   | `chapo`     | chapôs, prix sur les cartes                       | 19 px   | 24,0 px | 25 px   |
+| `text-2xl`  | `titre-s`   | h3, titres de cartes                              | 24 px   | 33,6 px | 34 px   |
+| `text-4xl`  | `titre-m`   | h2 de section, titre du hero                      | 30 px   | 46 px   | 46 px   |
+| `text-5xl`  | `titre-l`   | grands titres (appel contact)                     | 36 px   | 62 px   | 62 px   |
 
 Les `clamp()` déjà présents dans les composants (`text-[clamp(34px,5vw,58px)]` et consorts) sont remplacés par le palier correspondant. Les espacements verticaux de section (`py-[clamp(86px,11vw,148px)]`) sont conservés tels quels : ils fonctionnent déjà.
 
@@ -84,13 +88,13 @@ Mesures sur le fond `--color-sky` (`#fff6ec`). Le seuil WCAG AA pour du texte de
 
 | Token                            | Usage                                                                                  | Avant                                 | Après     | Ratio obtenu |
 | -------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------- | --------- | ------------ |
-| `--color-mute`                   | sous-titre « Consultant », légendes de section, prix boutique, profondeurs des strates | `#ac8b73` — **2,9:1**                 | `#8a6a53` | 4,7:1        |
+| `--color-mute`                   | sous-titre « Consultant », légendes de section, prix boutique, profondeurs des strates | `#ac8b73` — **2,9:1**                 | `#8a6a53` | 4,60:1       |
 | `--color-coral-ink` _(nouveau)_  | tous les surtitres `eyebrow`, mentions « Réserver → » des cartes                       | `--color-coral` `#f0653a` — **3,0:1** | `#b93a18` | 5,4:1        |
 | `--color-coral-deep` _(nouveau)_ | fond des boutons `btn-sun` (texte blanc dessus)                                        | `--color-coral` `#f0653a` — **3,2:1** | `#d03c19` | 4,8:1        |
 
 `--color-coral` reste inchangé et conserve tous ses usages décoratifs : filets, pastilles, ornements SVG, bordures, points de liste. Seuls ses deux usages porteurs de texte migrent.
 
-L'utilitaire `eyebrow` passe à `color: var(--color-coral-ink)` et `font-size: var(--text-etiquette)` ; `btn` passe à `font-size: var(--text-etiquette)` ; `btn-sun` à `background: var(--color-coral-deep)`.
+L'utilitaire `eyebrow` passe à `color: var(--color-coral-ink)` et `font-size: var(--text-xs)` ; `btn` passe à `font-size: var(--text-xs)` ; `btn-sun` à `background: var(--color-coral-deep)`.
 
 ## 4. Contenu — `src/lib/content/defaults.ts`
 
@@ -148,7 +152,7 @@ Le SVG du soleil, aujourd'hui écrit en dur dans `Header.svelte`, devient un com
 
 ### 5.2 `Header.svelte`
 
-- Soleil agrandi de 38 px à `clamp(46px, 3.6vw, 62px)` ; « Olivier Hildevert » de 22 px à `clamp(24px, 1.9vw, 34px)` ; « Consultant » au palier `etiquette`.
+- Soleil agrandi de 38 px à `clamp(46px, 3.6vw, 62px)` ; « Olivier Hildevert » de 22 px à `clamp(24px, 1.9vw, 34px)` ; « Consultant » au palier `text-xs` (étiquette).
 - **Menu mobile** — sous `lg` (1024 px), un `<details>` / `<summary>` stylé en bouton burger (48 × 48 px) ouvre un panneau contenant les six liens de `nav` (`$lib/config`) et le bouton « Prendre rendez-vous ».
   Le choix de `<details>` plutôt que d'un état Svelte est délibéré : le panneau s'ouvre, se ferme et se pilote au clavier **sans JavaScript**, conformément au principe d'amélioration progressive suivi partout ailleurs dans le projet (formulaires, réservation, newsletter). Un `$effect` facultatif referme le panneau après un clic sur un lien ; son absence dégrade proprement.
   `aria-label` sur le `<summary>`, `aria-label="Navigation principale"` conservé sur le `<nav>` desktop, second `<nav aria-label="Navigation mobile">` dans le panneau.
