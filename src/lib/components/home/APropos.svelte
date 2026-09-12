@@ -26,26 +26,26 @@
 					src="$lib/assets/portrait-cabinet.jpg"
 					alt="Olivier Hildevert dans son cabinet"
 					loading="lazy"
-					sizes="(min-width: 1024px) 460px, 90vw"
-					class="h-full w-full object-cover"
+					sizes="(min-width: 1024px) 560px, calc(100vw - 2.75rem)"
+					class="h-full w-full object-cover object-[22%_center]"
 				/>
 			</div>
 			<span
-				class="absolute -bottom-7.5 left-0 font-mono text-[10px] tracking-[0.16em] text-mute uppercase"
+				class="absolute -bottom-7.5 left-0 font-mono text-xs tracking-[0.16em] text-mute uppercase"
 			>
 				{content.legendePortrait}
 			</span>
 		</div>
 		<div class="reveal" {@attach reveal()}>
 			<span class="eyebrow">{content.eyebrow}</span>
-			<h2 class="mt-3.5 mb-2 text-[clamp(34px,4.6vw,56px)]">{content.titre}</h2>
-			<p class="mb-6 font-mono text-[11px] tracking-[0.2em] text-coral uppercase">
+			<h2 class="mt-3.5 mb-2 text-4xl">{content.titre}</h2>
+			<p class="mb-6 font-mono text-xs tracking-[0.2em] text-coral uppercase">
 				{content.sousTitre}
 			</p>
-			<p class="mb-4 text-[15.5px] leading-[1.7] text-ink-soft">
+			<p class="mb-4 text-base leading-[1.7] text-ink-soft">
 				{content.paragraphe1}
 			</p>
-			<p class="mb-4 text-[15.5px] leading-[1.7] text-ink-soft">
+			<p class="mb-4 text-base leading-[1.7] text-ink-soft">
 				{content.paragraphe2}
 			</p>
 			<blockquote
@@ -53,13 +53,13 @@
 			>
 				{content.citation}
 			</blockquote>
-			<p class="mb-4 text-[15.5px] leading-[1.7] text-ink-soft">
+			<p class="mb-4 text-base leading-[1.7] text-ink-soft">
 				{content.paragraphe3}
 			</p>
 			<div class="mt-6.5 flex flex-wrap gap-2.5">
 				{#each content.qualifications as cred (cred)}
 					<span
-						class="rounded-full border border-line bg-[color-mix(in_oklab,var(--color-coral)_10%,#fff)] px-3.5 py-2 font-mono text-[10.5px] tracking-[0.08em] text-ink-soft"
+						class="rounded-full border border-line bg-[color-mix(in_oklab,var(--color-coral)_10%,#fff)] px-3.5 py-2 font-mono text-xs tracking-[0.08em] text-ink-soft"
 					>
 						{cred}
 					</span>
