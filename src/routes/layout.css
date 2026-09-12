@@ -31,13 +31,15 @@
 
 	--color-ink: #3a2114; /* espresso chaud — texte */
 	--color-ink-soft: #7a5644;
-	--color-mute: #ac8b73; /* gris chaud */
+	--color-mute: #8a6a53; /* gris chaud — assombri pour atteindre 4,7:1 sur --color-sky */
 	--color-line: #f1d9c0; /* hairline clair */
 	--color-line-2: #e7c7a6;
 
 	--color-amber: #f2a03d; /* or solaire */
 	--color-amber-soft: #fbc074;
-	--color-coral: #f0653a; /* corail — accent principal */
+	--color-coral: #f0653a; /* corail — accent décoratif : filets, pastilles, ornements */
+	--color-coral-ink: #b93a18; /* corail en TEXTE sur fond clair — 5,4:1 */
+	--color-coral-deep: #d03c19; /* corail en FOND de bouton, texte blanc dessus — 4,8:1 */
 	--color-coral-soft: #f79b79;
 	--color-ember: #d8431f; /* vermillon profond */
 	--color-rose: #e85d78; /* rose d'aurore */
@@ -60,9 +62,35 @@
 	--font-rubik: 'Rubik', system-ui, sans-serif;
 	--font-merriweather: 'Merriweather', Georgia, serif;
 
+	/* ---------- Échelle typographique fluide ----------
+	   On redéfinit les noms d'échelle de Tailwind eux-mêmes : tout `text-sm`,
+	   `text-4xl`… déjà écrit dans le projet devient fluide sans toucher au site
+	   d'appel — y compris sur /contact, /reservation, /newsletter et +error.
+	   Chaque palier : plancher (mobile) · rem + vw · plafond (grands écrans).
+	   Le `rem` fait respecter la taille de police choisie dans le navigateur ;
+	   le `vw` fait suivre l'écran. */
+	--text-xs: clamp(12.5px, 0.72rem + 0.18vw, 15px);
+	--text-xs--line-height: 1.5;
+	--text-sm: clamp(14px, 0.8rem + 0.25vw, 17px);
+	--text-sm--line-height: 1.6;
+	--text-base: clamp(16.5px, 0.95rem + 0.35vw, 21px);
+	--text-base--line-height: 1.65;
+	--text-lg: clamp(19px, 1.05rem + 0.5vw, 25px);
+	--text-lg--line-height: 1.5;
+	--text-xl: clamp(21px, 1.1rem + 0.7vw, 28px);
+	--text-xl--line-height: 1.4;
+	--text-2xl: clamp(24px, 1.2rem + 1vw, 34px);
+	--text-2xl--line-height: 1.25;
+	--text-3xl: clamp(27px, 1.3rem + 1.4vw, 40px);
+	--text-3xl--line-height: 1.2;
+	--text-4xl: clamp(30px, 1.4rem + 1.8vw, 46px);
+	--text-4xl--line-height: 1.12;
+	--text-5xl: clamp(36px, 1.6rem + 2.6vw, 62px);
+	--text-5xl--line-height: 1.08;
+
 	--radius-card: 10px;
 	--radius-btn: 6px;
-	--container-wrap: 1180px;
+	--container-wrap: 1440px;
 }
 
 @layer base {
@@ -116,7 +144,9 @@
 
 /* ---------- Conteneur du design ---------- */
 @utility wrap {
-	width: min(var(--container-wrap), 90vw);
+	/* `100% - 2.75rem` plutôt que `90vw` : gouttières fixes de 22 px sur mobile,
+	   et pas de dépendance à vw (qui inclut la barre de défilement). */
+	width: min(var(--container-wrap), 100% - 2.75rem);
 	margin-inline: auto;
 }
 
@@ -124,7 +154,7 @@
 @utility btn {
 	font-family: var(--font-mono);
 	font-weight: 500;
-	font-size: 12.5px;
+	font-size: var(--text-xs);
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	cursor: pointer;
@@ -147,13 +177,13 @@
 	}
 }
 @utility btn-sun {
-	background: var(--color-coral);
+	background: var(--color-coral-deep);
 	color: #fff;
-	box-shadow: 0 16px 36px -16px var(--color-coral);
+	box-shadow: 0 16px 36px -16px var(--color-coral-deep);
 	&:hover {
 		background: var(--color-ember);
 		transform: translateY(-2px);
-		box-shadow: 0 20px 44px -14px var(--color-coral);
+		box-shadow: 0 20px 44px -14px var(--color-coral-deep);
 	}
 }
 @utility btn-line {
@@ -162,7 +192,7 @@
 	color: var(--color-ink);
 	&:hover {
 		border-color: var(--color-coral);
-		color: var(--color-coral);
+		color: var(--color-coral-ink);
 		transform: translateY(-2px);
 	}
 }
@@ -181,10 +211,10 @@
 /* ---------- Eyebrow (surtitre mono avec filet) ---------- */
 @utility eyebrow {
 	font-family: var(--font-mono);
-	font-size: 11.5px;
+	font-size: var(--text-xs);
 	letter-spacing: 0.34em;
 	text-transform: uppercase;
-	color: var(--color-coral);
+	color: var(--color-coral-ink);
 	font-weight: 500;
 	display: inline-flex;
 	align-items: center;
