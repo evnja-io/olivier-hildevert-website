@@ -11,6 +11,10 @@
 	let scrollY = $state(0);
 	const scrolled = $derived(scrollY > 40);
 	const home = resolve('/');
+
+	// Ouverture du panneau mobile. Sans JavaScript, ce lien n'existe pas et
+	// <details> continue de s'ouvrir et se fermer nativement par son <summary>.
+	let menuOuvert = $state(false);
 </script>
 
 <svelte:window bind:scrollY />
@@ -35,7 +39,7 @@
 			</span>
 		</a>
 
-		<nav class="hidden items-center gap-[30px] lg:flex" aria-label="Navigation principale">
+		<nav class="hidden items-center gap-[30px] xl:flex" aria-label="Navigation principale">
 			{#each nav as item (item.anchor)}
 				{#if item.pill}
 					<a
@@ -56,7 +60,7 @@
 		</nav>
 
 		<a
-			class="btn hidden btn-sun lg:inline-flex"
+			class="btn hidden btn-sun xl:inline-flex"
 			href={resolve('/reservation')}
 			onclick={(e) => {
 				e.preventDefault();
@@ -66,12 +70,13 @@
 			Prendre rendez-vous
 		</a>
 
-		<!-- Menu mobile : <details> plutôt qu'un état Svelte, pour qu'il
-		     fonctionne sans JavaScript comme le reste des parcours du site. -->
-		<details class="lg:hidden">
+		<!-- Menu mobile : <details> plutôt qu'un panneau piloté uniquement par
+		     JavaScript, pour qu'il fonctionne sans JS comme le reste des parcours
+		     du site. `bind:open` n'ajoute que la fermeture au clic sur un lien. -->
+		<details bind:open={menuOuvert} class="xl:hidden">
 			<summary
 				class="grid h-12 w-12 cursor-pointer list-none place-items-center gap-[5px] rounded-btn border border-[color-mix(in_oklab,var(--color-coral)_40%,transparent)] bg-[color-mix(in_oklab,#fff_55%,transparent)] [&::-webkit-details-marker]:hidden"
-				aria-label="Ouvrir le menu"
+				aria-label={menuOuvert ? 'Fermer le menu' : 'Ouvrir le menu'}
 			>
 				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
 				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
@@ -83,9 +88,15 @@
 				aria-label="Navigation mobile"
 			>
 				{#each nav as item (item.anchor)}
+					<!-- La pastille du bureau se lit mal dans une liste verticale : la mise
+					     en avant devient un filet ambre à gauche, plus un texte appuyé.
+					     L'ambre reste décoratif — le texte garde sa couleur contrastée. -->
 					<a
 						href="{home}#{item.anchor}"
-						class="rounded-btn px-3 py-3 font-mono text-xs tracking-[0.14em] text-ink-soft uppercase transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_10%,transparent)] hover:text-coral-ink"
+						onclick={() => (menuOuvert = false)}
+						class="rounded-btn py-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_10%,transparent)] hover:text-coral-ink {item.pill
+							? 'border-l-2 border-amber pr-3 pl-2.5 font-semibold text-ink'
+							: 'px-3 text-ink-soft'}"
 					>
 						{item.label}
 					</a>
@@ -95,6 +106,7 @@
 					href={resolve('/reservation')}
 					onclick={(e) => {
 						e.preventDefault();
+						menuOuvert = false;
 						openBooking();
 					}}
 				>
