@@ -19,7 +19,12 @@
 		{ label: 'Tarifs', anchor: 'tarifs' }
 	];
 
-	const rdvLinks: { label: string; prestation?: PrestationId; href?: string }[] = [
+	/* Une entrée porte soit une prestation (ouvre la modale), soit une URL externe :
+	   l'union rend inécrivable la forme « ni l'une ni l'autre », qui produisait un
+	   `openBooking(undefined)` sur un lien sans destination. */
+	type LienRdv = { label: string } & ({ prestation: PrestationId } | { href: string });
+
+	const rdvLinks: LienRdv[] = [
 		{ label: 'Séance individuelle', prestation: 'individuelle' },
 		{ label: 'Entreprises', prestation: 'entreprise' },
 		{ label: 'Stages & ateliers', prestation: 'stage' },
@@ -61,7 +66,7 @@
 					Rendez-vous
 				</h4>
 				{#each rdvLinks as link (link.label)}
-					{#if link.href}
+					{#if 'href' in link}
 						<a
 							href={link.href}
 							target="_blank"
@@ -72,7 +77,7 @@
 						</a>
 					{:else}
 						<a
-							href="{reservation}{link.prestation ? '?prestation=' + link.prestation : ''}"
+							href="{reservation}?prestation={link.prestation}"
 							class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
 							onclick={(e) => {
 								e.preventDefault();

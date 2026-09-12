@@ -95,7 +95,9 @@ const accueilSchema = z.object({
 					desc: z.string(),
 					prixTexte: z.string(),
 					boutonLabel: z.string(),
-					lien: z.string()
+					// URL et non simple chaîne : une valeur vide venue du CMS
+					// produirait un href="" — un lien qui ne mène nulle part.
+					lien: z.url()
 				})
 			)
 			.nonempty()
