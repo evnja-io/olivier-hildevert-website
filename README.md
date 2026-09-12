@@ -83,6 +83,29 @@ src/
     └── sitemap.xml/         # Sitemap prerendered (routes statiques + slugs Strapi à terme)
 ```
 
+## Assets
+
+### Régénérer `hero-mer.jpg`
+
+Le fond du hero est la moitié gauche de `hero-bg.jpg` (mer et lever de soleil,
+sans le portrait, qui commence à x ≈ 1460 px), agrandie ×2 en lanczos :
+
+    node -e "
+    const fs = require('fs');
+    const dossier = fs.readdirSync('node_modules/.pnpm').find((d) => d.startsWith('sharp@'));
+    const sharp = require('./node_modules/.pnpm/' + dossier + '/node_modules/sharp');
+    sharp('src/lib/assets/hero-bg.jpg')
+      .extract({ left: 0, top: 0, width: 1460, height: 1429 })
+      .resize({ width: 2920, kernel: 'lanczos3' })
+      .jpeg({ quality: 84, mozjpeg: true })
+      .toFile('src/lib/assets/hero-mer.jpg')
+      .then((i) => console.log(i.width + 'x' + i.height));
+    "
+
+`sharp` est une dépendance transitive de `vite-imagetools` : elle n'est pas
+déclarée dans `package.json` et se résout depuis le magasin pnpm.
+`hero-bg.jpg` est conservé comme source du recadrage.
+
 ## Recréer ce socle
 
 ```sh
