@@ -8,7 +8,7 @@ import type { PageAccueilContent, PrestationContent, ReglagesSite } from './type
 
 export const defaultAccueil: PageAccueilContent = {
 	hero: {
-		eyebrow: 'Sophrologie · Thérapie psycho énergétique',
+		eyebrow: 'Sophrologie · Thérapie psycho énergétique et transpersonnelle',
 		titreLigne1: 'Décoder le visible,',
 		titreLigne2: "grâce à l'invisible",
 		paragraphe:
@@ -17,9 +17,10 @@ export const defaultAccueil: PageAccueilContent = {
 		boutonPrincipal: 'Réserver une séance',
 		boutonSecondaire: "Découvrir l'approche",
 		stats: [
-			{ valeur: '1992', legende: "Praticien en relation d'aide" },
-			{ valeur: '1 h 30', legende: 'Par séance individuelle' },
-			{ valeur: '+30 ans', legende: "D'accompagnements" }
+			{ valeur: 'Depuis 1992', legende: "Praticien en relation d'aide" },
+			{ valeur: '+ de 10 000', legende: 'Séances animées' },
+			// « 34 ans » est du texte, pas un calcul : à corriger dans le CMS en 2027.
+			{ valeur: '34 ans', legende: "D'accompagnements individuels et collectifs" }
 		]
 	},
 	approche: {
@@ -77,7 +78,7 @@ export const defaultAccueil: PageAccueilContent = {
 		legendeDroite: 'Sept portes — une même lumière'
 	},
 	espritAme: {
-		eyebrow: 'Deux logiques, une même personne',
+		eyebrow: 'Deux logiques, pour une même personne',
 		titre: "États d'esprit & états d'âme",
 		colonneEsprit: {
 			tag: "États d'esprit",
@@ -146,17 +147,19 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	boutique: {
 		eyebrow: 'Boutique',
-		titre: 'Prolonger le chemin',
+		titre: "Prolonger le chemin de l'éveil",
 		paragraphe:
-			"Un roman thérapeutique et les veilleuses LUMINÂME, pensées pour la réharmonisation vibratoire des lieux et des états d'être.",
+			'Un roman thérapeutique pour se réaligner et des veilleuses énergétiques pour réharmoniser les lieux et les êtres.',
 		produits: [
 			{
 				cleImage: 'livre',
 				tag: 'Roman fantastique & thérapeutique',
 				titre: "Angela, l'ange est là !",
 				desc: "Un récit où le merveilleux soigne; premier roman d'Olivier Hildevert, paru chez BoD.",
-				prixTexte: 'Disponible à la commande',
-				boutonLabel: 'Commander'
+				prixTexte: "Disponible à l'achat",
+				boutonLabel: 'Commander',
+				// URL de remplacement — à renseigner dans Strapi.
+				lien: 'https://www.bod.fr/'
 			},
 			{
 				cleImage: 'veilleuses',
@@ -164,7 +167,9 @@ export const defaultAccueil: PageAccueilContent = {
 				titre: 'LUMINÂME',
 				desc: "Inspirées de motifs sacrés, pour l'harmonisation vibratoire des lieux, le bien-être énergétique et les pratiques méditatives.",
 				prixTexte: 'Catalogue en ligne',
-				boutonLabel: 'Découvrir'
+				boutonLabel: 'Découvrir',
+				// URL de remplacement — à renseigner dans Strapi.
+				lien: 'https://olivierhildevert.com/'
 			}
 		]
 	},
@@ -201,8 +206,7 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	mantra: {
 		citation:
-			"Relier les *états d'esprit* et les *états d'âme*, pour révéler le sens des expériences où chacun se construit, se répare et se transforme.",
-		auteur: "La vocation de l'accompagnement"
+			"Relier les *états d'esprit* et les *états d'âme*, pour révéler le sens des expériences où chacun se construit, se répare et se transforme."
 	},
 	contactCta: {
 		eyebrow: 'Contact',
@@ -222,7 +226,7 @@ export const defaultAccueil: PageAccueilContent = {
 export const defaultPrestations: PrestationContent[] = [
 	{
 		cle: 'individuelle',
-		titre: 'Séance individuelle',
+		titre: 'Séance individuelle — décodage et solutions',
 		metaReservation: '1 h 30 · 140 €',
 		descReservation: 'Décodage et accompagnement d’une situation de vie.',
 		descCarte:

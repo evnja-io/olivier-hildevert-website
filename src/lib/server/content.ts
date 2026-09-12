@@ -94,7 +94,8 @@ const accueilSchema = z.object({
 					titre: z.string(),
 					desc: z.string(),
 					prixTexte: z.string(),
-					boutonLabel: z.string()
+					boutonLabel: z.string(),
+					lien: z.string()
 				})
 			)
 			.nonempty()
@@ -116,7 +117,7 @@ const accueilSchema = z.object({
 			)
 			.nonempty()
 	}),
-	mantra: z.object({ citation: z.string(), auteur: z.string() }),
+	mantra: z.object({ citation: z.string() }),
 	contactCta: z.object({
 		eyebrow: z.string(),
 		titre: z.string(),

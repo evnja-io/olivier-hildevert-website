@@ -85,6 +85,8 @@ export interface ProduitBoutique {
 	desc: string;
 	prixTexte: string;
 	boutonLabel: string;
+	/** URL externe de la boutique — éditable dans Strapi, ouverte dans un nouvel onglet. */
+	lien: string;
 }
 
 export interface BoutiqueContent {
@@ -113,7 +115,6 @@ export interface TarifsContent {
 /** `citation` : les segments entre astérisques (`*…*`) sont mis en valeur. */
 export interface MantraContent {
 	citation: string;
-	auteur: string;
 }
 
 export interface ContactCtaContent {

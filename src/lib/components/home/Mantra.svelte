@@ -22,10 +22,5 @@
 		<div class="rule mx-auto mt-7.5 max-w-[200px] text-white [&>b]:bg-amber-soft">
 			<i></i><b></b><i></i>
 		</div>
-		<cite
-			class="mt-4.5 block font-mono text-[11px] tracking-[0.26em] text-white/80 uppercase not-italic"
-		>
-			{content.auteur}
-		</cite>
 	</div>
 </div>
