@@ -28,26 +28,26 @@
 		individuelle: {
 			num: '01',
 			image: cardIndividuelle,
-			position: 'center 60%',
-			alt: "Silhouette en méditation, énergie lumineuse reliant l'esprit et le cœur"
+			position: 'center 62%',
+			alt: "Personne assise en méditation au bord d'une falaise, face à la mer au soleil levant"
 		},
 		programme: {
 			num: '02',
 			image: cardProgramme,
-			position: 'center 42%',
-			alt: 'Chemin de lumière serpentant vers un soleil levant à travers les nuées'
+			position: 'center 38%',
+			alt: 'Sentier de crête serpentant vers le soleil levant au-dessus des montagnes'
 		},
 		entreprise: {
 			num: '03',
 			image: cardEntreprise,
-			position: 'center 58%',
-			alt: 'Groupe de silhouettes reliées par des fils de lumière devant un soleil levant'
+			position: 'center 45%',
+			alt: 'Petit groupe de professionnels en échange sur une passerelle en forêt, lumière dorée'
 		},
 		stage: {
 			num: '04',
 			image: cardStages,
-			position: 'center 48%',
-			alt: "Cercle de sphères lumineuses gravitant autour d'un soleil central"
+			position: 'center 55%',
+			alt: "Cercle de participants réunis autour d'un feu de camp et de lanternes au crépuscule"
 		}
 	};
 
