@@ -20,8 +20,7 @@ export function accueilVersStrapi(c: PageAccueilContent) {
 			colonneAme: { ...c.espritAme.colonneAme, points: items(c.espritAme.colonneAme.points) }
 		},
 		aPropos: { ...c.aPropos, qualifications: items(c.aPropos.qualifications) },
-		pourQui: { ...c.pourQui, publics: items(c.pourQui.publics) },
-		contactCta: { ...c.contactCta, modes: items(c.contactCta.modes) }
+		pourQui: { ...c.pourQui, publics: items(c.pourQui.publics) }
 	};
 }
 

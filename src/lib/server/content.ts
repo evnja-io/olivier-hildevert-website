@@ -124,8 +124,7 @@ const accueilSchema = z.object({
 		eyebrow: z.string(),
 		titre: z.string(),
 		paragraphe: z.string(),
-		boutonLabel: z.string(),
-		modes: itemsTexte
+		boutonLabel: z.string()
 	})
 });
 

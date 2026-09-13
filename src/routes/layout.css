@@ -91,6 +91,26 @@
 	--radius-card: 10px;
 	--radius-btn: 6px;
 	--container-wrap: 1440px;
+
+	/* ---------- Menu mobile ----------
+	   Le panneau s'épanouit depuis le bouton (coin haut-droit) et ses entrées
+	   se posent l'une après l'autre (décalage réglé en `animation-delay` inline
+	   dans Header.svelte). Voir la neutralisation en mouvement réduit plus bas. */
+	--animate-menu-panel: menu-panel 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+	--animate-menu-item: menu-item 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+	@keyframes menu-panel {
+		from {
+			opacity: 0;
+			transform: translateY(-10px) scale(0.94);
+		}
+	}
+	@keyframes menu-item {
+		from {
+			opacity: 0;
+			transform: translateX(14px);
+		}
+	}
 }
 
 @layer base {
@@ -287,6 +307,11 @@
 			opacity: 1 !important;
 			transform: none !important;
 			transition: none !important;
+		}
+		/* Le menu mobile s'affiche d'un coup : ni ouverture du panneau ni cascade. */
+		.animate-menu-panel,
+		.animate-menu-item {
+			animation: none !important;
 		}
 	}
 }

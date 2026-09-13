@@ -73,36 +73,68 @@
 		<!-- Menu mobile : <details> plutôt qu'un panneau piloté uniquement par
 		     JavaScript, pour qu'il fonctionne sans JS comme le reste des parcours
 		     du site. `bind:open` n'ajoute que la fermeture au clic sur un lien. -->
-		<details bind:open={menuOuvert} class="xl:hidden">
+		<details bind:open={menuOuvert} class="group xl:hidden">
+			<!-- Pastille ronde « soleil » : au repos trois filets corail de largeurs
+			     inégales (le court s'étire au survol), à l'ouverture le disque
+			     s'allume en corail plein et les filets se croisent en X. -->
 			<summary
-				class="grid h-12 w-12 cursor-pointer list-none place-items-center gap-[5px] rounded-btn border border-[color-mix(in_oklab,var(--color-coral)_40%,transparent)] bg-[color-mix(in_oklab,#fff_55%,transparent)] [&::-webkit-details-marker]:hidden"
+				class="group/burger relative grid h-12 w-12 cursor-pointer list-none place-items-center rounded-full border border-[color-mix(in_oklab,var(--color-coral)_38%,transparent)] bg-[color-mix(in_oklab,#fff_58%,transparent)] shadow-[0_6px_18px_-12px_var(--color-coral-deep)] backdrop-blur-[6px] transition-[background-color,border-color,box-shadow,translate] duration-400 group-open:border-transparent group-open:bg-coral-deep group-open:shadow-[0_12px_28px_-12px_var(--color-coral-deep)] hover:-translate-y-px hover:border-coral hover:shadow-[0_12px_26px_-12px_var(--color-coral-deep)] [&::-webkit-details-marker]:hidden"
 				aria-label={menuOuvert ? 'Fermer le menu' : 'Ouvrir le menu'}
 			>
-				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
-				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
-				<span class="block h-0.5 w-5 rounded-full bg-coral-ink"></span>
+				<span
+					class="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--color-amber)_60%,transparent),transparent_70%)] opacity-0 blur-[7px] transition-opacity duration-500 group-open:opacity-0 group-hover/burger:opacity-100"
+					aria-hidden="true"
+				></span>
+				<span
+					class="pointer-events-none absolute h-0.5 w-5 -translate-y-1.5 rounded-full bg-coral-ink transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:translate-y-0 group-open:rotate-45 group-open:bg-white"
+				></span>
+				<span
+					class="pointer-events-none absolute h-0.5 w-3 rounded-full bg-coral-ink transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:w-0 group-open:opacity-0 group-hover/burger:w-5"
+				></span>
+				<span
+					class="pointer-events-none absolute h-0.5 w-5 translate-y-1.5 rounded-full bg-coral-ink transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:translate-y-0 group-open:-rotate-45 group-open:bg-white"
+				></span>
 			</summary>
 
 			<nav
-				class="absolute top-[calc(100%+14px)] right-0 flex w-[min(320px,calc(100vw-2.75rem))] flex-col gap-1 rounded-card border border-line bg-[color-mix(in_oklab,var(--color-sky)_97%,transparent)] p-4 shadow-[0_30px_60px_-30px_color-mix(in_oklab,var(--color-ember)_45%,transparent)] backdrop-blur-[14px]"
+				class="absolute top-[calc(100%+16px)] right-0 flex w-[min(320px,calc(100vw-2.75rem))] origin-top-right animate-menu-panel flex-col rounded-card border border-line-2 bg-[linear-gradient(175deg,color-mix(in_oklab,var(--color-surface)_96%,transparent),color-mix(in_oklab,var(--color-blush)_48%,var(--color-surface)))] p-3 shadow-[0_34px_70px_-30px_color-mix(in_oklab,var(--color-ember)_55%,transparent)] backdrop-blur-[16px]"
 				aria-label="Navigation mobile"
 			>
-				{#each nav as item (item.anchor)}
+				<span
+					class="absolute -top-[7px] right-[17px] h-3.5 w-3.5 rotate-45 rounded-[3px] border-t border-l border-line-2 bg-surface"
+					aria-hidden="true"
+				></span>
+				{#each nav as item, i (item.anchor)}
 					<!-- La pastille du bureau se lit mal dans une liste verticale : la mise
-					     en avant devient un filet ambre à gauche, plus un texte appuyé.
-					     L'ambre reste décoratif — le texte garde sa couleur contrastée. -->
+					     en avant devient une puce ambre allumée en permanence, plus un
+					     texte appuyé. La couleur reste décorative — le texte garde son
+					     contraste. Sur les autres entrées, la puce éclot au survol ;
+					     réservée à sa place dès le repos, elle ne décale pas le libellé. -->
 					<a
 						href="{home}#{item.anchor}"
 						onclick={() => (menuOuvert = false)}
-						class="rounded-btn py-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_10%,transparent)] hover:text-coral-ink {item.pill
-							? 'border-l-2 border-amber pr-3 pl-2.5 font-semibold text-ink'
-							: 'px-3 text-ink-soft'}"
+						style="animation-delay: {70 + i * 45}ms"
+						class="group/lien flex animate-menu-item items-center gap-3 rounded-btn px-3 py-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors hover:bg-[color-mix(in_oklab,var(--color-coral)_9%,transparent)] hover:text-coral-ink {item.pill
+							? 'font-semibold text-ink'
+							: 'text-ink-soft'}"
 					>
-						{item.label}
+						<span
+							class="h-[6px] w-[6px] flex-none rounded-full transition-[scale,background-color] duration-300 group-hover/lien:scale-100 {item.pill
+								? 'bg-amber'
+								: 'scale-0 bg-coral'}"
+							aria-hidden="true"
+						></span>
+						<span class="transition-[translate] duration-300 group-hover/lien:translate-x-0.5">
+							{item.label}
+						</span>
 					</a>
 				{/each}
+				<div class="rule my-2 px-3 text-line-2" aria-hidden="true">
+					<i></i><b></b><i></i>
+				</div>
 				<a
-					class="mt-2 btn btn-sun justify-center"
+					class="btn btn-sun animate-menu-item justify-center"
+					style="animation-delay: {70 + nav.length * 45}ms"
 					href={resolve('/reservation')}
 					onclick={(e) => {
 						e.preventDefault();

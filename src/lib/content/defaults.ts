@@ -127,8 +127,7 @@ export const defaultAccueil: PageAccueilContent = {
 	prestationsIntro: {
 		eyebrow: 'Prestations',
 		titre: 'Des accompagnements pour chaque chemin',
-		paragraphe:
-			'Pour les particuliers, les groupes et les entreprises en présentiel, en visioconférence ou par téléphone.'
+		paragraphe: 'Pour les particuliers, les groupes et les entreprises, en séances par téléphone.'
 	},
 	pourQui: {
 		eyebrow: 'Pour qui ?',
@@ -189,7 +188,7 @@ export const defaultAccueil: PageAccueilContent = {
 				label: 'Particuliers',
 				montant: '140',
 				suffixe: '€',
-				sousTexte: 'Séance individuelle de 1 h 30, en présentiel ou à distance.',
+				sousTexte: 'Séance individuelle de 1 h 30, par téléphone.',
 				boutonLabel: 'Réserver',
 				prestationCle: 'individuelle',
 				misEnAvant: true
@@ -212,9 +211,8 @@ export const defaultAccueil: PageAccueilContent = {
 		eyebrow: 'Contact',
 		titre: 'Faisons lever votre chemin',
 		paragraphe:
-			'Prenez rendez-vous pour une première séance, ou écrivez-moi votre demande. Les consultations sont proposées en présentiel, en visioconférence ou par téléphone, selon vos besoins.',
-		boutonLabel: 'Prendre rendez-vous',
-		modes: ['En présentiel', 'En visioconférence', 'Par téléphone']
+			'Prenez rendez-vous pour une première séance, ou écrivez-moi votre demande. Les consultations se déroulent par téléphone, où que vous soyez.',
+		boutonLabel: 'Prendre rendez-vous'
 	}
 };
 

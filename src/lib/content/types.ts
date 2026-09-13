@@ -122,7 +122,6 @@ export interface ContactCtaContent {
 	titre: string;
 	paragraphe: string;
 	boutonLabel: string;
-	modes: string[];
 }
 
 export interface PageAccueilContent {

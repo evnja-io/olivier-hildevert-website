@@ -30,15 +30,5 @@
 				<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</a>
-		<div class="mt-7.5 flex flex-wrap justify-center gap-6.5">
-			{#each content.modes as mode (mode)}
-				<span
-					class="flex items-center gap-2 font-mono text-xs tracking-[0.13em] text-white/84 uppercase"
-				>
-					<span class="h-[5px] w-[5px] rounded-full bg-amber-soft" aria-hidden="true"></span>
-					{mode}
-				</span>
-			{/each}
-		</div>
 	</div>
 </div>
