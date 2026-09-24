@@ -39,6 +39,46 @@ describe('getPageAccueil', () => {
 		await expect(getPageAccueil(reponse({ data: { hero: {} } }))).resolves.toEqual(defaultAccueil);
 	});
 
+	it('remet les strates dans l’ordre de leur numéro, quel que soit l’ordre renvoyé', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const { strates } = brut.approche;
+		const melange = [
+			strates[6],
+			strates[2],
+			strates[0],
+			strates[5],
+			strates[1],
+			strates[4],
+			strates[3]
+		];
+		const accueil = await getPageAccueil(
+			reponse({ data: { ...brut, approche: { ...brut.approche, strates: melange } } })
+		);
+		expect(accueil.approche.strates.map((s) => s.num)).toEqual([
+			'I',
+			'II',
+			'III',
+			'IV',
+			'V',
+			'VI',
+			'VII'
+		]);
+	});
+
+	it('trie aussi les numéros arabes, et laisse en fin ceux qui ne sont pas des numéros', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const [a, b, c] = brut.approche.strates;
+		const strates = [
+			{ ...a, num: '10' },
+			{ ...b, num: '?' },
+			{ ...c, num: '2' }
+		];
+		const accueil = await getPageAccueil(
+			reponse({ data: { ...brut, approche: { ...brut.approche, strates } } })
+		);
+		expect(accueil.approche.strates.map((s) => s.num)).toEqual(['2', '10', '?']);
+	});
+
 	it('retombe sur le défaut si Strapi est en erreur', async () => {
 		await expect(getPageAccueil(enEchec)).resolves.toEqual(defaultAccueil);
 	});

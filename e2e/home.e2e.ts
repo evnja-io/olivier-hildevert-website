@@ -8,7 +8,9 @@ test.describe('page d’accueil Aurore', () => {
 		for (const ancre of ['approche', 'apropos', 'prestations', 'boutique', 'tarifs', 'contact']) {
 			await expect(page.locator(`#${ancre}`)).toBeAttached();
 		}
-		await expect(page.getByText('ne relèvent pas de la médecine', { exact: false })).toBeVisible();
+		await expect(
+			page.getByRole('heading', { name: /Nature et limites des accompagnements/ })
+		).toBeVisible();
 	});
 
 	test('la nav mène aux ancres depuis une autre route', async ({ page }) => {

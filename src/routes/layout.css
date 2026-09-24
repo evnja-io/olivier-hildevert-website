@@ -30,7 +30,7 @@
 	--color-halo: #ffe7cb;
 
 	--color-ink: #3a2114; /* espresso chaud — texte */
-	--color-ink-soft: #7a5644;
+	--color-ink-soft: #4a1b12; /* = dusk (fond du footer) — texte courant assombri */
 	--color-mute: #8a6a53; /* gris chaud — assombri pour atteindre 4,60:1 sur --color-sky */
 	--color-line: #f1d9c0; /* hairline clair */
 	--color-line-2: #e7c7a6;
@@ -217,15 +217,15 @@
 	}
 }
 /* inversion sur fond chaud (bandes immersives) */
-@layer components {
-	.on-warm .btn-line {
-		border-color: color-mix(in oklab, #fff 55%, transparent);
-		color: #fff;
-	}
-	.on-warm .btn-line:hover {
-		border-color: #fff;
-		background: color-mix(in oklab, #fff 12%, transparent);
-	}
+/* Hors couche : doit l'emporter sur l'utilitaire `btn-line` (couche
+   utilities), ce qu'une règle en `@layer components` ne faisait pas. */
+.on-warm .btn-line {
+	border-color: color-mix(in oklab, #fff 55%, transparent);
+	color: #fff;
+}
+.on-warm .btn-line:hover {
+	border-color: #fff;
+	background: color-mix(in oklab, #fff 12%, transparent);
 }
 
 /* ---------- Eyebrow (surtitre mono avec filet) ---------- */
@@ -244,7 +244,9 @@
 	   seule ligne, le rendu est identique à celui de `center`. */
 	align-items: flex-start;
 	gap: 13px;
-	&::before {
+	/* filet avant ET après sur tous les surtitres, centrés ou non (cohérence) */
+	&::before,
+	&::after {
 		content: '';
 		width: 26px;
 		height: 1px;
@@ -256,15 +258,6 @@
 }
 @utility eyebrow-center {
 	justify-content: center;
-	&::after {
-		content: '';
-		width: 26px;
-		height: 1px;
-		margin-top: calc(0.5lh - 0.5px);
-		background: currentColor;
-		opacity: 0.7;
-		flex: none;
-	}
 }
 
 /* ---------- Filet ornemental à nœud central ---------- */

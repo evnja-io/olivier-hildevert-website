@@ -21,35 +21,29 @@
 	type EnhancedSrc = typeof cardIndividuelle;
 
 	// Les images restent locales, appariées par clé stable.
-	const IMAGES_PRESTATIONS: Record<
-		PrestationId,
-		{ num: string; image: EnhancedSrc; position: string; alt: string }
-	> = {
-		individuelle: {
-			num: '01',
-			image: cardIndividuelle,
-			position: 'center 62%',
-			alt: "Personne assise en méditation au bord d'une falaise, face à la mer au soleil levant"
-		},
-		programme: {
-			num: '02',
-			image: cardProgramme,
-			position: 'center 38%',
-			alt: 'Sentier de crête serpentant vers le soleil levant au-dessus des montagnes'
-		},
-		entreprise: {
-			num: '03',
-			image: cardEntreprise,
-			position: 'center 45%',
-			alt: 'Petit groupe de professionnels en échange sur une passerelle en forêt, lumière dorée'
-		},
-		stage: {
-			num: '04',
-			image: cardStages,
-			position: 'center 55%',
-			alt: "Cercle de participants réunis autour d'un feu de camp et de lanternes au crépuscule"
-		}
-	};
+	const IMAGES_PRESTATIONS: Record<PrestationId, { num: string; image: EnhancedSrc; alt: string }> =
+		{
+			individuelle: {
+				num: '01',
+				image: cardIndividuelle,
+				alt: "Personne assise en méditation au bord d'une falaise, face à la mer au soleil levant"
+			},
+			programme: {
+				num: '02',
+				image: cardProgramme,
+				alt: 'Sentier de crête serpentant vers le soleil levant au-dessus des montagnes'
+			},
+			entreprise: {
+				num: '03',
+				image: cardEntreprise,
+				alt: 'Petit groupe de professionnels en échange sur une passerelle en forêt, lumière dorée'
+			},
+			stage: {
+				num: '04',
+				image: cardStages,
+				alt: "Cercle de participants réunis autour d'un feu de camp et de lanternes au crépuscule"
+			}
+		};
 
 	const cartes = $derived(prestations.map((p) => ({ ...p, ...IMAGES_PRESTATIONS[p.cle] })));
 </script>
@@ -65,7 +59,7 @@
 				{intro.paragraphe}
 			</p>
 		</div>
-		<div class="grid gap-5.5 lg:grid-cols-2">
+		<div class="grid gap-5.5 sm:grid-cols-2 xl:grid-cols-4">
 			{#each cartes as carte, i (carte.cle)}
 				<a
 					href="{reservation}?prestation={carte.cle}"
@@ -76,7 +70,7 @@
 						openBooking(carte.cle);
 					}}
 				>
-					<div class="prest-media relative h-[250px] overflow-hidden">
+					<div class="relative aspect-square overflow-hidden">
 						<span
 							class="absolute top-3.5 left-4 z-2 rounded-full bg-[color-mix(in_oklab,var(--color-ember)_52%,transparent)] px-2.5 py-[5px] font-mono text-xs tracking-[0.14em] text-white backdrop-blur-[3px]"
 						>
@@ -86,15 +80,16 @@
 							src={carte.image}
 							alt={carte.alt}
 							loading="lazy"
-							sizes="(min-width: 1024px) 700px, calc(100vw - 2.75rem)"
+							sizes="(min-width: 1280px) 340px, (min-width: 640px) 50vw, calc(100vw - 2.75rem)"
 							class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-106"
-							style="object-position: {carte.position}"
 						/>
 					</div>
-					<div class="flex flex-1 flex-col gap-3 p-[26px_30px]">
-						<h3 class="text-2xl tracking-[0.01em]">{carte.titre}</h3>
+					<div class="flex flex-1 flex-col gap-3 p-[22px_24px]">
+						<h3 class="text-2xl tracking-[0.01em] xl:text-xl">{carte.titre}</h3>
 						<p class="flex-1 text-sm leading-[1.62] text-ink-soft">{carte.descCarte}</p>
-						<div class="flex items-center justify-between border-t border-line pt-4">
+						<div
+							class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-t border-line pt-4"
+						>
 							<b class="font-display text-lg font-normal text-ink">{carte.prixCarte}</b>
 							<span
 								class="font-mono text-xs tracking-[0.1em] text-coral-ink uppercase transition-transform duration-250 group-hover:translate-x-[5px]"
@@ -108,17 +103,3 @@
 		</div>
 	</div>
 </section>
-
-<style>
-	/* voile pêche remontant du bas de l'image */
-	.prest-media::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(
-			180deg,
-			transparent 40%,
-			color-mix(in oklab, var(--color-blush) 55%, transparent) 100%
-		);
-	}
-</style>

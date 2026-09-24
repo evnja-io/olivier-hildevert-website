@@ -70,7 +70,7 @@
 						<p class="mb-4.5 text-sm leading-[1.6] text-ink-soft">
 							{produit.desc}
 						</p>
-						<div class="flex flex-wrap items-center gap-3.5">
+						<div class="flex flex-col items-start gap-3.5">
 							<b class="font-mono text-xs tracking-[0.08em] text-mute uppercase">
 								{produit.prixTexte}
 							</b>

@@ -23,6 +23,21 @@ const optionnel = z
 	.nullish()
 	.transform((v) => v ?? undefined);
 
+const ROMAINS: Record<string, number> = { I: 1, V: 5, X: 10, L: 50, C: 100 };
+
+/** « VII » → 7, « 3 » → 3 ; autre chose → Infinity (placé en fin, ordre conservé). */
+function rangNumero(num: string): number {
+	const n = num.trim().toUpperCase();
+	if (/^\d+$/.test(n)) return Number(n);
+	if (!/^[IVXLC]+$/.test(n)) return Infinity;
+	let total = 0;
+	for (let i = 0; i < n.length; i++) {
+		const v = ROMAINS[n[i]];
+		total += v < (ROMAINS[n[i + 1]] ?? 0) ? -v : v;
+	}
+	return total;
+}
+
 const colonneSchema = z.object({
 	tag: z.string(),
 	titre: z.string(),
@@ -55,7 +70,12 @@ const accueilSchema = z.object({
 					profondeur: z.string()
 				})
 			)
-			.nonempty(),
+			.nonempty()
+			// Strapi ne garantit pas l'ordre des composants répétables après une
+			// édition : l'ordre affiché suit le numéro de la strate (I, II… ou 1, 2…).
+			.transform((strates) =>
+				strates.toSorted((a, b) => rangNumero(a.num) - rangNumero(b.num) || 0)
+			),
 		legendeGauche: z.string(),
 		legendeDroite: z.string()
 	}),

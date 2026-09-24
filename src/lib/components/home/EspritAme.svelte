@@ -30,7 +30,7 @@
 				>
 					{#if col.variante === 'mind'}
 						<svg
-							class="pointer-events-none absolute -top-7.5 -right-7.5 h-[170px] w-[170px] text-coral opacity-18"
+							class="pointer-events-none absolute -top-7.5 -right-7.5 h-[170px] w-[170px] text-coral-ink opacity-70"
 							viewBox="0 0 100 100"
 							fill="none"
 							stroke="currentColor"
@@ -43,7 +43,7 @@
 						</svg>
 					{:else}
 						<svg
-							class="pointer-events-none absolute -top-7.5 -right-7.5 h-[170px] w-[170px] text-amber opacity-18"
+							class="pointer-events-none absolute -top-7.5 -right-7.5 h-[170px] w-[170px] text-ember opacity-70"
 							viewBox="0 0 100 100"
 							fill="none"
 							stroke="currentColor"

@@ -8,6 +8,14 @@
 
 	let { reglages = defaultReglages }: { reglages?: ReglagesSite } = $props();
 
+	// Champ texte multiligne Strapi : un paragraphe par ligne non vide.
+	const paragraphesMention = $derived(
+		reglages.mentionLegale
+			.split(/\n+/)
+			.map((l) => l.trim())
+			.filter(Boolean)
+	);
+
 	const home = resolve('/');
 	const reservation = resolve('/reservation');
 
@@ -91,11 +99,19 @@
 			</nav>
 		</div>
 		<div
-			class="flex flex-wrap justify-between gap-6 border-t border-[color-mix(in_oklab,#fff_14%,transparent)] pt-6.5 font-mono text-xs leading-[1.7] tracking-[0.04em] text-[color-mix(in_oklab,var(--color-on-dusk-soft)_80%,transparent)] max-sm:flex-col"
+			class="border-t border-[color-mix(in_oklab,#fff_14%,transparent)] pt-6.5 font-mono text-xs leading-[1.7] tracking-[0.04em] text-[color-mix(in_oklab,var(--color-on-dusk-soft)_80%,transparent)]"
 		>
-			<span>
-				{reglages.mentionLegale}
-			</span>
+			<section aria-labelledby="avertissement-titre" class="mb-6 max-w-[80em]">
+				<h4
+					id="avertissement-titre"
+					class="mb-2.5 font-medium tracking-[0.12em] text-on-dusk-soft uppercase"
+				>
+					Avertissement – Nature et limites des accompagnements
+				</h4>
+				{#each paragraphesMention as paragraphe, i (i)}
+					<p class="mt-2 first-of-type:mt-0">{paragraphe}</p>
+				{/each}
+			</section>
 			<span>© {new Date().getFullYear()} {site.name} {reglages.sousTitreLogo}</span>
 		</div>
 	</div>

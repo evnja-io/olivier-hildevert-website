@@ -23,7 +23,7 @@
 
 <Hero content={data.accueil.hero} />
 
-<ImmersiveBand tight>
+<ImmersiveBand tight soft>
 	{#snippet image()}
 		<enhanced:img
 			src="$lib/assets/mantra-esprit.jpg"
@@ -44,7 +44,7 @@
 
 <Prestations intro={data.accueil.prestationsIntro} prestations={data.prestations} />
 
-<ImmersiveBand>
+<ImmersiveBand soft>
 	{#snippet image()}
 		<enhanced:img
 			src="$lib/assets/zen.jpg"

@@ -6,7 +6,8 @@
 		image,
 		children,
 		onWarm = false,
-		tight = false
+		tight = false,
+		soft = false
 	}: {
 		id?: string;
 		/** Image de fond plein-bleed (enhanced:img rendue par le parent). */
@@ -16,6 +17,8 @@
 		onWarm?: boolean;
 		/** Variante basse (bande mantra). */
 		tight?: boolean;
+		/** Voile sombre allégé (bandes mantra et « Pour qui ? »). */
+		soft?: boolean;
 	} = $props();
 </script>
 
@@ -24,6 +27,7 @@
 	class="band relative z-1 flex scroll-mt-24 items-center overflow-hidden text-white {onWarm
 		? 'on-warm'
 		: ''} {tight ? 'min-h-[380px]' : 'min-h-[clamp(460px,70vh,660px)]'}"
+	class:soft
 >
 	<div class="band-bg absolute inset-0 z-0">
 		{@render image()}
@@ -58,6 +62,21 @@
 			125% 125% at 50% 45%,
 			color-mix(in oklab, var(--color-dusk) 18%, transparent) 0%,
 			color-mix(in oklab, var(--color-dusk) 66%, transparent) 100%
+		);
+	}
+	/* variante allégée : le voile reste assez dense pour le texte blanc */
+	.soft .band-bg::after {
+		background: radial-gradient(
+			120% 120% at 50% 50%,
+			color-mix(in oklab, var(--color-coral) 34%, transparent),
+			color-mix(in oklab, var(--color-ember) 76%, transparent)
+		);
+	}
+	.soft::after {
+		background: radial-gradient(
+			125% 125% at 50% 45%,
+			color-mix(in oklab, var(--color-dusk) 8%, transparent) 0%,
+			color-mix(in oklab, var(--color-dusk) 40%, transparent) 100%
 		);
 	}
 	.band-bg :global(img) {

@@ -24,7 +24,7 @@ describe('contenu par défaut', () => {
 	});
 
 	it('porte les réglages du site (mention légale, tagline)', () => {
-		expect(defaultReglages.mentionLegale).toContain('ne relèvent pas de la médecine');
+		expect(defaultReglages.mentionLegale).toContain('accompagnement non médical');
 		expect(defaultReglages.tagline).toBe("Décoder le visible grâce à l'invisible");
 	});
 

@@ -268,8 +268,10 @@ export const defaultReglages: ReglagesSite = {
 	tagline: "Décoder le visible grâce à l'invisible",
 	descriptionSeo:
 		"Accompagnement psycho-spirituel et psycho énergétique — décoder le visible grâce à l'invisible. Particuliers, groupes et entreprises.",
+	// Deux paragraphes séparés par un retour à la ligne (le titre est dans Footer.svelte).
 	mentionLegale:
-		'Les accompagnements proposés ne relèvent pas de la médecine et ne se substituent en aucun cas à un avis, un diagnostic ou un traitement médical.',
+		'Les approches, techniques, conseils et informations proposés sur ce site relèvent d’un accompagnement non médical et ne constituent ni un diagnostic, ni un traitement, ni une prescription médicale. Ils ne se substituent en aucun cas à l’avis ou au suivi d’un professionnel de santé et peuvent être, éventuellement, envisagés comme complément de celui-ci.\n' +
+		'En cas de problèmes de santé, de troubles psychologiques et/ou de comportements, de symptômes persistants ou de questions concernant votre état de santé, il est recommandé dans tous les cas de consulter un professionnel de santé qualifié et diplômé.',
 	footerIntro:
 		"Décoder le visible grâce à l'invisible. Accompagnement psycho-spirituel et psycho énergétique pour particuliers, groupes et entreprises.",
 	sousTitreLogo: 'Consultant',

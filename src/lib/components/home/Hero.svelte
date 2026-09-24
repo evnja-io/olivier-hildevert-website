@@ -12,29 +12,28 @@
 	});
 </script>
 
-<section class="relative overflow-hidden pt-28 pb-21 max-sm:pt-[138px]">
+<section class="on-warm relative overflow-hidden pt-28 pb-21 max-sm:pt-[138px]">
 	<enhanced:img
-		src="$lib/assets/hero-mer.jpg"
+		src="$lib/assets/hero-mer.jpg?quality=80"
 		alt=""
 		fetchpriority="high"
 		loading="eager"
 		sizes="100vw"
-		class="absolute inset-0 h-full w-full object-cover object-[center_58%]"
+		class="absolute inset-0 h-full w-full object-cover object-[68%_center]"
 	/>
 	<div class="hero-wash absolute inset-0 z-1" aria-hidden="true"></div>
 
 	<div class="relative z-3 wrap">
-		<div
-			class="hero-copy max-w-[min(1000px,100%)] [text-shadow:0_1px_10px_rgba(255,246,236,0.55)]"
-			class:ready
-		>
-			<span class="eyebrow text-[#A55A43]!">{content.eyebrow}</span>
-			<h1 class="hero-titre mt-6.5 mb-7 text-4xl tracking-[0.006em]">
-				<span class="font-rubik text-[#396CB2]">{content.titreLigne1}</span>
-				<em class="font-merriweather font-bold text-coral not-italic">{content.titreLigne2}</em>
+		<div class="hero-copy max-w-[min(1000px,100%)]" class:ready>
+			<span class="eyebrow text-amber-soft!">{content.eyebrow}</span>
+			<h1
+				class="hero-titre mt-6.5 mb-7 font-merriweather text-4xl font-bold tracking-[0.006em] text-[#A9CBF5]"
+			>
+				<span>{content.titreLigne1}</span>
+				<em class="not-italic">{content.titreLigne2}</em>
 			</h1>
-			<p class="mb-3.5 max-w-[34em] text-base text-ink">{content.paragraphe}</p>
-			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-[#5E4108] uppercase">
+			<p class="mb-3.5 max-w-[34em] text-base text-on-dusk">{content.paragraphe}</p>
+			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-on-dusk uppercase">
 				{content.ligneMono}
 			</p>
 			<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-[13px]">
@@ -56,7 +55,7 @@
 				>
 			</div>
 			<div
-				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
+				class="mt-10.5 grid border-t border-[color-mix(in_oklab,#fff_34%,transparent)] pt-5.5 md:flex"
 			>
 				<!-- La rangée passe à `md` (768 px) et non `sm` : à 640 px les trois
 				     colonnes ne réclamaient que 634 px pour 596 px disponibles, et
@@ -68,15 +67,15 @@
 				     calculent bien sur la police du texte qu'ils doivent contenir. -->
 				{#each content.stats as stat (stat.valeur)}
 					<div
-						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
+						class="border-b border-[color-mix(in_oklab,#fff_22%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
 					>
 						<strong
-							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
+							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-amber-soft"
 						>
 							{stat.valeur}
 						</strong>
 						<span
-							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
+							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-on-dusk uppercase"
 						>
 							{stat.legende}
 						</span>
@@ -88,31 +87,16 @@
 </section>
 
 <style>
-	/* dégradé crème : le texte reste lisible sur la photo d'aube.
-	   Horizontal sur grand écran (texte à gauche, mer à droite) ; vertical en
-	   dessous de 900 px, où le texte occupe toute la largeur. */
+	/* voile crépuscule uniforme sur toute la photo : le texte passe en clair
+	   (crème, ambre, bleu ciel) et reste lisible sans ombre portée. Un peu plus
+	   dense en haut, où se trouvent l'en-tête et le titre. */
 	.hero-wash {
 		pointer-events: none;
 		background: linear-gradient(
-			178deg,
-			rgba(255, 246, 236, 0.92) 0%,
-			rgba(255, 246, 236, 0.86) 46%,
-			rgba(255, 246, 236, 0.66) 74%,
-			rgba(255, 246, 236, 0.4) 100%
+			180deg,
+			color-mix(in oklab, var(--color-dusk) 66%, transparent) 0%,
+			color-mix(in oklab, var(--color-dusk) 56%, transparent) 100%
 		);
-	}
-	@media (min-width: 900px) {
-		.hero-wash {
-			background: linear-gradient(
-				90deg,
-				rgba(255, 246, 236, 0.88) 0%,
-				rgba(255, 246, 236, 0.82) 34%,
-				rgba(255, 246, 236, 0.66) 52%,
-				rgba(255, 246, 236, 0.44) 68%,
-				rgba(255, 246, 236, 0.2) 84%,
-				rgba(255, 246, 236, 0) 98%
-			);
-		}
 	}
 
 	/* « Décoder le visible, grâce à l'invisible » tient sur une ligne à partir
