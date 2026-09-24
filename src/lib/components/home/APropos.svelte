@@ -24,10 +24,10 @@
 			>
 				<enhanced:img
 					src="$lib/assets/portrait-cabinet.jpg"
-					alt="Olivier Hildevert dans son cabinet"
+					alt="Olivier Hildevert souriant, assis à son bureau dans son cabinet"
 					loading="lazy"
 					sizes="(min-width: 1024px) 560px, calc(100vw - 2.75rem)"
-					class="h-full w-full object-cover object-[22%_center]"
+					class="h-full w-full object-cover object-[center_40%]"
 				/>
 			</div>
 			<span
