@@ -61,11 +61,9 @@
 							<a href={carte.page} class="transition-colors hover:text-coral-ink">{carte.titre}</a>
 						</h3>
 						<p class="flex-1 text-sm leading-[1.62] text-ink-soft">{carte.descCarte}</p>
-						<!-- Côte à côte à 2 colonnes ; empilés pleine largeur à 4 colonnes,
-						     où la carte n'offre que ~250 px utiles. -->
-						<div
-							class="flex flex-wrap items-center gap-3 border-t border-line pt-4 xl:flex-col xl:items-stretch"
-						>
+						<!-- Empilés pleine largeur à toutes les tailles : côte à côte, ils ne
+						     tenaient pas à 2 colonnes et se replaçaient carte par carte. -->
+						<div class="flex flex-col gap-3 border-t border-line pt-4">
 							<a
 								class="btn btn-sun justify-center"
 								href="{reservation}?prestation={carte.cle}"
