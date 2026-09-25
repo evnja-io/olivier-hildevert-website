@@ -93,7 +93,7 @@ Suppression de `prixCarte` et `modes` : les valeurs existantes sont perdues. Ell
 
 - Dépendance ajoutée : `marked`.
 - `src/lib/server/markdown.ts` : `renderMarkdown(source: string): string`. Le HTML brut saisi dans Strapi est **échappé, jamais interprété** (surcharge du rendu des jetons `html`). Liens : `rel="noopener noreferrer"` et `target="_blank"` pour les URL externes.
-- Styles : bloc `.texte-riche` dans `src/routes/layout.css` (paragraphes, `h2`/`h3`, listes, `strong`, liens) avec les tokens de la palette Aurore — le plugin Tailwind Typography n'est pas utilisé dans le projet.
+- Styles : bloc `.texte-riche` dans `src/routes/layout.css` (paragraphes, `h2`/`h3`, listes, `strong`, liens) avec les tokens de la palette Aurore — le plugin `@tailwindcss/typography` est déclaré dans `layout.css` mais inutilisé, et ses couleurs par défaut reposent sur la palette Tailwind désactivée (`--color-*: initial`).
 
 ### 5.4 Référencement
 
