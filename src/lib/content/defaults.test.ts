@@ -77,8 +77,45 @@ describe('corrections éditoriales validées le 2026-09-12', () => {
 			expect(produit.lien).toMatch(/^https:\/\//);
 		}
 	});
+});
 
-	it('précise ce que couvre la séance individuelle', () => {
-		expect(defaultPrestations[0].titre).toBe('Séance individuelle — décodage et solutions');
+describe('corrections éditoriales validées le 2026-09-25', () => {
+	it('renomme les quatre prestations', () => {
+		expect(defaultPrestations.map((p) => p.titre)).toEqual([
+			'Séance individuelle',
+			"Programmes d'éveil",
+			'Entreprises',
+			'Stages & ateliers'
+		]);
+	});
+
+	it('reprend les descriptions de cartes fournies par le client', () => {
+		expect(defaultPrestations.map((p) => p.descCarte)).toEqual([
+			'Décodage et solution des situations de vie dans les domaines : physique, psychique, émotionnel, comportemental, amoureux, sexuel, traumatique, transitionnel, contractuel, matériel et préparatoires de projets.',
+			"Parcours de rééducation et de transformation pour l'ouverture de conscience, la réappropriation de vie, le développement intuitif, la reconnexion spirituelle et le rééquilibrage psycho-énergétique.",
+			"Actions d'expertises et d'accompagnements personnalisés dédiés au psycho-recrutement, analyse comportementale, préparation mentale, cohésion d'équipe et optimisation des ressources et des talents. Organisation et animation de séances de Sophrologie de groupe.",
+			"Catalogue d'activités, séjours, conférences, rencontres dédiés aux outils de transformation psycho-énergétique et de spiritualité appliquée pour aider aux réalisations personnelles et collectives."
+		]);
+	});
+
+	it('donne à chaque carte son verbe d’action', () => {
+		expect(defaultPrestations.map((p) => p.actionCarte)).toEqual([
+			'Réserver',
+			'Découvrir',
+			'Contacter',
+			'Participer'
+		]);
+	});
+
+	it('ne promet plus des séances uniquement par téléphone', () => {
+		expect(defaultAccueil.prestationsIntro.paragraphe).not.toContain('téléphone');
+		expect(defaultAccueil.contactCta.paragraphe).not.toContain('téléphone');
+	});
+
+	it('présente le consultant dans le pied de page', () => {
+		expect(defaultReglages.sousTitreLogo).toBe('Consultant');
+		expect(defaultReglages.footerIntro).toBe(
+			'Accompagnement sophrologique psycho énergétique et spirituel pour particuliers, groupes et entreprises.'
+		);
 	});
 });

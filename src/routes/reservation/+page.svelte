@@ -13,7 +13,7 @@
 	<title>Prendre rendez-vous — {site.name}</title>
 	<meta
 		name="description"
-		content="Réservez une séance avec {site.name} : séance individuelle, programme personnalisé, entreprise ou stage."
+		content="Réservez une séance avec {site.name} : séance individuelle, programmes d'éveil, entreprise ou stage."
 	/>
 	<link rel="canonical" href="{site.url}/reservation" />
 </svelte:head>
@@ -22,8 +22,7 @@
 	<span class="eyebrow">Rendez-vous</span>
 	<h1 class="mt-5 text-4xl text-ink sm:text-5xl">Prendre rendez-vous</h1>
 	<p class="mt-4 max-w-2xl text-ink-soft">
-		Les séances se déroulent par téléphone. Je vous recontacte pour convenir ensemble d'une date et
-		d'un horaire.
+		Je vous recontacte pour convenir ensemble d'une date et d'un horaire d'entretien.
 	</p>
 
 	{#if $message}

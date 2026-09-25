@@ -55,7 +55,7 @@
 				>
 			</div>
 			<div
-				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
+				class="hero-stats mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
 			>
 				<!-- La rangée passe à `md` (768 px) et non `sm` : à 640 px les trois
 				     colonnes ne réclamaient que 634 px pour 596 px disponibles, et
@@ -70,7 +70,7 @@
 						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
 					>
 						<strong
-							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
+							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-[#396CB2]"
 						>
 							{stat.valeur}
 						</strong>
@@ -109,6 +109,16 @@
 				rgba(255, 246, 236, 0) 72%
 			);
 		}
+	}
+
+	/* Repères chiffrés : le voile s'efface vers la droite, et « 34 ans » tombait
+	   sur la photo nue (retours client du 2026-09-25). Un halo crème porté par
+	   le texte seul les détache sans éclaircir davantage l'image. Les nombres
+	   reprennent le bleu du titre plutôt que l'orange, fondu dans le ciel. */
+	.hero-stats {
+		text-shadow:
+			0 0 14px rgba(255, 246, 236, 0.95),
+			0 0 4px rgba(255, 246, 236, 0.9);
 	}
 
 	/* « Décoder le visible, grâce à l'invisible » tient sur une ligne à partir

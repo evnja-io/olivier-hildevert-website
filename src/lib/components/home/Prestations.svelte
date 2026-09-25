@@ -21,29 +21,24 @@
 	type EnhancedSrc = typeof cardIndividuelle;
 
 	// Les images restent locales, appariées par clé stable.
-	const IMAGES_PRESTATIONS: Record<PrestationId, { num: string; image: EnhancedSrc; alt: string }> =
-		{
-			individuelle: {
-				num: '01',
-				image: cardIndividuelle,
-				alt: "Personne assise en méditation au bord d'une falaise, face à la mer au soleil levant"
-			},
-			programme: {
-				num: '02',
-				image: cardProgramme,
-				alt: 'Sentier de crête serpentant vers le soleil levant au-dessus des montagnes'
-			},
-			entreprise: {
-				num: '03',
-				image: cardEntreprise,
-				alt: 'Petit groupe de professionnels en échange sur une passerelle en forêt, lumière dorée'
-			},
-			stage: {
-				num: '04',
-				image: cardStages,
-				alt: "Cercle de participants réunis autour d'un feu de camp et de lanternes au crépuscule"
-			}
-		};
+	const IMAGES_PRESTATIONS: Record<PrestationId, { image: EnhancedSrc; alt: string }> = {
+		individuelle: {
+			image: cardIndividuelle,
+			alt: "Personne assise en méditation au bord d'une falaise, face à la mer au soleil levant"
+		},
+		programme: {
+			image: cardProgramme,
+			alt: 'Sentier de crête serpentant vers le soleil levant au-dessus des montagnes'
+		},
+		entreprise: {
+			image: cardEntreprise,
+			alt: 'Petit groupe de professionnels en échange sur une passerelle en forêt, lumière dorée'
+		},
+		stage: {
+			image: cardStages,
+			alt: "Cercle de participants réunis autour d'un feu de camp et de lanternes au crépuscule"
+		}
+	};
 
 	const cartes = $derived(prestations.map((p) => ({ ...p, ...IMAGES_PRESTATIONS[p.cle] })));
 </script>
@@ -61,21 +56,14 @@
 		</div>
 		<div class="grid gap-5.5 sm:grid-cols-2 xl:grid-cols-4">
 			{#each cartes as carte, i (carte.cle)}
-				<a
-					href="{reservation}?prestation={carte.cle}"
+				<!-- La carte n'est plus un lien englobant : l'action vit sur son
+				     bouton (retours client du 2026-09-25), et « En savoir plus »
+				     viendra s'y ajouter à côté. -->
+				<article
 					class="reveal group relative flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-[0_24px_50px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition-all duration-400 hover:-translate-y-1.5 hover:border-[color-mix(in_oklab,var(--color-coral)_45%,transparent)] hover:shadow-[0_40px_74px_-44px_color-mix(in_oklab,var(--color-ember)_58%,transparent)]"
 					{@attach reveal(i * 85)}
-					onclick={(e) => {
-						e.preventDefault();
-						openBooking(carte.cle);
-					}}
 				>
 					<div class="relative aspect-square overflow-hidden">
-						<span
-							class="absolute top-3.5 left-4 z-2 rounded-full bg-[color-mix(in_oklab,var(--color-ember)_52%,transparent)] px-2.5 py-[5px] font-mono text-xs tracking-[0.14em] text-white backdrop-blur-[3px]"
-						>
-							{carte.num}
-						</span>
 						<enhanced:img
 							src={carte.image}
 							alt={carte.alt}
@@ -87,18 +75,23 @@
 					<div class="flex flex-1 flex-col gap-3 p-[22px_24px]">
 						<h3 class="text-2xl tracking-[0.01em] xl:text-xl">{carte.titre}</h3>
 						<p class="flex-1 text-sm leading-[1.62] text-ink-soft">{carte.descCarte}</p>
-						<div
-							class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-t border-line pt-4"
-						>
-							<b class="font-display text-lg font-normal text-ink">{carte.prixCarte}</b>
-							<span
-								class="font-mono text-xs tracking-[0.1em] text-coral-ink uppercase transition-transform duration-250 group-hover:translate-x-[5px]"
+						<div class="flex flex-wrap items-center gap-3 border-t border-line pt-4">
+							<a
+								class="btn btn-sun"
+								href="{reservation}?prestation={carte.cle}"
+								onclick={(e) => {
+									e.preventDefault();
+									openBooking(carte.cle);
+								}}
 							>
 								{carte.actionCarte}
-							</span>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+								</svg>
+							</a>
 						</div>
 					</div>
-				</a>
+				</article>
 			{/each}
 		</div>
 	</div>

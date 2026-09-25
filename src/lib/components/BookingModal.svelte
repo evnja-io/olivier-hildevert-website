@@ -28,6 +28,21 @@
 
 	const prestationChoisie = $derived(prestations.find((p) => p.cle === $form.prestation));
 
+	// Seule la séance individuelle se déroule forcément par téléphone : les
+	// autres accompagnements s'organisent lors d'un entretien.
+	const RAPPEL =
+		"Je vous recontacte pour convenir ensemble d'une date et d'un horaire d'entretien.";
+	const MODALITES: Record<PrestationId, { annonce: string; format: string }> = {
+		individuelle: {
+			annonce: `Les séances se déroulent par téléphone. ${RAPPEL}`,
+			format: 'Par téléphone'
+		},
+		programme: { annonce: RAPPEL, format: 'Par téléphone' },
+		entreprise: { annonce: RAPPEL, format: 'À définir ensemble' },
+		stage: { annonce: RAPPEL, format: 'En présentiel' }
+	};
+	const modalites = $derived($form.prestation ? MODALITES[$form.prestation] : undefined);
+
 	$effect(() => {
 		if (booking.open) {
 			reset({ data: booking.prestation ? { prestation: booking.prestation } : undefined });
@@ -133,10 +148,7 @@
 		</div>
 	{:else}
 		<h3 class="font-display text-2xl">Vos coordonnées</h3>
-		<p class="mt-1.5 mb-5 text-base text-ink-soft">
-			Les séances se déroulent par téléphone. Je vous recontacte pour convenir ensemble d'une date
-			et d'un horaire.
-		</p>
+		<p class="mt-1.5 mb-5 text-base text-ink-soft">{modalites?.annonce ?? RAPPEL}</p>
 
 		{#if $message?.type === 'erreur'}
 			<p
@@ -158,7 +170,7 @@
 			</div>
 			<div class="flex justify-between gap-4 py-3 text-sm">
 				<span class="text-ink-soft">Format</span>
-				<strong class="text-right font-semibold">Par téléphone</strong>
+				<strong class="text-right font-semibold">{modalites?.format ?? '—'}</strong>
 			</div>
 		</div>
 

@@ -127,7 +127,9 @@ export const defaultAccueil: PageAccueilContent = {
 	prestationsIntro: {
 		eyebrow: 'Prestations',
 		titre: 'Des accompagnements pour chaque chemin',
-		paragraphe: 'Pour les particuliers, les groupes et les entreprises, en séances par téléphone.'
+		// Rédaction du client dans Strapi (2026-09-25), reprise ici comme repli.
+		paragraphe:
+			'Particuliers - Entreprises - CSE - Associations - Collectivités locales - Établissements de santé - Fédérations culturelles et sportives - Organisations sociales.'
 	},
 	pourQui: {
 		eyebrow: 'Pour qui ?',
@@ -210,47 +212,49 @@ export const defaultAccueil: PageAccueilContent = {
 	contactCta: {
 		eyebrow: 'Contact',
 		titre: 'Faisons lever votre chemin',
+		// Rédaction du client dans Strapi (2026-09-25), reprise ici comme repli.
 		paragraphe:
-			'Prenez rendez-vous pour une première séance, ou écrivez-moi votre demande. Les consultations se déroulent par téléphone, où que vous soyez.',
+			"Prenez rendez-vous pour une première séance, ou écrivez-moi pour m'expliquer votre besoin . C'est le bon moment. Je vous attends...",
 		boutonLabel: 'Prendre rendez-vous'
 	}
 };
 
 /**
- * Rédactions unifiées (titres des cartes home retenus : « Entreprises &
- * dirigeants », « Stages & ateliers »). En ajouter/retirer une = modification
- * de code (clés statiques dans booking/prestations.ts).
+ * Rédactions unifiées. En ajouter/retirer une = modification de code (clés
+ * statiques dans booking/prestations.ts). `prixCarte` n'est plus affiché sur
+ * les cartes (retours client du 2026-09-25) mais reste requis par le schéma
+ * Strapi jusqu'à sa migration.
  */
 export const defaultPrestations: PrestationContent[] = [
 	{
 		cle: 'individuelle',
-		titre: 'Séance individuelle — décodage et solutions',
+		titre: 'Séance individuelle',
 		metaReservation: '1 h 30 · 140 €',
 		descReservation: 'Décodage et accompagnement d’une situation de vie.',
 		descCarte:
-			'Décodage des situations de vie : relationnel, affectif, burn-out, transitions, traumatismes, recherche de sens et préparation de projets.',
+			'Décodage et solution des situations de vie dans les domaines : physique, psychique, émotionnel, comportemental, amoureux, sexuel, traumatique, transitionnel, contractuel, matériel et préparatoires de projets.',
 		prixCarte: '140 € · 1 h 30',
-		actionCarte: 'Réserver →'
+		actionCarte: 'Réserver'
 	},
 	{
 		cle: 'programme',
-		titre: 'Programme personnalisé',
+		titre: "Programmes d'éveil",
 		metaReservation: 'Sur mesure · plusieurs séances',
 		descReservation: 'Parcours d’éveil, de réorientation et de transformation.',
 		descCarte:
-			"Parcours d'éveil et de transformation : éveil de conscience, réorientation de vie, développement intuitif et rééquilibrage psycho-énergétique.",
+			"Parcours de rééducation et de transformation pour l'ouverture de conscience, la réappropriation de vie, le développement intuitif, la reconnexion spirituelle et le rééquilibrage psycho-énergétique.",
 		prixCarte: 'Sur mesure',
-		actionCarte: 'En savoir plus →'
+		actionCarte: 'Découvrir'
 	},
 	{
 		cle: 'entreprise',
-		titre: 'Entreprises & dirigeants',
+		titre: 'Entreprises',
 		metaReservation: 'Sur devis',
 		descReservation: 'Psycho-recrutement, préparation mentale, cohésion.',
 		descCarte:
-			"Psycho-recrutement, analyse comportementale, préparation mentale, cohésion d'équipe et optimisation des ressources humaines.",
+			"Actions d'expertises et d'accompagnements personnalisés dédiés au psycho-recrutement, analyse comportementale, préparation mentale, cohésion d'équipe et optimisation des ressources et des talents. Organisation et animation de séances de Sophrologie de groupe.",
 		prixCarte: 'Sur devis',
-		actionCarte: 'Demander un devis →'
+		actionCarte: 'Contacter'
 	},
 	{
 		cle: 'stage',
@@ -258,9 +262,9 @@ export const defaultPrestations: PrestationContent[] = [
 		metaReservation: 'Sur devis · groupe',
 		descReservation: 'Conférences et ateliers pratiques d’éveil énergétique.',
 		descCarte:
-			'Conférences et ateliers : sophrologie, intelligence émotionnelle, conscience de soi, éveil énergétique et spiritualité appliquée.',
+			"Catalogue d'activités, séjours, conférences, rencontres dédiés aux outils de transformation psycho-énergétique et de spiritualité appliquée pour aider aux réalisations personnelles et collectives.",
 		prixCarte: 'Sur devis · groupe',
-		actionCarte: 'Organiser →'
+		actionCarte: 'Participer'
 	}
 ];
 
@@ -273,7 +277,7 @@ export const defaultReglages: ReglagesSite = {
 		'Les approches, techniques, conseils et informations proposés sur ce site relèvent d’un accompagnement non médical et ne constituent ni un diagnostic, ni un traitement, ni une prescription médicale. Ils ne se substituent en aucun cas à l’avis ou au suivi d’un professionnel de santé et peuvent être, éventuellement, envisagés comme complément de celui-ci.\n' +
 		'En cas de problèmes de santé, de troubles psychologiques et/ou de comportements, de symptômes persistants ou de questions concernant votre état de santé, il est recommandé dans tous les cas de consulter un professionnel de santé qualifié et diplômé.',
 	footerIntro:
-		"Décoder le visible grâce à l'invisible. Accompagnement psycho-spirituel et psycho énergétique pour particuliers, groupes et entreprises.",
+		'Accompagnement sophrologique psycho énergétique et spirituel pour particuliers, groupes et entreprises.',
 	sousTitreLogo: 'Consultant',
 	siteExterne: 'olivierhildevert.com'
 };

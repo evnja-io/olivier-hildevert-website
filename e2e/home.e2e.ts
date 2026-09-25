@@ -49,13 +49,38 @@ test.describe('réservation', () => {
 		await page.getByRole('link', { name: 'Prendre rendez-vous' }).first().click();
 
 		const modale = page.getByRole('dialog', { name: 'Prendre rendez-vous' });
-		await modale.getByRole('button', { name: 'Programme personnalisé' }).click();
+		await modale.getByRole('button', { name: "Programmes d'éveil" }).click();
 		await modale.getByRole('button', { name: 'Envoyer ma demande' }).click();
 
 		await expect(
 			modale.getByText('Veuillez indiquer votre nom (2 caractères minimum).')
 		).toBeVisible();
 		await expect(modale.getByText('Veuillez indiquer une adresse e-mail valide.')).toBeVisible();
+	});
+
+	test('le format et l’annonce dépendent de l’accompagnement choisi', async ({ page }) => {
+		await page.goto('/');
+		const modale = page.getByRole('dialog', { name: 'Prendre rendez-vous' });
+
+		await page.locator('#tarifs').getByRole('link', { name: 'Demander' }).first().click();
+		await expect(modale.getByText('En présentiel', { exact: true })).toBeVisible();
+		await expect(modale).toContainText("d'une date et d'un horaire d'entretien");
+		await expect(modale).not.toContainText('par téléphone');
+		await modale.getByRole('button', { name: 'Fermer' }).click();
+
+		await page.locator('#tarifs').getByRole('link', { name: 'Réserver' }).click();
+		await expect(modale.getByText('Par téléphone', { exact: true })).toBeVisible();
+		await expect(modale).toContainText('Les séances se déroulent par téléphone');
+	});
+
+	test('chaque carte de prestation ouvre la modale sur son accompagnement', async ({ page }) => {
+		await page.goto('/');
+		const modale = page.getByRole('dialog', { name: 'Prendre rendez-vous' });
+
+		await page.locator('#prestations').getByRole('link', { name: 'Contacter' }).click();
+		await expect(modale.getByText('Vos coordonnées')).toBeVisible();
+		await expect(modale).toContainText('Entreprises');
+		await expect(modale.getByText('À définir ensemble', { exact: true })).toBeVisible();
 	});
 
 	test('la page /reservation fonctionne comme fallback avec pré-sélection', async ({ page }) => {
