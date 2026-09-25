@@ -4,7 +4,7 @@
  */
 export const site = {
 	name: 'Olivier Hildevert',
-	url: 'https://olivier-hildevert.vercel.app',
+	url: 'https://olivier-hildevert-website.vercel.app',
 	tagline: "Décoder le visible grâce à l'invisible",
 	description:
 		"Accompagnement psycho-spirituel et psycho énergétique — décoder le visible grâce à l'invisible. Particuliers, groupes et entreprises."
