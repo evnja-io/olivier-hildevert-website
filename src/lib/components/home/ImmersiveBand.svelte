@@ -68,15 +68,15 @@
 	.soft .band-bg::after {
 		background: radial-gradient(
 			120% 120% at 50% 50%,
-			color-mix(in oklab, var(--color-coral) 34%, transparent),
-			color-mix(in oklab, var(--color-ember) 76%, transparent)
+			color-mix(in oklab, var(--color-coral) 20%, transparent),
+			color-mix(in oklab, var(--color-ember) 50%, transparent)
 		);
 	}
 	.soft::after {
 		background: radial-gradient(
 			125% 125% at 50% 45%,
-			color-mix(in oklab, var(--color-dusk) 8%, transparent) 0%,
-			color-mix(in oklab, var(--color-dusk) 40%, transparent) 100%
+			color-mix(in oklab, var(--color-dusk) 4%, transparent) 0%,
+			color-mix(in oklab, var(--color-dusk) 26%, transparent) 100%
 		);
 	}
 	.band-bg :global(img) {
@@ -84,5 +84,8 @@
 		height: 100%;
 		object-fit: cover;
 		filter: saturate(1.08) brightness(0.86);
+	}
+	.soft .band-bg :global(img) {
+		filter: saturate(1.05);
 	}
 </style>

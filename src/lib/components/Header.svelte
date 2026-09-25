@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
 	import { site, nav } from '$lib/config';
 	import { openBooking } from '$lib/booking/booking.svelte';
 	import type { ReglagesSite } from '$lib/content/types';
@@ -12,9 +11,6 @@
 	let scrollY = $state(0);
 	const scrolled = $derived(scrollY > 40);
 	const home = resolve('/');
-	// En haut de l'accueil, l'en-tête transparent flotte sur le voile sombre du
-	// hero : textes en clair. Partout ailleurs (ou après défilement), fond crème.
-	const surHero = $derived(!scrolled && page.url.pathname === home);
 
 	// Ouverture du panneau mobile. Sans JavaScript, ce lien n'existe pas et
 	// <details> continue de s'ouvrir et se fermer nativement par son <summary>.
@@ -29,22 +25,14 @@
 		: 'py-[26px]'}"
 >
 	<div class="relative wrap flex items-center justify-between gap-4">
-		<a
-			class="flex min-w-0 items-center gap-3.5 {surHero ? 'text-on-dusk' : 'text-ink'}"
-			href={home}
-			aria-label="Accueil"
-		>
+		<a class="flex min-w-0 items-center gap-3.5 text-ink" href={home} aria-label="Accueil">
 			<SunMark class="h-[clamp(46px,3.6vw,62px)] w-[clamp(46px,3.6vw,62px)] flex-none text-coral" />
 			<span
-				class="font-display text-[clamp(24px,1.9vw,34px)] leading-none tracking-[0.04em] whitespace-nowrap transition-colors duration-500 {surHero
-					? 'text-on-dusk'
-					: 'text-[#5E4108]'}"
+				class="font-display text-[clamp(24px,1.9vw,34px)] leading-none tracking-[0.04em] whitespace-nowrap text-[#5E4108]"
 			>
 				{site.name}
 				<small
-					class="mt-2 block font-mono text-xs font-medium tracking-[0.28em] uppercase transition-colors duration-500 {surHero
-						? 'text-on-dusk-soft'
-						: 'text-mute'}"
+					class="mt-2 block font-mono text-xs font-medium tracking-[0.28em] text-mute uppercase"
 				>
 					{reglages.sousTitreLogo}
 				</small>
@@ -63,9 +51,7 @@
 				{:else}
 					<a
 						href="{home}#{item.anchor}"
-						class="relative font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase transition-colors after:absolute {surHero
-							? 'text-on-dusk hover:text-amber-soft'
-							: 'text-ink-soft hover:text-coral-ink'} after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-coral after:transition-[width] after:duration-300 hover:after:w-full"
+						class="relative font-mono text-xs tracking-[0.14em] whitespace-nowrap text-ink-soft uppercase transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-coral after:transition-[width] after:duration-300 hover:text-coral-ink hover:after:w-full"
 					>
 						{item.label}
 					</a>

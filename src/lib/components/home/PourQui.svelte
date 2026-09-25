@@ -6,7 +6,9 @@
 	let { content = defaultAccueil.pourQui }: { content?: PourQuiContent } = $props();
 </script>
 
-<div class="wrap">
+<!-- ombre douce, comme la citation du mantra : le voile allégé laisse le
+     sable clair de la photo sous le texte blanc -->
+<div class="wrap [text-shadow:0_2px_24px_rgba(74,27,18,0.45)]">
 	<div class="reveal mx-auto mb-10.5 max-w-[640px] text-center" {@attach reveal()}>
 		<span class="eyebrow eyebrow-center text-amber-soft!">{content.eyebrow}</span>
 		<h2 class="mt-5 text-4xl tracking-[0.005em]">

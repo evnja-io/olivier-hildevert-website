@@ -21,7 +21,7 @@
 			<p class="mb-4 text-base leading-[1.66] text-ink-soft">
 				{content.paragraphe2}
 			</p>
-			<SunMark class="mt-7.5 h-21 w-21 text-coral opacity-90" />
+			<SunMark class="mt-7.5 h-36 w-36 text-coral opacity-90" />
 		</div>
 		<div class="echelle relative mt-2">
 			{#each content.strates as strate, i (strate.num)}

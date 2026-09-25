@@ -12,7 +12,7 @@
 	});
 </script>
 
-<section class="on-warm relative overflow-hidden pt-28 pb-21 max-sm:pt-[138px]">
+<section class="relative overflow-hidden pt-28 pb-21 max-sm:pt-[138px]">
 	<enhanced:img
 		src="$lib/assets/hero-mer.jpg?quality=80"
 		alt=""
@@ -25,15 +25,15 @@
 
 	<div class="relative z-3 wrap">
 		<div class="hero-copy max-w-[min(1000px,100%)]" class:ready>
-			<span class="eyebrow text-amber-soft!">{content.eyebrow}</span>
+			<span class="eyebrow text-[#A55A43]!">{content.eyebrow}</span>
 			<h1
-				class="hero-titre mt-6.5 mb-7 font-merriweather text-4xl font-bold tracking-[0.006em] text-[#A9CBF5]"
+				class="hero-titre mt-6.5 mb-7 font-merriweather text-4xl font-bold tracking-[0.006em] text-[#396CB2]"
 			>
 				<span>{content.titreLigne1}</span>
 				<em class="not-italic">{content.titreLigne2}</em>
 			</h1>
-			<p class="mb-3.5 max-w-[34em] text-base text-on-dusk">{content.paragraphe}</p>
-			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-on-dusk uppercase">
+			<p class="mb-3.5 max-w-[34em] text-base text-ink">{content.paragraphe}</p>
+			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-[#5E4108] uppercase">
 				{content.ligneMono}
 			</p>
 			<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-[13px]">
@@ -55,7 +55,7 @@
 				>
 			</div>
 			<div
-				class="mt-10.5 grid border-t border-[color-mix(in_oklab,#fff_34%,transparent)] pt-5.5 md:flex"
+				class="mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
 			>
 				<!-- La rangée passe à `md` (768 px) et non `sm` : à 640 px les trois
 				     colonnes ne réclamaient que 634 px pour 596 px disponibles, et
@@ -67,15 +67,15 @@
 				     calculent bien sur la police du texte qu'ils doivent contenir. -->
 				{#each content.stats as stat (stat.valeur)}
 					<div
-						class="border-b border-[color-mix(in_oklab,#fff_22%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
+						class="border-b border-[color-mix(in_oklab,var(--color-ink)_16%,transparent)] py-4 last:border-b-0 md:mr-[clamp(24px,2.4vw,40px)] md:border-r md:border-b-0 md:py-0 md:pr-[clamp(24px,2.4vw,40px)] md:last:mr-0 md:last:border-r-0 md:last:pr-0"
 					>
 						<strong
-							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-amber-soft"
+							class="mb-1.5 block font-display text-[clamp(30px,2.6vw,42px)] leading-none font-normal text-coral-ink"
 						>
 							{stat.valeur}
 						</strong>
 						<span
-							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-on-dusk uppercase"
+							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
 						>
 							{stat.legende}
 						</span>
@@ -87,16 +87,28 @@
 </section>
 
 <style>
-	/* voile crépuscule uniforme sur toute la photo : le texte passe en clair
-	   (crème, ambre, bleu ciel) et reste lisible sans ombre portée. Un peu plus
-	   dense en haut, où se trouvent l'en-tête et le titre. */
+	/* voile crème léger : les couleurs de la photo restent visibles, le texte
+	   foncé reste lisible sans ombre portée. Horizontal sur grand écran (texte
+	   à gauche, soleil à droite, sans voile) ; vertical en dessous de 900 px. */
 	.hero-wash {
 		pointer-events: none;
 		background: linear-gradient(
 			180deg,
-			color-mix(in oklab, var(--color-dusk) 66%, transparent) 0%,
-			color-mix(in oklab, var(--color-dusk) 56%, transparent) 100%
+			rgba(255, 246, 236, 0.62) 0%,
+			rgba(255, 246, 236, 0.52) 55%,
+			rgba(255, 246, 236, 0.3) 100%
 		);
+	}
+	@media (min-width: 900px) {
+		.hero-wash {
+			background: linear-gradient(
+				90deg,
+				rgba(255, 246, 236, 0.6) 0%,
+				rgba(255, 246, 236, 0.5) 38%,
+				rgba(255, 246, 236, 0.2) 58%,
+				rgba(255, 246, 236, 0) 72%
+			);
+		}
 	}
 
 	/* « Décoder le visible, grâce à l'invisible » tient sur une ligne à partir
