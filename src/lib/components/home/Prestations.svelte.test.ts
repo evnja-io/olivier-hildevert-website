@@ -27,8 +27,31 @@ describe('Prestations', () => {
 				.element(screen.getByRole('link', { name: label, exact: true }))
 				.toHaveAttribute('href', expect.stringContaining(`?prestation=${cle}`));
 		}
-		// la carte n'est plus un lien englobant : seuls les 4 boutons sont des liens
-		expect(screen.container.querySelectorAll('a')).toHaveLength(4);
+		// pas de lien englobant : la carte reste un article, aucun lien ne la contient
+		expect(screen.container.querySelectorAll('article')).toHaveLength(4);
+		expect(screen.container.querySelector('a:has(article)')).toBeNull();
+	});
+
+	it('mène à la page de chaque prestation par « En savoir plus », le titre et la photo', async () => {
+		const screen = render(Prestations);
+		const pages = [
+			['Séance individuelle', 'individuelle'],
+			["Programmes d'éveil", 'programme'],
+			['Entreprises', 'entreprise'],
+			['Stages & ateliers', 'stage']
+		];
+		for (const [titre, cle] of pages) {
+			const href = `/prestations/${cle}`;
+			await expect
+				.element(screen.getByRole('link', { name: `En savoir plus : ${titre}` }))
+				.toHaveAttribute('href', href);
+			await expect
+				.element(screen.getByRole('link', { name: titre, exact: true }))
+				.toHaveAttribute('href', href);
+			// la photo mène au même endroit, sans doubler le lien pour le clavier
+			const photo = screen.container.querySelector(`a[href="${href}"][aria-hidden="true"]`);
+			expect(photo?.getAttribute('tabindex')).toBe('-1');
+		}
 	});
 
 	it('n’affiche plus ni numéro ni prix sur les cartes', async () => {
