@@ -54,7 +54,6 @@ describe('corrections éditoriales validées le 2026-09-12', () => {
 
 	it('conserve la durée de séance là où elle a un sens', () => {
 		expect(defaultAccueil.tarifs.cartes[1].sousTexte).toContain('1 h 30');
-		expect(defaultPrestations[0].prixCarte).toContain('1 h 30');
 	});
 
 	it('nuance le surtitre des deux logiques', () => {
@@ -110,6 +109,14 @@ describe('corrections éditoriales validées le 2026-09-25', () => {
 	it('ne promet plus des séances uniquement par téléphone', () => {
 		expect(defaultAccueil.prestationsIntro.paragraphe).not.toContain('téléphone');
 		expect(defaultAccueil.contactCta.paragraphe).not.toContain('téléphone');
+	});
+
+	it('donne à chaque prestation un texte long provisoire, sans prix de carte', () => {
+		for (const p of defaultPrestations) {
+			expect(p.descLongue).toBe('Présentation détaillée à venir.');
+			expect(p).not.toHaveProperty('prixCarte');
+			expect(p).not.toHaveProperty('infosPratiques');
+		}
 	});
 
 	it('présente le consultant dans le pied de page', () => {

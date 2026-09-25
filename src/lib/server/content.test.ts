@@ -117,6 +117,50 @@ describe('getPrestations', () => {
 	it('retombe sur les défauts si Strapi est en erreur', async () => {
 		await expect(getPrestations(enEchec)).resolves.toEqual(defaultPrestations);
 	});
+
+	it('sert le texte long par défaut quand Strapi ne le fournit pas, sans déclasser le domaine', async () => {
+		const fetcher = reponse({
+			data: [
+				{ ...defaultPrestations[0], titre: 'Séance revue', descLongue: null },
+				{ ...defaultPrestations[1], titre: 'Programmes revus', descLongue: '' },
+				{ ...defaultPrestations[2], titre: 'Entreprises revues', descLongue: undefined },
+				{ ...defaultPrestations[3], descLongue: '## Déroulé\n\nTexte **client**.' }
+			],
+			meta: { pagination: { page: 1, pageSize: 25, pageCount: 1, total: 4 } }
+		});
+		const prestations = await getPrestations(fetcher);
+		expect(prestations.map((p) => p.titre)).toEqual([
+			'Séance revue',
+			'Programmes revus',
+			'Entreprises revues',
+			defaultPrestations[3].titre
+		]);
+		expect(prestations.slice(0, 3).map((p) => p.descLongue)).toEqual([
+			'Présentation détaillée à venir.',
+			'Présentation détaillée à venir.',
+			'Présentation détaillée à venir.'
+		]);
+		expect(prestations[3].descLongue).toBe('## Déroulé\n\nTexte **client**.');
+	});
+
+	it('ignore des infos pratiques vides ou faites d’espaces, garde les autres', async () => {
+		const fetcher = reponse({
+			data: [
+				{ ...defaultPrestations[0], infosPratiques: '140 € · 1 h 30 · par téléphone' },
+				{ ...defaultPrestations[1], infosPratiques: '   ' },
+				{ ...defaultPrestations[2], infosPratiques: null },
+				{ ...defaultPrestations[3], prixCarte: 'Sur devis · groupe' }
+			],
+			meta: { pagination: { page: 1, pageSize: 25, pageCount: 1, total: 4 } }
+		});
+		const prestations = await getPrestations(fetcher);
+		expect(prestations[0].infosPratiques).toBe('140 € · 1 h 30 · par téléphone');
+		expect(prestations[1].infosPratiques).toBeUndefined();
+		expect(prestations[2].infosPratiques).toBeUndefined();
+		// l'ancien champ prixCarte, encore présent en production, ne gêne pas et n'est pas repris
+		expect(prestations[3]).not.toHaveProperty('prixCarte');
+		expect(prestations[3].titre).toBe(defaultPrestations[3].titre);
+	});
 });
 
 describe('getReglages', () => {

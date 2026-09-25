@@ -221,10 +221,11 @@ export const defaultAccueil: PageAccueilContent = {
 
 /**
  * Rédactions unifiées. En ajouter/retirer une = modification de code (clés
- * statiques dans booking/prestations.ts). `prixCarte` n'est plus affiché sur
- * les cartes (retours client du 2026-09-25) mais reste requis par le schéma
- * Strapi jusqu'à sa migration.
+ * statiques dans booking/prestations.ts). `descLongue` est un texte provisoire
+ * que le client remplace dans Strapi (retours du 2026-09-25).
  */
+const TEXTE_LONG_PROVISOIRE = 'Présentation détaillée à venir.';
+
 export const defaultPrestations: PrestationContent[] = [
 	{
 		cle: 'individuelle',
@@ -233,7 +234,7 @@ export const defaultPrestations: PrestationContent[] = [
 		descReservation: 'Décodage et accompagnement d’une situation de vie.',
 		descCarte:
 			'Décodage et solution des situations de vie dans les domaines : physique, psychique, émotionnel, comportemental, amoureux, sexuel, traumatique, transitionnel, contractuel, matériel et préparatoires de projets.',
-		prixCarte: '140 € · 1 h 30',
+		descLongue: TEXTE_LONG_PROVISOIRE,
 		actionCarte: 'Réserver'
 	},
 	{
@@ -243,7 +244,7 @@ export const defaultPrestations: PrestationContent[] = [
 		descReservation: 'Parcours d’éveil, de réorientation et de transformation.',
 		descCarte:
 			"Parcours de rééducation et de transformation pour l'ouverture de conscience, la réappropriation de vie, le développement intuitif, la reconnexion spirituelle et le rééquilibrage psycho-énergétique.",
-		prixCarte: 'Sur mesure',
+		descLongue: TEXTE_LONG_PROVISOIRE,
 		actionCarte: 'Découvrir'
 	},
 	{
@@ -253,7 +254,7 @@ export const defaultPrestations: PrestationContent[] = [
 		descReservation: 'Psycho-recrutement, préparation mentale, cohésion.',
 		descCarte:
 			"Actions d'expertises et d'accompagnements personnalisés dédiés au psycho-recrutement, analyse comportementale, préparation mentale, cohésion d'équipe et optimisation des ressources et des talents. Organisation et animation de séances de Sophrologie de groupe.",
-		prixCarte: 'Sur devis',
+		descLongue: TEXTE_LONG_PROVISOIRE,
 		actionCarte: 'Contacter'
 	},
 	{
@@ -263,7 +264,7 @@ export const defaultPrestations: PrestationContent[] = [
 		descReservation: 'Conférences et ateliers pratiques d’éveil énergétique.',
 		descCarte:
 			"Catalogue d'activités, séjours, conférences, rencontres dédiés aux outils de transformation psycho-énergétique et de spiritualité appliquée pour aider aux réalisations personnelles et collectives.",
-		prixCarte: 'Sur devis · groupe',
+		descLongue: TEXTE_LONG_PROVISOIRE,
 		actionCarte: 'Participer'
 	}
 ];

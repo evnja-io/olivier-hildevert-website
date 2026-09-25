@@ -148,13 +148,24 @@ const accueilSchema = z.object({
 	})
 });
 
+// `descLongue` : tolérant pour de bon — absent, null ou vide, la page sert le
+// texte par défaut de la clé plutôt que de déclasser tout le domaine (un champ
+// vidé par erreur dans l'administration ne doit rien faire tomber). La valeur
+// `undefined` est résolue dans getPrestations, qui connaît la clé.
 const prestationSchema = z.object({
 	cle: z.enum(PRESTATION_IDS),
 	titre: z.string(),
 	metaReservation: z.string(),
 	descReservation: z.string(),
 	descCarte: z.string(),
-	prixCarte: z.string(),
+	descLongue: z
+		.string()
+		.nullish()
+		.transform((v) => (v?.trim() ? v : undefined)),
+	infosPratiques: z
+		.string()
+		.nullish()
+		.transform((v) => v?.trim() || undefined),
 	actionCarte: z.string()
 });
 
@@ -217,7 +228,14 @@ export async function getPrestations(fetcher: typeof fetch): Promise<PrestationC
 				console.warn('Prestation Strapi ignorée (invalide ou clé inconnue).', res.error.issues);
 				continue;
 			}
-			if (!valides.has(res.data.cle)) valides.set(res.data.cle, res.data);
+			if (valides.has(res.data.cle)) continue;
+			const parDefaut = defaultPrestations.find((p) => p.cle === res.data.cle)!;
+			const { infosPratiques, ...reste } = res.data;
+			valides.set(res.data.cle, {
+				...reste,
+				descLongue: res.data.descLongue ?? parDefaut.descLongue,
+				...(infosPratiques ? { infosPratiques } : {})
+			});
 		}
 		// Toujours 4 entrées, dans l’ordre canonique — les manquantes viennent des défauts.
 		return PRESTATION_IDS.map(

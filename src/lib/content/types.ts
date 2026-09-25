@@ -139,7 +139,7 @@ export interface PageAccueilContent {
 
 /**
  * Une prestation = UNE entrée avec des rédactions distinctes par contexte
- * (modale/réservation vs carte home) — unifie les 3 sources divergentes.
+ * (modale/réservation, carte home, page « En savoir plus »).
  */
 export interface PrestationContent {
 	cle: PrestationId;
@@ -147,7 +147,10 @@ export interface PrestationContent {
 	metaReservation: string;
 	descReservation: string;
 	descCarte: string;
-	prixCarte: string;
+	/** Texte long de la page /prestations/<cle>, en Markdown. */
+	descLongue: string;
+	/** Ligne d'infos pratiques de la page (prix, durée, format) — absente, rien ne s'affiche. */
+	infosPratiques?: string;
 	actionCarte: string;
 }
 
