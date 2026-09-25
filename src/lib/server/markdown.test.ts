@@ -42,4 +42,23 @@ describe('renderMarkdown', () => {
 	it('garde les retours à la ligne simples saisis dans l’administration', () => {
 		expect(renderMarkdown('ligne 1\nligne 2')).toContain('ligne 1<br>ligne 2');
 	});
+
+	it('rend un bloc indenté ou délimité comme un paragraphe, pas un <pre> qui déborde sur mobile', () => {
+		const html = renderMarkdown(
+			'Intro\n\n    texte collé depuis Word, indenté\n\n```\nbloc délimité\n```'
+		);
+		expect(html).not.toContain('<pre');
+		expect(html).not.toContain('<code');
+		expect(html).toContain('<p>texte collé depuis Word, indenté</p>');
+		expect(html).toContain('<p>bloc délimité</p>');
+	});
+
+	it('n’insère aucune image distante : seul le texte alternatif reste', () => {
+		const html = renderMarkdown(
+			'![Coucher de soleil](https://images.example.com/x.jpg) ![b](javascript:alert(1))'
+		);
+		expect(html).not.toContain('<img');
+		expect(html).not.toContain('images.example.com');
+		expect(html).toContain('Coucher de soleil');
+	});
 });
