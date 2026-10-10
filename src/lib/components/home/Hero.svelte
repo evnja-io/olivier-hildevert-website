@@ -6,10 +6,6 @@
 
 	let { content = defaultAccueil.hero }: { content?: HeroContent } = $props();
 
-	// Retours client du 2026-10-01 : le bouton secondaire passe en plein pour
-	// ressortir sur les vagues. Variante proposée en comparaison : 'btn-cream'.
-	const BOUTON_SECONDAIRE: 'btn-sun' | 'btn-cream' = 'btn-sun';
-
 	let ready = $state(false);
 	$effect(() => {
 		requestAnimationFrame(() => (ready = true));
@@ -56,9 +52,8 @@
 						<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</a>
-				<a
-					class="btn {BOUTON_SECONDAIRE} justify-center sm:justify-start"
-					href="{resolve('/')}#approche">{content.boutonSecondaire}</a
+				<a class="btn btn-cream justify-center sm:justify-start" href="{resolve('/')}#approche"
+					>{content.boutonSecondaire}</a
 				>
 			</div>
 			<div
