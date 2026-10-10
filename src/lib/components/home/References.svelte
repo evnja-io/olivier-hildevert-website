@@ -18,12 +18,14 @@
 				{content.titre}
 			</h2>
 			<!-- Un logo n'apparaît que s'il a été envoyé dans Strapi (avec l'accord de
-			     l'entreprise) ; sinon, le nom seul. -->
+			     l'entreprise) ; sinon, le nom seul. Cadres identiques : les logos sont
+			     préparés au même format (docs/logos-references/), monochromes et à
+			     poids optique égal — l'homogénéité vient des fichiers, pas d'un filtre. -->
 			<ul
-				class="mx-auto mt-10 flex max-w-[1000px] flex-wrap items-center justify-center gap-x-10 gap-y-6"
+				class="mx-auto mt-10 flex max-w-[1120px] flex-wrap items-center justify-center gap-x-8 gap-y-6"
 			>
 				{#each content.entreprises as entreprise, i (`${i}-${entreprise.nom}`)}
-					<li class="flex items-center">
+					<li class="flex h-14 w-[calc(50%-1rem)] items-center justify-center sm:h-16 sm:w-40">
 						{#if entreprise.logo}
 							<img
 								src={entreprise.logo.src}
@@ -33,10 +35,12 @@
 								height={entreprise.logo.hauteur}
 								alt={entreprise.nom}
 								loading="lazy"
-								class="h-10 w-auto max-w-[160px] object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0"
+								class="h-full w-full object-contain opacity-85 transition-opacity hover:opacity-100"
 							/>
 						{:else}
-							<span class="font-display text-xl tracking-[0.01em] text-ink-soft">
+							<span
+								class="font-display text-lg leading-tight tracking-[0.01em] text-balance text-ink-soft"
+							>
 								{entreprise.nom}
 							</span>
 						{/if}
