@@ -41,6 +41,27 @@ export async function enregistrerReservation(
 	);
 }
 
+export async function enregistrerCommande(
+	data: { produit: string; name: string; email: string; phone: string; message: string },
+	fetcher: typeof fetch
+): Promise<void> {
+	if (!isStrapiConfigured()) {
+		console.log('Demande de commande reçue (Strapi non configuré) :', data);
+		return;
+	}
+	await createEntry(
+		'demandes-commande',
+		{
+			produit: data.produit,
+			nom: data.name,
+			email: data.email,
+			telephone: data.phone,
+			message: data.message
+		},
+		fetcher
+	);
+}
+
 export async function inscrireNewsletter(
 	data: { email: string },
 	fetcher: typeof fetch

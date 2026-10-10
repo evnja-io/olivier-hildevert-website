@@ -64,13 +64,30 @@ test.describe('réservation', () => {
 
 		await page.locator('#tarifs').getByRole('link', { name: 'Demander' }).first().click();
 		await expect(modale.getByText('En présentiel', { exact: true })).toBeVisible();
-		await expect(modale).toContainText("d'une date et d'un horaire d'entretien");
+		await expect(modale).toContainText('je vous ajoute à la liste de diffusion');
 		await expect(modale).not.toContainText('par téléphone');
+		const infosStages = modale.getByRole('checkbox', { name: /prochains stages/ });
+		await expect(infosStages).not.toBeChecked();
 		await modale.getByRole('button', { name: 'Fermer' }).click();
 
 		await page.locator('#tarifs').getByRole('link', { name: 'Réserver' }).click();
 		await expect(modale.getByText('Par téléphone', { exact: true })).toBeVisible();
 		await expect(modale).toContainText('Les séances se déroulent par téléphone');
+		await expect(modale.getByRole('checkbox')).toHaveCount(0);
+	});
+
+	test('une demande de stage peut s’inscrire à la liste de diffusion', async ({ page }) => {
+		await page.goto('/');
+		await page.locator('#tarifs').getByRole('link', { name: 'Demander' }).first().click();
+
+		const modale = page.getByRole('dialog', { name: 'Prendre rendez-vous' });
+		await modale.getByLabel('Nom et prénom').fill('Jeanne Dupont');
+		await modale.getByLabel('Adresse e-mail').fill('jeanne@example.com');
+		await modale.getByLabel('Téléphone').fill('06 12 34 56 78');
+		await modale.getByRole('checkbox', { name: /prochains stages/ }).check();
+		await modale.getByRole('button', { name: 'Envoyer ma demande' }).click();
+
+		await expect(modale.getByRole('heading', { name: 'Demande transmise' })).toBeVisible();
 	});
 
 	test('chaque carte de prestation ouvre la modale sur son accompagnement', async ({ page }) => {
@@ -137,13 +154,30 @@ test.describe('navigation mobile', () => {
 	});
 });
 
+test.describe('commande', () => {
+	test('la page /commande fonctionne sans JavaScript, produit prérempli', async ({ browser }) => {
+		const contexte = await browser.newContext({ javaScriptEnabled: false });
+		const page = await contexte.newPage();
+		await page.goto('/commande?produit=Cartes%20de%20m%C3%A9ditation');
+
+		await expect(page.getByLabel('Produit souhaité')).toHaveValue('Cartes de méditation');
+		await page.getByLabel('Nom et prénom').fill('Jeanne Dupont');
+		await page.getByLabel('Adresse e-mail').fill('jeanne@example.com');
+		await page.getByLabel('Téléphone').fill('06 12 34 56 78');
+		await page.getByRole('button', { name: 'Envoyer ma demande' }).click();
+
+		await expect(page.getByRole('status')).toContainText('Demande de commande transmise');
+		await contexte.close();
+	});
+});
+
 test.describe('liens externes', () => {
 	test('les boutons de la boutique mènent hors du site', async ({ page }) => {
 		await page.goto('/');
 		const boutique = page.locator('#boutique');
 
 		for (const nom of ['Commander', 'Découvrir']) {
-			const lien = boutique.getByRole('link', { name: nom, exact: true });
+			const lien = boutique.getByRole('link', { name: new RegExp(`^${nom}`) });
 			await expect(lien).toHaveAttribute('href', /^https:\/\//);
 			await expect(lien).toHaveAttribute('target', '_blank');
 			await expect(lien).toHaveAttribute('rel', /noopener/);

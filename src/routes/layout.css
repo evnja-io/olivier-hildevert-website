@@ -216,6 +216,18 @@
 		transform: translateY(-2px);
 	}
 }
+/* Bouton secondaire plein : fond crème opaque, contour et texte corail.
+   Ressort sur une photo (vagues du hero) sans concurrencer `btn-sun`. */
+@utility btn-cream {
+	background: var(--color-sky);
+	border: 1.5px solid var(--color-coral-deep);
+	color: var(--color-coral-ink);
+	box-shadow: 0 14px 32px -18px var(--color-coral-deep);
+	&:hover {
+		background: var(--color-white);
+		transform: translateY(-2px);
+	}
+}
 /* inversion sur fond chaud (bandes immersives) */
 /* Hors couche : doit l'emporter sur l'utilitaire `btn-line` (couche
    utilities), ce qu'une règle en `@layer components` ne faisait pas. */

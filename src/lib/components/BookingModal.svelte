@@ -12,6 +12,7 @@
 	import { resolve } from '$app/paths';
 	import { booking, closeBooking } from '$lib/booking/booking.svelte';
 	import type { PrestationId } from '$lib/booking/prestations';
+	import { LIBELLE_INFOS_STAGES, MODALITES, RAPPEL } from '$lib/booking/modalites';
 	import type { PrestationContent } from '$lib/content/types';
 	import { defaultPrestations } from '$lib/content/defaults';
 
@@ -28,19 +29,6 @@
 
 	const prestationChoisie = $derived(prestations.find((p) => p.cle === $form.prestation));
 
-	// Seule la séance individuelle se déroule forcément par téléphone : les
-	// autres accompagnements s'organisent lors d'un entretien.
-	const RAPPEL =
-		"Je vous recontacte pour convenir ensemble d'une date et d'un horaire d'entretien.";
-	const MODALITES: Record<PrestationId, { annonce: string; format: string }> = {
-		individuelle: {
-			annonce: `Les séances se déroulent par téléphone. ${RAPPEL}`,
-			format: 'Par téléphone'
-		},
-		programme: { annonce: RAPPEL, format: 'Par téléphone' },
-		entreprise: { annonce: RAPPEL, format: 'À définir ensemble' },
-		stage: { annonce: RAPPEL, format: 'En présentiel' }
-	};
 	const modalites = $derived($form.prestation ? MODALITES[$form.prestation] : undefined);
 
 	$effect(() => {
@@ -234,6 +222,17 @@
 					></textarea>
 					{#if $errors.message}<p class="mt-1 text-sm text-ember">{$errors.message[0]}</p>{/if}
 				</div>
+				{#if $form.prestation === 'stage'}
+					<label class="flex cursor-pointer items-start gap-3 text-sm leading-[1.5] text-ink-soft">
+						<input
+							type="checkbox"
+							name="infosStages"
+							bind:checked={$form.infosStages}
+							class="mt-0.5 size-4.5 shrink-0 cursor-pointer rounded border-[color-mix(in_oklab,var(--color-ink)_30%,transparent)] text-coral-deep focus:ring-coral"
+						/>
+						{LIBELLE_INFOS_STAGES}
+					</label>
+				{/if}
 			</div>
 
 			<div class="mt-6 flex justify-between gap-3">

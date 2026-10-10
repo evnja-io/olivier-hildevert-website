@@ -6,6 +6,10 @@
 
 	let { content = defaultAccueil.hero }: { content?: HeroContent } = $props();
 
+	// Retours client du 2026-10-01 : le bouton secondaire passe en plein pour
+	// ressortir sur les vagues. Variante proposée en comparaison : 'btn-cream'.
+	const BOUTON_SECONDAIRE: 'btn-sun' | 'btn-cream' = 'btn-sun';
+
 	let ready = $state(false);
 	$effect(() => {
 		requestAnimationFrame(() => (ready = true));
@@ -33,7 +37,9 @@
 				<em class="not-italic">{content.titreLigne2}</em>
 			</h1>
 			<p class="mb-3.5 max-w-[34em] text-base text-ink">{content.paragraphe}</p>
-			<p class="mb-9 font-mono text-xs leading-[1.6] tracking-[0.16em] text-[#5E4108] uppercase">
+			<p
+				class="hero-mono mb-9 font-mono text-xs leading-[1.6] font-medium tracking-[0.16em] text-coral-ink uppercase"
+			>
 				{content.ligneMono}
 			</p>
 			<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-[13px]">
@@ -50,8 +56,9 @@
 						<path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</a>
-				<a class="btn btn-line justify-center sm:justify-start" href="{resolve('/')}#approche"
-					>{content.boutonSecondaire}</a
+				<a
+					class="btn {BOUTON_SECONDAIRE} justify-center sm:justify-start"
+					href="{resolve('/')}#approche">{content.boutonSecondaire}</a
 				>
 			</div>
 			<div
@@ -111,11 +118,13 @@
 		}
 	}
 
-	/* Repères chiffrés : le voile s'efface vers la droite, et « 34 ans » tombait
+	/* Repères chiffrés et ligne « Accompagnement non médical » (en corail depuis
+	   les retours du 2026-10-01) : le voile s'efface vers la droite, et « 34 ans » tombait
 	   sur la photo nue (retours client du 2026-09-25). Un halo crème porté par
 	   le texte seul les détache sans éclaircir davantage l'image. Les nombres
 	   reprennent le bleu du titre plutôt que l'orange, fondu dans le ciel. */
-	.hero-stats {
+	.hero-stats,
+	.hero-mono {
 		text-shadow:
 			0 0 14px rgba(255, 246, 236, 0.95),
 			0 0 4px rgba(255, 246, 236, 0.9);

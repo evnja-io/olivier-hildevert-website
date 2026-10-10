@@ -6,10 +6,15 @@
  * et couvert par les tests round-trip de content.test.ts.
  */
 import { z } from 'zod';
-import { fetchEntries, fetchSingle, isStrapiConfigured } from './strapi';
+import { fetchEntries, fetchSingle, isStrapiConfigured, urlMedia } from './strapi';
 import { PRESTATION_IDS } from '$lib/booking/prestations';
 import { defaultAccueil, defaultPrestations, defaultReglages } from '$lib/content/defaults';
-import type { PageAccueilContent, PrestationContent, ReglagesSite } from '$lib/content/types';
+import type {
+	ImageCms,
+	PageAccueilContent,
+	PrestationContent,
+	ReglagesSite
+} from '$lib/content/types';
 
 // ————— Schémas de validation de la réponse Strapi (attributs à plat, v5) —————
 
@@ -22,6 +27,50 @@ const optionnel = z
 	.string()
 	.nullish()
 	.transform((v) => v ?? undefined);
+
+// http(s) seulement : `z.url()` seul accepte aussi `javascript:…`.
+const urlWeb = z.url({ protocol: /^https?$/ });
+
+/** Lien facultatif : null, vide ou blanc → absent. Renseigné, il doit être une URL web. */
+const lienOptionnel = z
+	.string()
+	.nullish()
+	.transform((v) => v?.trim() || undefined)
+	.pipe(urlWeb.optional());
+
+const formatImage = z.object({ url: z.string(), width: z.number() });
+
+/** Image de la médiathèque (populate) → URLs absolues + srcset des formats générés. */
+const imageMedia = z
+	.object({
+		url: z.string(),
+		alternativeText: z.string().nullish(),
+		width: z.number(),
+		height: z.number(),
+		formats: z.record(z.string(), formatImage).nullish()
+	})
+	.nullish()
+	.transform((m): ImageCms | undefined => {
+		if (!m) return undefined;
+		const declinaisons = Object.values(m.formats ?? {})
+			.filter((f) => f.width < m.width)
+			.sort((a, b) => a.width - b.width)
+			.map((f) => `${urlMedia(f.url)} ${f.width}w`);
+		return {
+			src: urlMedia(m.url),
+			...(declinaisons.length
+				? { srcset: [...declinaisons, `${urlMedia(m.url)} ${m.width}w`].join(', ') }
+				: {}),
+			largeur: m.width,
+			hauteur: m.height,
+			alt: m.alternativeText?.trim() ?? ''
+		};
+	});
+
+const documentMedia = z
+	.object({ url: z.string() })
+	.nullish()
+	.transform((m) => (m ? urlMedia(m.url) : undefined));
 
 const ROMAINS: Record<string, number> = { I: 1, V: 5, X: 10, L: 50, C: 100 };
 
@@ -108,17 +157,35 @@ const accueilSchema = z.object({
 		paragraphe: z.string(),
 		produits: z
 			.array(
-				z.object({
-					cleImage: z.enum(['livre', 'veilleuses']),
-					tag: z.string(),
-					titre: z.string(),
-					desc: z.string(),
-					prixTexte: z.string(),
-					boutonLabel: z.string(),
-					// URL et non simple chaîne : une valeur vide venue du CMS
-					// produirait un href="" — un lien qui ne mène nulle part.
-					lien: z.url()
-				})
+				z
+					.object({
+						cleImage: z
+							.enum(['livre', 'veilleuses'])
+							.nullish()
+							.transform((v) => v ?? undefined),
+						image: imageMedia,
+						tag: z.string(),
+						titre: z.string(),
+						desc: z.string(),
+						prixTexte: z.string(),
+						boutonLabel: z.string(),
+						// Vide : « Commander » ouvre le formulaire de coordonnées.
+						lien: lienOptionnel,
+						document: documentMedia,
+						lienInfo: lienOptionnel
+					})
+					// Le document envoyé prime sur le lien saisi ; les clés absentes
+					// sont omises (round-trip strict avec les défauts).
+					.transform(({ cleImage, image, lien, document, lienInfo, ...texte }) => {
+						const info = document ?? lienInfo;
+						return {
+							...texte,
+							...(cleImage ? { cleImage } : {}),
+							...(image ? { image } : {}),
+							...(lien ? { lien } : {}),
+							...(info ? { info } : {})
+						};
+					})
 			)
 			.nonempty()
 	}),
@@ -145,7 +212,22 @@ const accueilSchema = z.object({
 		titre: z.string(),
 		paragraphe: z.string(),
 		boutonLabel: z.string()
-	})
+	}),
+	// Section ajoutée après la mise en ligne : absente d'une page d'accueil déjà
+	// rédigée par le client, elle prend les défauts SANS déclasser le reste de
+	// la page. Une liste vide (choix du client) masque la section.
+	references: z
+		.object({
+			eyebrow: z.string(),
+			titre: z.string(),
+			entreprises: z.array(
+				z
+					.object({ nom: z.string(), logo: imageMedia })
+					.transform(({ nom, logo }) => ({ nom, ...(logo ? { logo } : {}) }))
+			)
+		})
+		.nullish()
+		.transform((v) => v ?? defaultAccueil.references)
 });
 
 // `descLongue` : tolérant pour de bon — absent, null ou vide, la page sert le
@@ -190,10 +272,14 @@ const POPULATE_ACCUEIL = {
 	'populate[aPropos][populate]': '*',
 	'populate[prestationsIntro][populate]': '*',
 	'populate[pourQui][populate]': '*',
-	'populate[boutique][populate]': '*',
+	// Un niveau de plus : les médias (image, document) des produits.
+	'populate[boutique][populate][produits][populate]': '*',
 	'populate[tarifs][populate]': '*',
 	'populate[mantra][populate]': '*',
-	'populate[contactCta][populate]': '*'
+	'populate[contactCta][populate]': '*',
+	// Exige un CMS qui connaît `references` : un champ inconnu fait répondre
+	// 400 à Strapi (déployer le CMS AVANT le site).
+	'populate[references][populate][entreprises][populate]': '*'
 };
 
 export async function getPageAccueil(fetcher: typeof fetch): Promise<PageAccueilContent> {

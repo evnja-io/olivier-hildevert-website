@@ -76,6 +76,15 @@ export function isStrapiConfigured(): boolean {
 	return Boolean(env.STRAPI_URL);
 }
 
+/**
+ * URL publique d'un média Strapi. Le fournisseur d'upload local renvoie un
+ * chemin relatif (`/uploads/…`) servi par Strapi lui-même ; un fournisseur
+ * externe (S3, Cloudinary…) renvoie déjà une URL absolue, laissée intacte.
+ */
+export function urlMedia(chemin: string): string {
+	return /^https?:\/\//.test(chemin) ? chemin : `${config().url}${chemin}`;
+}
+
 async function strapiFetch<T>(
 	path: string,
 	query?: Query,

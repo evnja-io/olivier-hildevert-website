@@ -216,6 +216,20 @@ export const defaultAccueil: PageAccueilContent = {
 		paragraphe:
 			"Prenez rendez-vous pour une première séance, ou écrivez-moi pour m'expliquer votre besoin . C'est le bon moment. Je vous attends...",
 		boutonLabel: 'Prendre rendez-vous'
+	},
+	// Demande du client (2026-09-25). Noms cités, sans logo ni formule laissant
+	// entendre une recommandation : « ont fait confiance » reste factuel.
+	references: {
+		eyebrow: 'Références',
+		titre: 'Ces entreprises ont fait confiance à Olivier Hildevert Consultant',
+		entreprises: [
+			{ nom: 'Crédit Agricole SA' },
+			{ nom: 'Fiat France' },
+			{ nom: 'iDealwine' },
+			{ nom: 'Endemol Production' },
+			{ nom: 'Groupe M6' },
+			{ nom: 'Hôpitaux de Paris' }
+		]
 	}
 };
 
