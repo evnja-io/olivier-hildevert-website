@@ -217,7 +217,8 @@
 	}
 }
 /* Bouton secondaire plein : fond crème opaque, contour et texte corail.
-   Ressort sur une photo (vagues du hero) sans concurrencer `btn-sun`. */
+   Ressort sur une photo (vagues du hero) sans concurrencer `btn-sun` :
+   deux boutons orange pleins côte à côte seraient redondants. */
 @utility btn-cream {
 	background: var(--color-sky);
 	border: 1.5px solid var(--color-coral-deep);
