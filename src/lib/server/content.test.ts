@@ -156,6 +156,47 @@ describe('getPageAccueil — produits de la boutique', () => {
 	});
 });
 
+describe('getPageAccueil — références', () => {
+	it('prend les références par défaut quand le CMS n’a pas encore la section, sans déclasser la page', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const accueil = await getPageAccueil(
+			reponse({ data: { ...brut, references: null, hero: { ...brut.hero, eyebrow: 'Modifié' } } })
+		);
+		expect(accueil.hero.eyebrow).toBe('Modifié');
+		expect(accueil.references).toEqual(defaultAccueil.references);
+	});
+
+	it('garde une liste vide (section masquée) et mappe les logos envoyés', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const vide = await getPageAccueil(
+			reponse({ data: { ...brut, references: { ...brut.references, entreprises: [] } } })
+		);
+		expect(vide.references.entreprises).toEqual([]);
+
+		const avecLogo = await getPageAccueil(
+			reponse({
+				data: {
+					...brut,
+					references: {
+						...brut.references,
+						entreprises: [
+							{ nom: 'Groupe M6', logo: { url: '/uploads/m6.png', width: 300, height: 120 } },
+							{ nom: 'Fiat France', logo: null }
+						]
+					}
+				}
+			})
+		);
+		expect(avecLogo.references.entreprises).toEqual([
+			{
+				nom: 'Groupe M6',
+				logo: { src: 'http://cms.test/uploads/m6.png', largeur: 300, hauteur: 120, alt: '' }
+			},
+			{ nom: 'Fiat France' }
+		]);
+	});
+});
+
 describe('getPrestations', () => {
 	it('mappe les 4 prestations (round-trip avec le format de seed)', async () => {
 		const fetcher = reponse({

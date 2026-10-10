@@ -9,6 +9,7 @@
 	import Prestations from '$lib/components/home/Prestations.svelte';
 	import PourQui from '$lib/components/home/PourQui.svelte';
 	import Boutique from '$lib/components/home/Boutique.svelte';
+	import References from '$lib/components/home/References.svelte';
 	import Tarifs from '$lib/components/home/Tarifs.svelte';
 	import ContactCta from '$lib/components/home/ContactCta.svelte';
 
@@ -71,3 +72,5 @@
 	{/snippet}
 	<ContactCta content={data.accueil.contactCta} />
 </ImmersiveBand>
+
+<References content={data.accueil.references} />

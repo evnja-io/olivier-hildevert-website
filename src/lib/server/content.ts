@@ -212,7 +212,22 @@ const accueilSchema = z.object({
 		titre: z.string(),
 		paragraphe: z.string(),
 		boutonLabel: z.string()
-	})
+	}),
+	// Section ajoutée après la mise en ligne : absente d'une page d'accueil déjà
+	// rédigée par le client, elle prend les défauts SANS déclasser le reste de
+	// la page. Une liste vide (choix du client) masque la section.
+	references: z
+		.object({
+			eyebrow: z.string(),
+			titre: z.string(),
+			entreprises: z.array(
+				z
+					.object({ nom: z.string(), logo: imageMedia })
+					.transform(({ nom, logo }) => ({ nom, ...(logo ? { logo } : {}) }))
+			)
+		})
+		.nullish()
+		.transform((v) => v ?? defaultAccueil.references)
 });
 
 // `descLongue` : tolérant pour de bon — absent, null ou vide, la page sert le
@@ -261,7 +276,10 @@ const POPULATE_ACCUEIL = {
 	'populate[boutique][populate][produits][populate]': '*',
 	'populate[tarifs][populate]': '*',
 	'populate[mantra][populate]': '*',
-	'populate[contactCta][populate]': '*'
+	'populate[contactCta][populate]': '*',
+	// Exige un CMS qui connaît `references` : un champ inconnu fait répondre
+	// 400 à Strapi (déployer le CMS AVANT le site).
+	'populate[references][populate][entreprises][populate]': '*'
 };
 
 export async function getPageAccueil(fetcher: typeof fetch): Promise<PageAccueilContent> {

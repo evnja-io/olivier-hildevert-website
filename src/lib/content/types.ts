@@ -114,6 +114,22 @@ export interface BoutiqueContent {
 	produits: ProduitBoutique[];
 }
 
+/**
+ * Entreprise cliente. Le nom seul suffit (citation factuelle) ; le logo est
+ * une œuvre protégée, à n'envoyer qu'avec l'autorisation de l'entreprise.
+ */
+export interface ReferenceEntreprise {
+	nom: string;
+	logo?: ImageCms;
+}
+
+/** Liste vide : la section n'est pas affichée. */
+export interface ReferencesContent {
+	eyebrow: string;
+	titre: string;
+	entreprises: ReferenceEntreprise[];
+}
+
 export interface CarteTarif {
 	label: string;
 	montant: string;
@@ -153,6 +169,7 @@ export interface PageAccueilContent {
 	tarifs: TarifsContent;
 	mantra: MantraContent;
 	contactCta: ContactCtaContent;
+	references: ReferencesContent;
 }
 
 /**
