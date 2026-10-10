@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import { site } from '$lib/config';
+	import { LIBELLE_INFOS_STAGES, MODALITES, RAPPEL } from '$lib/booking/modalites';
 
 	let { data } = $props();
 
 	// superForm capture la valeur initiale par design (réactivité gérée en interne)
 	// svelte-ignore state_referenced_locally
 	const { form, errors, message, enhance, delayed } = superForm(data.form);
+
+	// Sans JavaScript, l'annonce reste celle de la prestation reçue par ?prestation=.
+	const annonce = $derived($form.prestation ? MODALITES[$form.prestation].annonce : RAPPEL);
 </script>
 
 <svelte:head>
@@ -21,9 +25,7 @@
 <section class="mx-auto w-[min(860px,90vw)] pt-36 pb-24">
 	<span class="eyebrow">Rendez-vous</span>
 	<h1 class="mt-5 text-4xl text-ink sm:text-5xl">Prendre rendez-vous</h1>
-	<p class="mt-4 max-w-2xl text-ink-soft">
-		Je vous recontacte pour convenir ensemble d'une date et d'un horaire d'entretien.
-	</p>
+	<p class="mt-4 max-w-2xl text-ink-soft">{annonce}</p>
 
 	{#if $message}
 		<p
@@ -134,6 +136,18 @@
 				<p id="message-error" class="mt-1 text-sm text-ember">{$errors.message[0]}</p>
 			{/if}
 		</div>
+
+		<!-- Toujours présente : sans JavaScript, la case ne peut pas suivre le choix
+		     de prestation. Le serveur l'ignore pour les autres accompagnements. -->
+		<label class="flex cursor-pointer items-start gap-3 text-sm leading-[1.5] text-ink-soft">
+			<input
+				type="checkbox"
+				name="infosStages"
+				bind:checked={$form.infosStages}
+				class="mt-0.5 size-4.5 shrink-0 cursor-pointer rounded border-line-2 text-coral-deep focus:ring-coral"
+			/>
+			<span>{LIBELLE_INFOS_STAGES} <span class="text-mute">(stages et ateliers)</span></span>
+		</label>
 
 		<button
 			type="submit"

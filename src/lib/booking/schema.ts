@@ -15,7 +15,9 @@ export const bookingSchema = z.object({
 		.string()
 		.max(2000, 'Votre message ne peut pas dépasser 2000 caractères.')
 		.optional()
-		.default('')
+		.default(''),
+	// Stages uniquement : inscription à la liste de diffusion, sur demande expresse.
+	infosStages: z.boolean().default(false)
 });
 
 export type BookingSchema = typeof bookingSchema;

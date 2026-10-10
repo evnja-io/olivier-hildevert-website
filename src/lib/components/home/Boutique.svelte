@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { reveal } from '$lib/attachments/reveal';
+	import { openCommande } from '$lib/commande/commande.svelte';
 	import type { BoutiqueContent, CleImageBoutique } from '$lib/content/types';
 	import { defaultAccueil } from '$lib/content/defaults';
 
@@ -10,23 +12,26 @@
 
 	type EnhancedSrc = typeof bookCover;
 
-	// Les images restent locales, appariées au contenu par cleImage.
+	// Images locales des produits d'origine, appariées par cleImage. Un visuel
+	// envoyé dans Strapi (`produit.image`) les remplace.
 	const IMAGES_BOUTIQUE: Record<
 		CleImageBoutique,
-		{ image: EnhancedSrc; alt: string; ratio: string; style?: string }
+		{ image: EnhancedSrc; alt: string; position: string }
 	> = {
 		livre: {
 			image: bookCover,
 			alt: "Couverture du roman Angela, l'ange est là !",
-			ratio: 'aspect-3/4'
+			position: 'center 30%'
 		},
 		veilleuses: {
 			image: luminame,
 			alt: 'Veilleuse LUMINÂME gravée de motifs sacrés, allumée sur un socle en bois',
-			ratio: 'aspect-square',
-			style: 'object-position: 38% center'
+			position: '38% center'
 		}
 	};
+
+	const commande = resolve('/commande');
+	const SIZES = '(min-width: 1280px) 380px, (min-width: 768px) 45vw, calc(100vw - 2.75rem)';
 </script>
 
 <section
@@ -43,48 +48,90 @@
 				{content.paragraphe}
 			</p>
 		</div>
-		<div class="grid gap-5.5 lg:grid-cols-2">
-			{#each content.produits as produit (produit.cleImage)}
-				{@const img = IMAGES_BOUTIQUE[produit.cleImage]}
-				<div
-					class="reveal grid items-center gap-6 rounded-card border border-line bg-white p-6 shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition hover:-translate-y-[5px] hover:shadow-[0_38px_76px_-46px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] sm:grid-cols-[0.82fr_1.18fr]"
-					{@attach reveal()}
+		<!-- Cartes verticales : le nombre de produits est libre (géré dans Strapi). -->
+		<div class="grid gap-5.5 md:grid-cols-2 xl:grid-cols-3">
+			{#each content.produits as produit, i (`${i}-${produit.titre}`)}
+				{@const locale = produit.cleImage ? IMAGES_BOUTIQUE[produit.cleImage] : undefined}
+				<article
+					class="reveal flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)] transition hover:-translate-y-[5px] hover:shadow-[0_38px_76px_-46px_color-mix(in_oklab,var(--color-ember)_50%,transparent)]"
+					{@attach reveal(i * 85)}
 				>
-					<div
-						class="{img.ratio} overflow-hidden rounded-btn shadow-[0_16px_38px_-22px_color-mix(in_oklab,var(--color-ember)_50%,transparent)] max-sm:mx-auto max-sm:max-w-[200px]"
-					>
-						<enhanced:img
-							src={img.image}
-							alt={img.alt}
-							loading="lazy"
-							sizes="(min-width: 1024px) 290px, (min-width: 640px) 240px, 200px"
-							class="h-full w-full object-cover"
-							style={img.style}
-						/>
-					</div>
-					<div>
-						<span class="font-mono text-xs tracking-[0.18em] text-coral uppercase">
+					<!-- Visuel Strapi en object-contain : un visuel Canva (A4, carré,
+					     paysage) s'affiche en entier, quel que soit son format — le carré
+					     le remplit exactement. Les images locales, recadrées à la main,
+					     restent en object-cover. `absolute` : <enhanced:img> enveloppe
+					     l'image dans un <picture> où `h-full` ne prendrait pas. -->
+					{#if produit.image}
+						<div class="relative aspect-square bg-surface-2">
+							<img
+								src={produit.image.src}
+								srcset={produit.image.srcset}
+								sizes={SIZES}
+								width={produit.image.largeur}
+								height={produit.image.hauteur}
+								alt={produit.image.alt}
+								loading="lazy"
+								class="absolute inset-0 h-full w-full object-contain"
+							/>
+						</div>
+					{:else if locale}
+						<div class="relative aspect-square overflow-hidden">
+							<enhanced:img
+								src={locale.image}
+								alt={locale.alt}
+								loading="lazy"
+								sizes={SIZES}
+								class="absolute inset-0 h-full w-full object-cover"
+								style="object-position: {locale.position}"
+							/>
+						</div>
+					{/if}
+					<div class="flex flex-1 flex-col p-[22px_24px]">
+						<span class="font-mono text-xs tracking-[0.18em] text-coral-ink uppercase">
 							{produit.tag}
 						</span>
 						<h3 class="mt-2 mb-2.5 text-2xl tracking-[0.01em]">{produit.titre}</h3>
-						<p class="mb-4.5 text-sm leading-[1.6] text-ink-soft">
+						<p class="mb-4.5 flex-1 text-sm leading-[1.6] text-ink-soft">
 							{produit.desc}
 						</p>
-						<div class="flex flex-col items-start gap-3.5">
-							<b class="font-mono text-xs tracking-[0.08em] text-mute uppercase">
-								{produit.prixTexte}
-							</b>
-							<a
-								class="btn btn-line"
-								href={produit.lien}
-								target="_blank"
-								rel="external noopener noreferrer"
-							>
-								{produit.boutonLabel}
-							</a>
+						<b class="mb-4 font-mono text-xs tracking-[0.08em] text-mute uppercase">
+							{produit.prixTexte}
+						</b>
+						<div class="flex flex-col gap-3 border-t border-line pt-4">
+							{#if produit.lien}
+								<a
+									class="btn btn-sun justify-center"
+									href={produit.lien}
+									target="_blank"
+									rel="external noopener noreferrer"
+								>
+									{produit.boutonLabel}<span class="sr-only">&nbsp;: {produit.titre}</span>
+								</a>
+							{:else}
+								<a
+									class="btn btn-sun justify-center"
+									href="{commande}?produit={encodeURIComponent(produit.titre)}"
+									onclick={(e) => {
+										e.preventDefault();
+										openCommande(produit.titre);
+									}}
+								>
+									{produit.boutonLabel}<span class="sr-only">&nbsp;: {produit.titre}</span>
+								</a>
+							{/if}
+							{#if produit.info}
+								<a
+									class="btn btn-line justify-center"
+									href={produit.info}
+									target="_blank"
+									rel="external noopener noreferrer"
+								>
+									Infos<span class="sr-only">&nbsp;: {produit.titre}</span>
+								</a>
+							{/if}
 						</div>
 					</div>
-				</div>
+				</article>
 			{/each}
 		</div>
 	</div>

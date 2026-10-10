@@ -58,4 +58,9 @@ describe('bookingSchema', () => {
 		const res = bookingSchema.safeParse({ ...valide, message: 'a'.repeat(2001) });
 		expect(res.success).toBe(false);
 	});
+
+	it('ne coche jamais la liste de diffusion par défaut', () => {
+		const res = bookingSchema.safeParse(valide);
+		expect(res.success && res.data.infosStages).toBe(false);
+	});
 });

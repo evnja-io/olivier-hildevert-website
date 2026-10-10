@@ -6,6 +6,7 @@
 	import ScrollProgress from '$lib/components/ScrollProgress.svelte';
 	import BookingModal from '$lib/components/BookingModal.svelte';
 	import NewsletterModal from '$lib/components/NewsletterModal.svelte';
+	import CommandeModal from '$lib/components/CommandeModal.svelte';
 
 	let { data, children } = $props();
 </script>
@@ -22,6 +23,7 @@
 
 <Footer reglages={data.reglages} />
 <BookingModal prestations={data.prestations} />
+<CommandeModal />
 <NewsletterModal />
 
 <noscript>

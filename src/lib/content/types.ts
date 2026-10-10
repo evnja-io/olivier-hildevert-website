@@ -78,15 +78,33 @@ export interface PourQuiContent {
 
 export type CleImageBoutique = 'livre' | 'veilleuses';
 
+/** Image envoyée dans la médiathèque Strapi, URLs déjà absolues. */
+export interface ImageCms {
+	src: string;
+	/** Déclinaisons générées par Strapi (`url largeurw, …`), absentes pour les petites images. */
+	srcset?: string;
+	largeur: number;
+	hauteur: number;
+	alt: string;
+}
+
 export interface ProduitBoutique {
-	cleImage: CleImageBoutique;
+	/** Image locale optimisée (produits d'origine) — ignorée si `image` est renseignée. */
+	cleImage?: CleImageBoutique;
+	/** Visuel envoyé par le client dans Strapi — prioritaire sur `cleImage`. */
+	image?: ImageCms;
 	tag: string;
 	titre: string;
 	desc: string;
 	prixTexte: string;
 	boutonLabel: string;
-	/** URL externe de la boutique — éditable dans Strapi, ouverte dans un nouvel onglet. */
-	lien: string;
+	/**
+	 * URL externe de commande, ouverte dans un nouvel onglet. Absente : le
+	 * bouton ouvre le formulaire de commande (coordonnées).
+	 */
+	lien?: string;
+	/** Bouton « Infos » : document envoyé dans Strapi (PDF, JPEG) ou lien externe (Canva…). */
+	info?: string;
 }
 
 export interface BoutiqueContent {

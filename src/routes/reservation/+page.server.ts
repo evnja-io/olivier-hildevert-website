@@ -3,7 +3,7 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
 import { bookingSchema } from '$lib/booking/schema';
 import { PRESTATION_IDS, type PrestationId } from '$lib/booking/prestations';
-import { enregistrerReservation } from '$lib/server/forms';
+import { enregistrerReservation, inscrireNewsletter } from '$lib/server/forms';
 import type { Actions, PageServerLoad } from './$types';
 
 // Portée module : permet à Superforms de mettre l'adapter en cache.
@@ -40,6 +40,16 @@ export const actions: Actions = {
 				},
 				{ status: 500 }
 			);
+		}
+
+		// La demande est enregistrée : un échec de l'inscription ne doit pas la
+		// faire passer pour perdue auprès du visiteur — on trace seulement.
+		if (form.data.prestation === 'stage' && form.data.infosStages) {
+			try {
+				await inscrireNewsletter({ email: form.data.email }, fetch);
+			} catch (err) {
+				console.error('Échec de l’inscription à la liste de diffusion des stages :', err);
+			}
 		}
 
 		return message(form, {

@@ -91,6 +91,71 @@ describe('getPageAccueil', () => {
 	});
 });
 
+describe('getPageAccueil — produits de la boutique', () => {
+	const avecProduit = (produit: Record<string, unknown>) => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		return reponse({
+			data: { ...brut, boutique: { ...brut.boutique, produits: [produit] } }
+		});
+	};
+	const base = {
+		tag: 'Création',
+		titre: 'Cartes',
+		desc: 'Un jeu de cartes.',
+		prixTexte: '25 €',
+		boutonLabel: 'Commander'
+	};
+
+	it('rend absolues les URLs des médias et construit le srcset des formats plus petits', async () => {
+		const accueil = await getPageAccueil(
+			avecProduit({
+				...base,
+				cleImage: null,
+				image: {
+					url: '/uploads/cartes.jpg',
+					alternativeText: 'Jeu de cartes',
+					width: 1200,
+					height: 1600,
+					formats: {
+						large: { url: '/uploads/large_cartes.jpg', width: 1000 },
+						small: { url: '/uploads/small_cartes.jpg', width: 500 }
+					}
+				},
+				document: { url: 'https://cdn.test/catalogue.pdf' },
+				lien: null,
+				lienInfo: 'https://www.canva.com/design/abc/view'
+			})
+		);
+		expect(accueil.boutique.produits).toEqual([
+			{
+				...base,
+				image: {
+					src: 'http://cms.test/uploads/cartes.jpg',
+					srcset:
+						'http://cms.test/uploads/small_cartes.jpg 500w, http://cms.test/uploads/large_cartes.jpg 1000w, http://cms.test/uploads/cartes.jpg 1200w',
+					largeur: 1200,
+					hauteur: 1600,
+					alt: 'Jeu de cartes'
+				},
+				// le document envoyé prime sur le lien saisi
+				info: 'https://cdn.test/catalogue.pdf'
+			}
+		]);
+	});
+
+	it('lien vide → pas de lien (formulaire de commande) ; lienInfo seul → Infos', async () => {
+		const accueil = await getPageAccueil(
+			avecProduit({ ...base, lien: '  ', lienInfo: 'https://www.canva.com/x' })
+		);
+		expect(accueil.boutique.produits[0]).toEqual({ ...base, info: 'https://www.canva.com/x' });
+	});
+
+	it('refuse un lien qui n’est pas http(s) (javascript:…)', async () => {
+		const accueil = await getPageAccueil(avecProduit({ ...base, lienInfo: 'javascript:alert(1)' }));
+		expect(accueil).toEqual(defaultAccueil);
+	});
+});
+
 describe('getPrestations', () => {
 	it('mappe les 4 prestations (round-trip avec le format de seed)', async () => {
 		const fetcher = reponse({
