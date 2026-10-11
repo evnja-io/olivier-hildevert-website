@@ -57,7 +57,7 @@
 				>
 			</div>
 			<div
-				class="hero-stats mt-10.5 grid border-t border-[color-mix(in_oklab,var(--color-ink)_26%,transparent)] pt-5.5 md:flex"
+				class="hero-stats mt-10.5 grid rounded-[22px] px-6 py-1.5 md:flex md:w-fit md:px-[30px] md:py-[22px]"
 			>
 				<!-- La rangée passe à `md` (768 px) et non `sm` : à 640 px les trois
 				     colonnes ne réclamaient que 634 px pour 596 px disponibles, et
@@ -77,7 +77,7 @@
 							{stat.valeur}
 						</strong>
 						<span
-							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink-soft uppercase"
+							class="block max-w-[22ch] font-mono text-xs leading-[1.5] font-medium tracking-[0.1em] text-ink uppercase"
 						>
 							{stat.legende}
 						</span>
@@ -89,8 +89,8 @@
 </section>
 
 <style>
-	/* voile crème léger : les couleurs de la photo restent visibles, le texte
-	   foncé reste lisible sans ombre portée. Horizontal sur grand écran (texte
+	/* voile crème : les couleurs de la photo restent visibles, le texte foncé
+	   reste lisible sans ombre portée (densifié le 2026-10-11). Horizontal sur grand écran (texte
 	   à gauche, soleil à droite, sans voile) ; vertical en dessous de 900 px. */
 	.hero-wash {
 		pointer-events: none;
@@ -105,20 +105,29 @@
 		.hero-wash {
 			background: linear-gradient(
 				90deg,
-				rgba(255, 246, 236, 0.6) 0%,
-				rgba(255, 246, 236, 0.5) 38%,
-				rgba(255, 246, 236, 0.2) 58%,
-				rgba(255, 246, 236, 0) 72%
+				rgba(255, 246, 236, 0.72) 0%,
+				rgba(255, 246, 236, 0.62) 40%,
+				rgba(255, 246, 236, 0.2) 62%,
+				rgba(255, 246, 236, 0) 75%
 			);
 		}
 	}
 
-	/* Repères chiffrés et ligne « Accompagnement non médical » (en corail depuis
-	   les retours du 2026-10-01) : le voile s'efface vers la droite, et « 34 ans » tombait
-	   sur la photo nue (retours client du 2026-09-25). Un halo crème porté par
-	   le texte seul les détache sans éclaircir davantage l'image. Les nombres
-	   reprennent le bleu du titre plutôt que l'orange, fondu dans le ciel. */
-	.hero-stats,
+	/* Repères chiffrés : en bas à gauche, ils tombaient sur l'écume des vagues,
+	   claire et chargée, que ni le voile ni un halo ne neutralisaient (retours du
+	   2026-10-11). Un bandeau crème en verre dépoli les isole sans masquer la
+	   photo ; pleine largeur en mobile, ajusté au contenu à partir de `md`. Les
+	   nombres reprennent le bleu du titre plutôt que l'orange, fondu dans le ciel. */
+	.hero-stats {
+		background: rgba(255, 246, 236, 0.8);
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
+		border: 1px solid rgba(255, 255, 255, 0.6);
+		box-shadow: 0 24px 60px -36px rgba(74, 27, 18, 0.35);
+	}
+
+	/* Ligne « Accompagnement non médical » (en corail depuis les retours du
+	   2026-10-01) : un halo crème porté par le texte seul la détache de la photo. */
 	.hero-mono {
 		text-shadow:
 			0 0 14px rgba(255, 246, 236, 0.95),
