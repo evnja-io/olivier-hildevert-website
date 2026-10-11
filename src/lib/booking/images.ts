@@ -23,7 +23,7 @@ export const IMAGES_PRESTATIONS: Record<PrestationId, { image: EnhancedSrc; alt:
 	},
 	entreprise: {
 		image: cardEntreprise,
-		alt: 'Petit groupe de professionnels en échange sur une passerelle en forêt, lumière dorée'
+		alt: 'Séminaire en plein air : un groupe de professionnels assis en cercle sur une pelouse écoute un intervenant devant un paperboard, une grande maison de maître et ses arbres en arrière-plan'
 	},
 	stage: {
 		image: cardStages,
