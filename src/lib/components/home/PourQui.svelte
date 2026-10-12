@@ -7,7 +7,9 @@
 </script>
 
 <!-- ombre douce, comme la citation du mantra : le voile allégé laisse le
-     sable clair de la photo sous le texte blanc -->
+     sable clair de la photo sous le texte blanc. Les publics, eux, sont des
+     pastilles blanches pleines à texte orange (retours du 2026-10-12) : elles
+     ne dépendent plus de la photo pour être lisibles. -->
 <div class="wrap [text-shadow:0_2px_24px_rgba(74,27,18,0.45)]">
 	<div class="reveal mx-auto mb-10.5 max-w-[640px] text-center" {@attach reveal()}>
 		<span class="eyebrow eyebrow-center text-amber-soft!">{content.eyebrow}</span>
@@ -21,7 +23,7 @@
 	>
 		{#each content.publics as public_ (public_)}
 			<span
-				class="rounded-full border border-[color-mix(in_oklab,#fff_34%,transparent)] bg-[color-mix(in_oklab,#fff_14%,transparent)] px-5 py-[11px] font-mono text-xs tracking-[0.08em] text-white backdrop-blur-[3px] transition hover:-translate-y-[3px] hover:border-white hover:bg-[color-mix(in_oklab,#fff_26%,transparent)]"
+				class="rounded-full border border-white bg-white px-5 py-[11px] font-mono text-xs font-medium tracking-[0.08em] text-coral-ink shadow-[0_12px_30px_-18px_rgba(74,27,18,0.55)] transition [text-shadow:none] hover:-translate-y-[3px] hover:bg-sky"
 			>
 				{public_}
 			</span>

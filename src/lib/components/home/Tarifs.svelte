@@ -29,7 +29,7 @@
 						class="reveal flex flex-col items-center gap-2 rounded-card bg-linear-165 from-coral to-ember px-7.5 py-11 text-center text-white shadow-[0_34px_70px_-38px_color-mix(in_oklab,var(--color-ember)_80%,transparent)] lg:-translate-y-2.5"
 						{@attach reveal(i * 90)}
 					>
-						<span class="font-mono text-xs tracking-[0.2em] text-amber-soft uppercase">
+						<span class="font-mono text-xs font-medium tracking-[0.2em] text-white uppercase">
 							{carte.label}
 						</span>
 						<div class="my-1.5 font-display text-[clamp(46px,3.4rem+2vw,70px)] leading-none">
