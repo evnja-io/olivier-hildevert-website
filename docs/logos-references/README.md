@@ -13,11 +13,13 @@ node scripts/preparer-logos.mjs docs/logos-references chemin/vers/nouveau-logo.s
 
 Le nom du fichier source donne le nom du PNG. Partir du SVG officiel de préférence.
 
-| Fichier                  | Source                                                                                                                      |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `credit-agricole-sa.png` | [Wikimedia Commons — Crédit Agricole logo 2017](https://commons.wikimedia.org/wiki/File:Cr%C3%A9dit_Agricole_logo_2017.svg) |
-| `fiat-france.png`        | [Wikimedia Commons — FIAT logo (2020)](<https://commons.wikimedia.org/wiki/File:FIAT_logo_(2020).svg>)                      |
-| `idealwine.png`          | [idealwine.com/logo-idealwine.svg](https://www.idealwine.com/logo-idealwine.svg)                                            |
-| `endemol-production.png` | [Wikimedia Commons — Endemol France 2021](https://commons.wikimedia.org/wiki/File:Endemol_France_2021.svg)                  |
-| `groupe-m6.png`          | [Wikimedia Commons — M6 Groupe 2023](https://commons.wikimedia.org/wiki/File:M6Groupe2023.svg)                              |
-| `hopitaux-de-paris.png`  | [Wikimedia Commons — AP-HP Logo](https://commons.wikimedia.org/wiki/File:AP-HP_Logo.svg)                                    |
+| Fichier                  | Source                                                                                                                                                            |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `credit-agricole-sa.png` | [Wikimedia Commons — Crédit Agricole logo 2017](https://commons.wikimedia.org/wiki/File:Cr%C3%A9dit_Agricole_logo_2017.svg)                                       |
+| `fiat-france.png`        | [Wikimedia Commons — FIAT logo (2020)](<https://commons.wikimedia.org/wiki/File:FIAT_logo_(2020).svg>)                                                            |
+| `idealwine.png`          | [idealwine.com/logo-idealwine.svg](https://www.idealwine.com/logo-idealwine.svg)                                                                                  |
+| `endemol-production.png` | [Wikimedia Commons — Endemol France 2021](https://commons.wikimedia.org/wiki/File:Endemol_France_2021.svg)                                                        |
+| `groupe-m6.png`          | [Wikimedia Commons — M6 Groupe 2023](https://commons.wikimedia.org/wiki/File:M6Groupe2023.svg)                                                                    |
+| `hopitaux-de-paris.png`  | [Wikimedia Commons — AP-HP Logo](https://commons.wikimedia.org/wiki/File:AP-HP_Logo.svg)                                                                          |
+| `oms.png`                | [Wikimedia Commons — Logo de l'Organisation mondiale de la santé](https://commons.wikimedia.org/wiki/File:Logo_de_l%27Organisation_mondiale_de_la_sant%C3%A9.svg) |
+| `cnrs.png`               | [Wikimedia Commons — Cnrs-logo](https://commons.wikimedia.org/wiki/File:Cnrs-logo.svg)                                                                            |
