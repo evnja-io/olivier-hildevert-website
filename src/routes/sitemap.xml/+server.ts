@@ -10,6 +10,8 @@ const routes = [
 	'/reservation',
 	'/commande',
 	'/newsletter',
+	'/audios',
+	'/fascicules',
 	...PRESTATION_IDS.map((cle) => `/prestations/${cle}`)
 ];
 

@@ -11,7 +11,7 @@
 </script>
 
 <article
-	class="flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)]"
+	class="flex w-full flex-col overflow-hidden rounded-card border border-line bg-white shadow-[0_24px_54px_-46px_color-mix(in_oklab,var(--color-ember)_40%,transparent)]"
 >
 	{#if fascicule.couverture}
 		<div class="relative aspect-square bg-surface-2">
