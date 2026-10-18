@@ -169,6 +169,31 @@ test.describe('commande', () => {
 		await expect(page.getByRole('status')).toContainText('Demande de commande transmise');
 		await contexte.close();
 	});
+
+	test('la page /commande passe en mode inscription avec ?type=inscription', async ({
+		browser
+	}) => {
+		const contexte = await browser.newContext({ javaScriptEnabled: false });
+		const page = await contexte.newPage();
+		await page.goto('/commande?produit=Adh%C3%A9sion%20annuelle&type=inscription');
+
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Adhérer');
+		await expect(page.getByText('finaliser votre inscription')).toBeVisible();
+		await page.getByLabel('Nom et prénom').fill('Jeanne Dupont');
+		await page.getByLabel('Adresse e-mail').fill('jeanne@example.com');
+		await page.getByLabel('Téléphone').fill('06 12 34 56 78');
+		await page.getByLabel('Votre message').fill('Bonjour');
+		await page.getByRole('button', { name: 'Envoyer ma demande' }).click();
+
+		await expect(page.getByRole('status')).toContainText('Demande d’inscription transmise');
+		await contexte.close();
+	});
+
+	test('un type inconnu retombe sur le parcours commande', async ({ page }) => {
+		await page.goto('/commande?produit=X&type=n-importe-quoi');
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Commander');
+		await expect(page.getByLabel('Votre message')).toBeVisible();
+	});
 });
 
 test.describe('liens externes', () => {

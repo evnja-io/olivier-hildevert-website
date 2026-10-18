@@ -1,28 +1,31 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import { site } from '$lib/config';
+	import { TEXTES_DEMANDE } from '$lib/commande/textes';
 
 	let { data } = $props();
 
 	// superForm capture la valeur initiale par design (réactivité gérée en interne)
 	// svelte-ignore state_referenced_locally
 	const { form, errors, message, enhance, delayed } = superForm(data.form);
+
+	const textes = $derived(TEXTES_DEMANDE[$form.type]);
 </script>
 
 <svelte:head>
-	<title>Commander — {site.name}</title>
+	<title>{textes.titre} — {site.name}</title>
 	<meta
 		name="description"
-		content="Commandez un produit de la boutique de {site.name} : laissez vos coordonnées, vous serez recontacté pour finaliser la commande."
+		content="Commande ou adhésion auprès de {site.name} : laissez vos coordonnées, vous serez recontacté pour finaliser votre demande."
 	/>
 	<link rel="canonical" href="{site.url}/commande" />
 </svelte:head>
 
 <section class="mx-auto w-[min(860px,90vw)] pt-36 pb-24">
 	<span class="eyebrow">Boutique</span>
-	<h1 class="mt-5 text-4xl text-ink sm:text-5xl">Commander</h1>
+	<h1 class="mt-5 text-4xl text-ink sm:text-5xl">{textes.titre}</h1>
 	<p class="mt-4 max-w-2xl text-ink-soft">
-		Laissez-moi vos coordonnées : je vous recontacte pour finaliser votre commande.
+		Laissez-moi vos coordonnées. {textes.accroche}
 	</p>
 
 	{#if $message}
@@ -37,6 +40,7 @@
 	{/if}
 
 	<form method="POST" use:enhance class="mt-10 space-y-8" novalidate>
+		<input type="hidden" name="type" value={$form.type} />
 		<div>
 			<label for="produit" class="block text-sm font-medium text-ink-soft">Produit souhaité</label>
 			<input
@@ -107,9 +111,7 @@
 		</div>
 
 		<div>
-			<label for="message" class="block text-sm font-medium text-ink-soft">
-				Quantité, adresse de livraison ou précisions
-			</label>
+			<label for="message" class="block text-sm font-medium text-ink-soft">Votre message</label>
 			<textarea
 				id="message"
 				name="message"
