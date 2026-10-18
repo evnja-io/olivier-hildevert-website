@@ -118,7 +118,7 @@ test.describe('réservation', () => {
 test.describe('navigation mobile', () => {
 	test.use({ viewport: { width: 390, height: 844 } });
 
-	test('le burger donne accès aux sept liens de navigation', async ({ page }) => {
+	test('le burger donne accès aux six liens de navigation', async ({ page }) => {
 		await page.goto('/');
 
 		const menu = page.locator('header details');
@@ -134,7 +134,6 @@ test.describe('navigation mobile', () => {
 			'Prestations',
 			'Tarifs',
 			'Contact',
-			'Ressources',
 			'Boutique'
 		]) {
 			await expect(nav.getByRole('link', { name: label, exact: true })).toBeVisible();
