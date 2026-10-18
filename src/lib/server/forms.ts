@@ -3,6 +3,7 @@
  * Mode dégradé assumé : sans STRAPI_URL, on trace en console et on confirme
  * (le site — et les e2e — doivent rester fonctionnels sans CMS).
  */
+import type { TypeDemande } from '$lib/commande/textes';
 import { createEntry, isStrapiConfigured, StrapiError } from './strapi';
 
 export async function enregistrerContact(
@@ -42,7 +43,14 @@ export async function enregistrerReservation(
 }
 
 export async function enregistrerCommande(
-	data: { produit: string; name: string; email: string; phone: string; message: string },
+	data: {
+		produit: string;
+		name: string;
+		email: string;
+		phone: string;
+		message: string;
+		type: TypeDemande;
+	},
 	fetcher: typeof fetch
 ): Promise<void> {
 	if (!isStrapiConfigured()) {
@@ -56,7 +64,8 @@ export async function enregistrerCommande(
 			nom: data.name,
 			email: data.email,
 			telephone: data.phone,
-			message: data.message
+			message: data.message,
+			type: data.type
 		},
 		fetcher
 	);

@@ -27,4 +27,15 @@ describe('commandeSchema', () => {
 	it('rejette une adresse e-mail invalide', () => {
 		expect(commandeSchema.safeParse({ ...valide, email: 'pas-un-email' }).success).toBe(false);
 	});
+
+	it('prend « commande » comme type par défaut et accepte « inscription »', () => {
+		const parDefaut = commandeSchema.safeParse(valide);
+		expect(parDefaut.success && parDefaut.data.type).toBe('commande');
+		const inscription = commandeSchema.safeParse({ ...valide, type: 'inscription' });
+		expect(inscription.success && inscription.data.type).toBe('inscription');
+	});
+
+	it('rejette un type inconnu', () => {
+		expect(commandeSchema.safeParse({ ...valide, type: 'location' }).success).toBe(false);
+	});
 });
