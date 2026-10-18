@@ -19,6 +19,6 @@ export const nav: readonly NavItem[] = [
 	{ label: 'Prestations', anchor: 'prestations' },
 	{ label: 'Tarifs', anchor: 'tarifs' },
 	{ label: 'Contact', anchor: 'contact' },
-	{ label: 'Ressources', anchor: 'audios' },
+	{ label: 'Ressources', anchor: 'ressources' },
 	{ label: 'Boutique', anchor: 'boutique', pill: true }
 ] as const;

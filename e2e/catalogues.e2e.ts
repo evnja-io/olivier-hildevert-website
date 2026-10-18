@@ -5,6 +5,7 @@ test.describe('catalogues', () => {
 	test('les sections vides sont absentes de l’accueil', async ({ page }) => {
 		await page.goto('/');
 		await expect(page.locator('#boutique')).toBeVisible();
+		await expect(page.locator('#ressources')).toHaveCount(0);
 		await expect(page.locator('#audios')).toHaveCount(0);
 		await expect(page.locator('#fascicules')).toHaveCount(0);
 	});

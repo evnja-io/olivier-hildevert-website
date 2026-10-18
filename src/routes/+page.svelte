@@ -62,23 +62,27 @@
 
 <Boutique content={data.accueil.boutique} />
 
-<CatalogueAccueil
-	id="audios"
-	content={data.accueil.audios}
-	page="/audios"
-	nombre={data.audios.length}
->
-	{#snippet carte(i)}<CarteAudio audio={data.audios[i]} />{/snippet}
-</CatalogueAccueil>
+{#if data.audios.length + data.fascicules.length > 0}
+	<div id="ressources" class="scroll-mt-24">
+		<CatalogueAccueil
+			id="audios"
+			content={data.accueil.audios}
+			page="/audios"
+			nombre={data.audios.length}
+		>
+			{#snippet carte(i)}<CarteAudio audio={data.audios[i]} />{/snippet}
+		</CatalogueAccueil>
 
-<CatalogueAccueil
-	id="fascicules"
-	content={data.accueil.fascicules}
-	page="/fascicules"
-	nombre={data.fascicules.length}
->
-	{#snippet carte(i)}<CarteFascicule fascicule={data.fascicules[i]} />{/snippet}
-</CatalogueAccueil>
+		<CatalogueAccueil
+			id="fascicules"
+			content={data.accueil.fascicules}
+			page="/fascicules"
+			nombre={data.fascicules.length}
+		>
+			{#snippet carte(i)}<CarteFascicule fascicule={data.fascicules[i]} />{/snippet}
+		</CatalogueAccueil>
+	</div>
+{/if}
 
 <Tarifs content={data.accueil.tarifs} />
 
