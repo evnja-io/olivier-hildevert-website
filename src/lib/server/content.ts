@@ -11,6 +11,8 @@ import { TYPES_DEMANDE } from '$lib/commande/textes';
 import { PRESTATION_IDS } from '$lib/booking/prestations';
 import { defaultAccueil, defaultPrestations, defaultReglages } from '$lib/content/defaults';
 import type {
+	AudioContent,
+	FasciculeContent,
 	ImageCms,
 	PageAccueilContent,
 	PrestationContent,
@@ -376,4 +378,133 @@ export async function getReglages(fetcher: typeof fetch): Promise<ReglagesSite> 
 		console.warn('Réglages Strapi indisponibles — défauts servis.', err);
 		return defaultReglages;
 	}
+}
+
+// ————— Catalogues (Audios, Fascicules) —————
+// Validation ÉLÉMENT PAR ÉLÉMENT, contrairement aux autres domaines : une
+// saisie ratée sur un audio ne doit pas vider tout le catalogue. Pas de
+// contenu par défaut : en erreur, la liste est vide et la section masquée.
+
+export type AvecMiseEnAvant<T> = T & { misEnAvant: boolean };
+
+const drapeauMiseEnAvant = z
+	.boolean()
+	.nullish()
+	.transform((v) => v ?? false);
+
+const texteOptionnel = z
+	.string()
+	.nullish()
+	.transform((v) => v?.trim() || undefined);
+
+const audioSchema = z
+	.object({
+		titre: z.string().trim().min(1),
+		description: texteOptionnel,
+		fichier: z.object({ url: z.string(), mime: z.string() }),
+		visuel: imageMedia,
+		duree: texteOptionnel,
+		misEnAvant: drapeauMiseEnAvant
+	})
+	.transform(
+		({ fichier, visuel, description, duree, ...reste }): AvecMiseEnAvant<AudioContent> => ({
+			...reste,
+			...(description ? { description } : {}),
+			fichier: { url: urlMedia(fichier.url), mime: fichier.mime },
+			...(visuel ? { visuel } : {}),
+			...(duree ? { duree } : {})
+		})
+	);
+
+const fasciculeSchema = z
+	.object({
+		titre: z.string().trim().min(1),
+		description: texteOptionnel,
+		couverture: imageMedia,
+		prixTexte: texteOptionnel,
+		document: z.object({ url: z.string() }).nullish(),
+		lien: lienOptionnel,
+		typeDemande: z.enum(TYPES_DEMANDE).nullish(),
+		misEnAvant: drapeauMiseEnAvant
+	})
+	.transform(
+		({
+			titre,
+			description,
+			couverture,
+			prixTexte,
+			document,
+			lien,
+			typeDemande,
+			misEnAvant
+		}): AvecMiseEnAvant<FasciculeContent> => {
+			// Payant : le document n'est JAMAIS relayé (il serait public et partageable).
+			const action: FasciculeContent['action'] = !prixTexte
+				? document
+					? { kind: 'telecharger', url: urlMedia(document.url) }
+					: { kind: 'aucune' }
+				: lien
+					? { kind: 'lien', url: lien }
+					: { kind: 'demande', type: typeDemande ?? 'commande' };
+			return {
+				titre,
+				...(description ? { description } : {}),
+				...(couverture ? { couverture } : {}),
+				...(prixTexte ? { prixTexte } : {}),
+				action,
+				misEnAvant
+			};
+		}
+	);
+
+const QUERY_CATALOGUE = {
+	populate: '*',
+	sort: 'publishedAt:desc',
+	// `maxLimit` du CMS : au-delà de 25 (défaut), la page complète serait tronquée.
+	'pagination[pageSize]': '100'
+};
+
+async function lireCatalogue<T>(
+	collection: string,
+	schema: z.ZodType<T>,
+	fetcher: typeof fetch
+): Promise<T[]> {
+	if (!isStrapiConfigured()) return [];
+	try {
+		const { items } = await fetchEntries<Record<string, unknown>>(
+			collection,
+			QUERY_CATALOGUE,
+			fetcher
+		);
+		return items.flatMap((item) => {
+			const res = schema.safeParse(item);
+			if (res.success) return [res.data];
+			console.warn(`Entrée « ${collection} » ignorée (invalide) :`, item.titre, res.error.issues);
+			return [];
+		});
+	} catch (err) {
+		console.warn(`Catalogue Strapi « ${collection} » indisponible — section masquée.`, err);
+		return [];
+	}
+}
+
+export const getAudios = (fetcher: typeof fetch) => lireCatalogue('audios', audioSchema, fetcher);
+
+export const getFascicules = (fetcher: typeof fetch) =>
+	lireCatalogue('fascicules', fasciculeSchema, fetcher);
+
+/** Liste complète, ordre conservé, sans le drapeau de mise en avant. */
+export function sansMiseEnAvant<T>(items: AvecMiseEnAvant<T>[]): T[] {
+	return items.map((item) => {
+		const copie: Partial<AvecMiseEnAvant<T>> = { ...item };
+		delete copie.misEnAvant;
+		return copie as T;
+	});
+}
+
+/** Les `n` éléments de l'accueil : mis en avant d'abord, complétés par les autres (ordre conservé). */
+export function vitrine<T>(items: AvecMiseEnAvant<T>[], n = 4): T[] {
+	const enAvant = items.filter((i) => i.misEnAvant);
+	const autres = items.filter((i) => !i.misEnAvant);
+	return sansMiseEnAvant([...enAvant, ...autres].slice(0, n));
 }
