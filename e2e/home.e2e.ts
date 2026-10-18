@@ -195,6 +195,26 @@ test.describe('commande', () => {
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Commander');
 		await expect(page.getByLabel('Votre message')).toBeVisible();
 	});
+
+	test('un type falsifié dans le POST ne provoque pas d’erreur 500', async ({ request }) => {
+		// Hors navigateur : l'en-tête Origin doit correspondre (protection CSRF de SvelteKit).
+		const origine = 'http://localhost:4173';
+		const base = { produit: 'X', email: 'jeanne@example.com', phone: '06 12 34 56 78' };
+
+		// formulaire invalide (nom manquant) : la page est re-rendue avec le type falsifié
+		const invalide = await request.post('/commande', {
+			form: { ...base, name: '', type: 'bogus' },
+			headers: { Origin: origine }
+		});
+		expect(invalide.status()).toBeLessThan(500);
+
+		// formulaire valide : le type falsifié est ramené à « commande »
+		const valide = await request.post('/commande', {
+			form: { ...base, name: 'Jeanne Dupont', type: 'bogus' },
+			headers: { Origin: origine }
+		});
+		expect(valide.status()).toBeLessThan(500);
+	});
 });
 
 test.describe('liens externes', () => {

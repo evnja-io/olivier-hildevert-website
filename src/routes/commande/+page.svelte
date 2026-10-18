@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import { site } from '$lib/config';
-	import { TEXTES_DEMANDE } from '$lib/commande/textes';
+	import { TEXTES_DEMANDE, typeDemande } from '$lib/commande/textes';
 
 	let { data } = $props();
 
@@ -9,7 +9,7 @@
 	// svelte-ignore state_referenced_locally
 	const { form, errors, message, enhance, delayed } = superForm(data.form);
 
-	const textes = $derived(TEXTES_DEMANDE[$form.type]);
+	const textes = $derived(TEXTES_DEMANDE[typeDemande($form.type)]);
 </script>
 
 <svelte:head>

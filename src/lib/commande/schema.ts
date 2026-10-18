@@ -20,7 +20,7 @@ export const commandeSchema = z.object({
 		.max(2000, 'Votre message ne peut pas dépasser 2000 caractères.')
 		.optional()
 		.default(''),
-	type: z.enum(TYPES_DEMANDE).default('commande')
+	type: z.enum(TYPES_DEMANDE).catch('commande')
 });
 
 export type CommandeSchema = typeof commandeSchema;

@@ -35,7 +35,8 @@ describe('commandeSchema', () => {
 		expect(inscription.success && inscription.data.type).toBe('inscription');
 	});
 
-	it('rejette un type inconnu', () => {
-		expect(commandeSchema.safeParse({ ...valide, type: 'location' }).success).toBe(false);
+	it('ramène un type inconnu à commande', () => {
+		const r = commandeSchema.safeParse({ ...valide, type: 'location' });
+		expect(r.success && r.data.type).toBe('commande');
 	});
 });

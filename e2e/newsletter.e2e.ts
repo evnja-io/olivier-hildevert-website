@@ -6,10 +6,17 @@ async function simulerSortie(page: Page) {
 	await page.dispatchEvent('html', 'mouseleave', { clientY: 0 });
 }
 
+// Attendre le réseau au repos garantit que l'hydratation est faite avant de
+// piloter l'horloge : sinon le minuteur d'armement serait posé sur une horloge
+// déjà avancée et ne se déclencherait jamais.
+async function allerAccueil(page: Page) {
+	await page.goto('/', { waitUntil: 'networkidle' });
+}
+
 test.describe('modale newsletter (exit-intent)', () => {
 	test('apparaît à l’intention de sortie et enregistre l’inscription', async ({ page }) => {
 		await page.clock.install();
-		await page.goto('/');
+		await allerAccueil(page);
 		await page.clock.fastForward(16_000);
 		await simulerSortie(page);
 
@@ -24,7 +31,7 @@ test.describe('modale newsletter (exit-intent)', () => {
 		expect(inscrit).toBeTruthy();
 
 		// Une fois inscrit·e, la modale ne réapparaît plus, même après rechargement.
-		await page.reload();
+		await page.reload({ waitUntil: 'networkidle' });
 		await page.clock.fastForward(16_000);
 		await simulerSortie(page);
 		await expect(modale).toBeHidden();
@@ -32,7 +39,7 @@ test.describe('modale newsletter (exit-intent)', () => {
 
 	test('fermée sans inscription, elle pose un snooze et ne réapparaît pas', async ({ page }) => {
 		await page.clock.install();
-		await page.goto('/');
+		await allerAccueil(page);
 		await page.clock.fastForward(16_000);
 		await simulerSortie(page);
 
@@ -46,7 +53,7 @@ test.describe('modale newsletter (exit-intent)', () => {
 			.poll(() => page.evaluate(() => Number(localStorage.getItem('newsletter:snooze-until'))))
 			.toBeGreaterThan(Date.now());
 
-		await page.reload();
+		await page.reload({ waitUntil: 'networkidle' });
 		await page.clock.fastForward(16_000);
 		await simulerSortie(page);
 		await expect(modale).toBeHidden();
@@ -54,7 +61,7 @@ test.describe('modale newsletter (exit-intent)', () => {
 
 	test('ne se déclenche pas avant l’armement de 15 s', async ({ page }) => {
 		await page.clock.install();
-		await page.goto('/');
+		await allerAccueil(page);
 		await page.clock.fastForward(2_000);
 		await simulerSortie(page);
 
@@ -63,7 +70,7 @@ test.describe('modale newsletter (exit-intent)', () => {
 
 	test('n’interrompt jamais la modale de réservation', async ({ page }) => {
 		await page.clock.install();
-		await page.goto('/');
+		await allerAccueil(page);
 		await page.getByRole('link', { name: 'Réserver une séance' }).click();
 		await expect(page.getByRole('dialog', { name: 'Prendre rendez-vous' })).toBeVisible();
 

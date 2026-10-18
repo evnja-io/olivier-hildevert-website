@@ -29,7 +29,7 @@ const avecCreation: BoutiqueContent = {
 };
 
 describe('Boutique', () => {
-	it('garde le lien externe des produits d’origine, sans bouton Infos', async () => {
+	it('garde le lien externe des produits d’origine, sans bouton En savoir plus', async () => {
 		const screen = render(Boutique);
 		await expect
 			.element(screen.getByRole('link', { name: /^Commander/ }))

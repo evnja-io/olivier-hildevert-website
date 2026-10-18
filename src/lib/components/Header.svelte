@@ -39,7 +39,7 @@
 			</span>
 		</a>
 
-		<nav class="hidden items-center gap-[16px] xl:flex" aria-label="Navigation principale">
+		<nav class="hidden items-center gap-4 xl:flex" aria-label="Navigation principale">
 			{#each nav as item (item.anchor)}
 				{#if item.pill}
 					<a
