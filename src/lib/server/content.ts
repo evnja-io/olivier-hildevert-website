@@ -7,6 +7,7 @@
  */
 import { z } from 'zod';
 import { fetchEntries, fetchSingle, isStrapiConfigured, urlMedia } from './strapi';
+import { TYPES_DEMANDE } from '$lib/commande/textes';
 import { PRESTATION_IDS } from '$lib/booking/prestations';
 import { defaultAccueil, defaultPrestations, defaultReglages } from '$lib/content/defaults';
 import type {
@@ -169,6 +170,7 @@ const accueilSchema = z.object({
 						desc: z.string(),
 						prixTexte: z.string(),
 						boutonLabel: z.string(),
+						typeDemande: z.enum(TYPES_DEMANDE).nullish(),
 						// Vide : « Commander » ouvre le formulaire de coordonnées.
 						lien: lienOptionnel,
 						document: documentMedia,
@@ -176,14 +178,16 @@ const accueilSchema = z.object({
 					})
 					// Le document envoyé prime sur le lien saisi ; les clés absentes
 					// sont omises (round-trip strict avec les défauts).
-					.transform(({ cleImage, image, lien, document, lienInfo, ...texte }) => {
+					.transform(({ cleImage, image, lien, document, lienInfo, typeDemande, ...texte }) => {
 						const info = document ?? lienInfo;
 						return {
 							...texte,
 							...(cleImage ? { cleImage } : {}),
 							...(image ? { image } : {}),
 							...(lien ? { lien } : {}),
-							...(info ? { info } : {})
+							...(info ? { info } : {}),
+							// « commande » est le défaut : omis pour le round-trip avec les défauts.
+							...(typeDemande === 'inscription' ? { typeDemande } : {})
 						};
 					})
 			)

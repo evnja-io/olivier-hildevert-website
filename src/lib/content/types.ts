@@ -3,6 +3,8 @@
  * forme Strapi (le mapping vit dans $lib/server/content.ts). Les images, alt
  * et positions restent dans les composants, appariés par clé stable.
  */
+
+import type { TypeDemande } from '../commande/textes';
 import type { PrestationId } from '../booking/prestations';
 
 export interface StatHero {
@@ -99,11 +101,16 @@ export interface ProduitBoutique {
 	prixTexte: string;
 	boutonLabel: string;
 	/**
+	 * Nature de la demande quand « boutonLabel » ouvre le formulaire (pas de
+	 * `lien`) : absent = commande, « inscription » = adhésion (textes adaptés).
+	 */
+	typeDemande?: TypeDemande;
+	/**
 	 * URL externe de commande, ouverte dans un nouvel onglet. Absente : le
 	 * bouton ouvre le formulaire de commande (coordonnées).
 	 */
 	lien?: string;
-	/** Bouton « Infos » : document envoyé dans Strapi (PDF, JPEG) ou lien externe (Canva…). */
+	/** Bouton « En savoir plus » : document envoyé dans Strapi (PDF, JPEG) ou lien externe (Canva…). */
 	info?: string;
 }
 

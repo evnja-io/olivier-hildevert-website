@@ -35,7 +35,7 @@ describe('Boutique', () => {
 			.element(screen.getByRole('link', { name: /^Commander/ }))
 			.toHaveAttribute('href', 'https://www.bod.fr/');
 		expect(screen.container.querySelectorAll('article')).toHaveLength(2);
-		expect(screen.getByRole('link', { name: /^Infos/ }).elements()).toHaveLength(0);
+		expect(screen.getByRole('link', { name: /^En savoir plus/ }).elements()).toHaveLength(0);
 	});
 
 	it('affiche le visuel envoyé dans Strapi', async () => {
@@ -45,11 +45,20 @@ describe('Boutique', () => {
 		await expect.element(img).toHaveAttribute('srcset', expect.stringContaining('500w'));
 	});
 
-	it('ouvre le document dans un nouvel onglet par « Infos »', async () => {
+	it('ouvre le document dans un nouvel onglet par « En savoir plus », placé avant le bouton principal', async () => {
 		const screen = render(Boutique, { content: avecCreation });
-		const infos = screen.getByRole('link', { name: 'Infos : Cartes de méditation' });
-		await expect.element(infos).toHaveAttribute('href', 'https://cms.test/uploads/catalogue.pdf');
-		await expect.element(infos).toHaveAttribute('target', '_blank');
+		const enSavoirPlus = screen.getByRole('link', {
+			name: 'En savoir plus : Cartes de méditation'
+		});
+		await expect
+			.element(enSavoirPlus)
+			.toHaveAttribute('href', 'https://cms.test/uploads/catalogue.pdf');
+		await expect.element(enSavoirPlus).toHaveAttribute('target', '_blank');
+
+		const actions = [...screen.container.querySelectorAll('article')].at(-1)!;
+		const libelles = [...actions.querySelectorAll('a')].map((a) => a.textContent?.trim());
+		expect(libelles[0]).toMatch(/^En savoir plus/);
+		expect(libelles[1]).toMatch(/^Commander/);
 	});
 
 	it('ouvre le formulaire de commande quand le produit n’a pas de lien', async () => {
@@ -62,6 +71,33 @@ describe('Boutique', () => {
 		await lien.click();
 		expect(commande.open).toBe(true);
 		expect(commande.produit).toBe('Cartes de méditation');
+		expect(commande.type).toBe('commande');
+		closeCommande();
+	});
+
+	it('ouvre le formulaire en mode inscription pour un produit d’adhésion', async () => {
+		const adhesion: BoutiqueContent = {
+			...defaultAccueil.boutique,
+			produits: [
+				{
+					tag: 'Association',
+					titre: 'Adhésion annuelle',
+					desc: 'Adhérer à l’association.',
+					prixTexte: '30 €',
+					boutonLabel: 'Adhérer',
+					typeDemande: 'inscription'
+				}
+			]
+		};
+		const screen = render(Boutique, { content: adhesion });
+		const lien = screen.getByRole('link', { name: 'Adhérer : Adhésion annuelle' });
+		await expect
+			.element(lien)
+			.toHaveAttribute('href', '/commande?produit=Adh%C3%A9sion%20annuelle&type=inscription');
+
+		await lien.click();
+		expect(commande.open).toBe(true);
+		expect(commande.type).toBe('inscription');
 		closeCommande();
 	});
 });

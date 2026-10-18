@@ -106,6 +106,16 @@ describe('getPageAccueil — produits de la boutique', () => {
 		boutonLabel: 'Commander'
 	};
 
+	it('garde typeDemande « inscription », omet « commande » et null', async () => {
+		const inscription = await getPageAccueil(avecProduit({ ...base, typeDemande: 'inscription' }));
+		expect(inscription.boutique.produits[0]).toEqual({ ...base, typeDemande: 'inscription' });
+
+		for (const typeDemande of ['commande', null]) {
+			const accueil = await getPageAccueil(avecProduit({ ...base, typeDemande }));
+			expect(accueil.boutique.produits[0]).toEqual(base);
+		}
+	});
+
 	it('rend absolues les URLs des médias et construit le srcset des formats plus petits', async () => {
 		const accueil = await getPageAccueil(
 			avecProduit({

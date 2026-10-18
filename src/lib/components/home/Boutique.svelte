@@ -98,6 +98,17 @@
 							{produit.prixTexte}
 						</b>
 						<div class="flex flex-col gap-3 border-t border-line pt-4">
+							<!-- On se renseigne avant de s'engager : « En savoir plus » d'abord. -->
+							{#if produit.info}
+								<a
+									class="btn btn-line justify-center"
+									href={produit.info}
+									target="_blank"
+									rel="external noopener noreferrer"
+								>
+									En savoir plus<span class="sr-only">&nbsp;: {produit.titre}</span>
+								</a>
+							{/if}
 							{#if produit.lien}
 								<a
 									class="btn btn-sun justify-center"
@@ -110,23 +121,15 @@
 							{:else}
 								<a
 									class="btn btn-sun justify-center"
-									href="{commande}?produit={encodeURIComponent(produit.titre)}"
+									href="{commande}?produit={encodeURIComponent(
+										produit.titre
+									)}{produit.typeDemande === 'inscription' ? '&type=inscription' : ''}"
 									onclick={(e) => {
 										e.preventDefault();
-										openCommande(produit.titre);
+										openCommande(produit.titre, produit.typeDemande);
 									}}
 								>
 									{produit.boutonLabel}<span class="sr-only">&nbsp;: {produit.titre}</span>
-								</a>
-							{/if}
-							{#if produit.info}
-								<a
-									class="btn btn-line justify-center"
-									href={produit.info}
-									target="_blank"
-									rel="external noopener noreferrer"
-								>
-									Infos<span class="sr-only">&nbsp;: {produit.titre}</span>
 								</a>
 							{/if}
 						</div>
