@@ -121,6 +121,35 @@ export interface BoutiqueContent {
 	produits: ProduitBoutique[];
 }
 
+export interface SectionCatalogue {
+	eyebrow: string;
+	titre: string;
+	paragraphe?: string;
+}
+
+export interface AudioContent {
+	titre: string;
+	description?: string;
+	fichier: { url: string; mime: string };
+	visuel?: ImageCms;
+	duree?: string;
+}
+
+export type FasciculeAction =
+	| { kind: 'telecharger'; url: string }
+	| { kind: 'lien'; url: string }
+	| { kind: 'demande'; type: TypeDemande }
+	| { kind: 'aucune' };
+
+export interface FasciculeContent {
+	titre: string;
+	description?: string;
+	couverture?: ImageCms;
+	/** Absent : gratuit. */
+	prixTexte?: string;
+	action: FasciculeAction;
+}
+
 /**
  * Entreprise cliente. Le nom seul suffit (citation factuelle) ; le logo est
  * une œuvre protégée, à n'envoyer qu'avec l'autorisation de l'entreprise.
@@ -173,6 +202,8 @@ export interface PageAccueilContent {
 	prestationsIntro: IntroSection;
 	pourQui: PourQuiContent;
 	boutique: BoutiqueContent;
+	audios: SectionCatalogue;
+	fascicules: SectionCatalogue;
 	tarifs: TarifsContent;
 	mantra: MantraContent;
 	contactCta: ContactCtaContent;

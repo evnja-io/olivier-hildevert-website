@@ -289,3 +289,42 @@ describe('getReglages', () => {
 		await expect(getReglages(reponse({ data: null }))).resolves.toEqual(defaultReglages);
 	});
 });
+
+describe('getPageAccueil — titres des catalogues', () => {
+	it('prend les titres par défaut quand le CMS n’a pas encore les sections, sans déclasser la page', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const accueil = await getPageAccueil(
+			reponse({
+				data: {
+					...brut,
+					audios: null,
+					fascicules: undefined,
+					hero: { ...brut.hero, eyebrow: 'Modifié' }
+				}
+			})
+		);
+		expect(accueil.hero.eyebrow).toBe('Modifié');
+		expect(accueil.audios).toEqual(defaultAccueil.audios);
+		expect(accueil.fascicules).toEqual(defaultAccueil.fascicules);
+	});
+
+	it('mappe les titres saisis et omet un paragraphe vide', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const accueil = await getPageAccueil(
+			reponse({
+				data: { ...brut, audios: { eyebrow: 'Écoute', titre: 'Méditations', paragraphe: '  ' } }
+			})
+		);
+		expect(accueil.audios).toEqual({ eyebrow: 'Écoute', titre: 'Méditations' });
+	});
+
+	it('demande les deux sections dans le populate', async () => {
+		const fetcher = reponse({ data: accueilVersStrapi(defaultAccueil) });
+		await getPageAccueil(fetcher);
+		const url = decodeURIComponent(
+			(fetcher as unknown as { mock: { calls: [string][] } }).mock.calls[0][0]
+		);
+		expect(url).toContain('populate[audios][populate]=*');
+		expect(url).toContain('populate[fascicules][populate]=*');
+	});
+});

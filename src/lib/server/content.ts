@@ -14,7 +14,8 @@ import type {
 	ImageCms,
 	PageAccueilContent,
 	PrestationContent,
-	ReglagesSite
+	ReglagesSite,
+	SectionCatalogue
 } from '$lib/content/types';
 
 // ————— Schémas de validation de la réponse Strapi (attributs à plat, v5) —————
@@ -94,6 +95,28 @@ const colonneSchema = z.object({
 	desc: z.string(),
 	points: itemsTexte
 });
+
+/**
+ * Titres d'une section catalogue. Ajoutés après la mise en ligne : absents
+ * d'une page d'accueil déjà rédigée, ils prennent les défauts SANS déclasser
+ * le reste de la page (même règle que `references`).
+ */
+const sectionCatalogue = (parDefaut: SectionCatalogue) =>
+	z
+		.object({
+			eyebrow: z.string(),
+			titre: z.string(),
+			paragraphe: z
+				.string()
+				.nullish()
+				.transform((v) => v?.trim() || undefined)
+		})
+		.transform(({ paragraphe, ...titres }) => ({
+			...titres,
+			...(paragraphe ? { paragraphe } : {})
+		}))
+		.nullish()
+		.transform((v) => v ?? parDefaut);
 
 const accueilSchema = z.object({
 	hero: z.object({
@@ -193,6 +216,8 @@ const accueilSchema = z.object({
 			)
 			.nonempty()
 	}),
+	audios: sectionCatalogue(defaultAccueil.audios),
+	fascicules: sectionCatalogue(defaultAccueil.fascicules),
 	tarifs: z.object({
 		eyebrow: z.string(),
 		titre: z.string(),
@@ -278,6 +303,9 @@ const POPULATE_ACCUEIL = {
 	'populate[pourQui][populate]': '*',
 	// Un niveau de plus : les médias (image, document) des produits.
 	'populate[boutique][populate][produits][populate]': '*',
+	// Exigent un CMS qui connaît `audios` / `fascicules` (déployer le CMS AVANT le site).
+	'populate[audios][populate]': '*',
+	'populate[fascicules][populate]': '*',
 	'populate[tarifs][populate]': '*',
 	'populate[mantra][populate]': '*',
 	'populate[contactCta][populate]': '*',
