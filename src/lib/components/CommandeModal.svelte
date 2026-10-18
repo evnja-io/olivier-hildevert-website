@@ -11,6 +11,7 @@
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { resolve } from '$app/paths';
 	import { commande, closeCommande } from '$lib/commande/commande.svelte';
+	import { TEXTES_DEMANDE } from '$lib/commande/textes';
 
 	let dlg: HTMLDialogElement | undefined = $state();
 
@@ -20,9 +21,11 @@
 		applyAction: false
 	});
 
+	const textes = $derived(TEXTES_DEMANDE[commande.type]);
+
 	$effect(() => {
 		if (commande.open) {
-			reset({ data: { produit: commande.produit } });
+			reset({ data: { produit: commande.produit, type: commande.type } });
 			dlg?.showModal();
 		} else {
 			dlg?.close();
@@ -35,7 +38,7 @@
 
 <dialog
 	bind:this={dlg}
-	aria-label="Commander"
+	aria-label={textes.titre}
 	class="m-auto max-h-[90vh] w-[min(640px,calc(100%-32px))] overflow-auto rounded-card bg-surface p-[38px_clamp(24px,5vw,48px)_40px] text-ink shadow-[0_40px_120px_-30px_rgba(40,20,10,0.45)] backdrop:bg-[color-mix(in_oklab,var(--color-ink)_55%,transparent)] backdrop:backdrop-blur-[6px]"
 	onclose={() => {
 		if (commande.open) closeCommande();
@@ -54,7 +57,7 @@
 	</button>
 
 	<span class="mb-5 block font-mono text-xs font-semibold tracking-[0.28em] text-coral uppercase">
-		Commander
+		{textes.titre}
 	</span>
 
 	<!-- Contenu rendu seulement à l'ouverture : la modale fermée ne doit pas
@@ -92,9 +95,7 @@
 		</div>
 	{:else}
 		<h3 class="font-display text-2xl">Vos coordonnées</h3>
-		<p class="mt-1.5 mb-5 text-base text-ink-soft">
-			Je vous recontacte pour finaliser votre commande.
-		</p>
+		<p class="mt-1.5 mb-5 text-base text-ink-soft">{textes.accroche}</p>
 
 		{#if $message?.type === 'erreur'}
 			<p
@@ -114,6 +115,7 @@
 
 		<form method="POST" action={resolve('/commande')} use:enhance novalidate>
 			<input type="hidden" name="produit" value={$form.produit} />
+			<input type="hidden" name="type" value={$form.type} />
 			{#if $errors.produit}<p class="mb-3 text-sm text-ember">{$errors.produit[0]}</p>{/if}
 			<div class="flex flex-col gap-3">
 				<div>
@@ -159,13 +161,11 @@
 					{#if $errors.phone}<p class="mt-1 text-sm text-ember">{$errors.phone[0]}</p>{/if}
 				</div>
 				<div>
-					<label for="cmd-message" class="sr-only">
-						Quantité, adresse de livraison ou précisions
-					</label>
+					<label for="cmd-message" class="sr-only">Votre message</label>
 					<textarea
 						id="cmd-message"
 						name="message"
-						placeholder="Quantité, adresse de livraison ou précisions"
+						placeholder="Votre message"
 						rows="3"
 						bind:value={$form.message}
 						aria-invalid={$errors.message ? 'true' : undefined}

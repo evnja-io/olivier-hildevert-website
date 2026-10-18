@@ -2,13 +2,17 @@
  * État global de la modale de commande (runes en portée module).
  * Mutations uniquement côté client (interactions utilisateur) — sûr en SSR.
  */
-export const commande = $state({
+import type { TypeDemande } from './textes';
+
+export const commande = $state<{ open: boolean; produit: string; type: TypeDemande }>({
 	open: false,
-	produit: ''
+	produit: '',
+	type: 'commande'
 });
 
-export function openCommande(produit: string) {
+export function openCommande(produit: string, type: TypeDemande = 'commande') {
 	commande.produit = produit;
+	commande.type = type;
 	commande.open = true;
 }
 

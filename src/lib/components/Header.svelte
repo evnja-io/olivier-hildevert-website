@@ -39,7 +39,7 @@
 			</span>
 		</a>
 
-		<nav class="hidden items-center gap-[30px] xl:flex" aria-label="Navigation principale">
+		<nav class="hidden items-center gap-4 xl:flex" aria-label="Navigation principale">
 			{#each nav as item (item.anchor)}
 				{#if item.pill}
 					<a
@@ -51,7 +51,7 @@
 				{:else}
 					<a
 						href="{home}#{item.anchor}"
-						class="relative font-mono text-xs tracking-[0.14em] whitespace-nowrap text-ink-soft uppercase transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-coral after:transition-[width] after:duration-300 hover:text-coral-ink hover:after:w-full"
+						class="relative font-mono text-xs tracking-[0.08em] whitespace-nowrap text-ink-soft uppercase transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-coral after:transition-[width] after:duration-300 hover:text-coral-ink hover:after:w-full"
 					>
 						{item.label}
 					</a>

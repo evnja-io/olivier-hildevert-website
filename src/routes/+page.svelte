@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { site } from '$lib/config';
+	import CatalogueAccueil from '$lib/components/catalogue/CatalogueAccueil.svelte';
+	import CarteAudio from '$lib/components/catalogue/CarteAudio.svelte';
+	import CarteFascicule from '$lib/components/catalogue/CarteFascicule.svelte';
 	import Hero from '$lib/components/home/Hero.svelte';
 	import ImmersiveBand from '$lib/components/home/ImmersiveBand.svelte';
 	import Mantra from '$lib/components/home/Mantra.svelte';
@@ -58,6 +61,28 @@
 </ImmersiveBand>
 
 <Boutique content={data.accueil.boutique} />
+
+{#if data.audios.length + data.fascicules.length > 0}
+	<div id="ressources" class="scroll-mt-24">
+		<CatalogueAccueil
+			id="audios"
+			content={data.accueil.audios}
+			page="/audios"
+			nombre={data.audios.length}
+		>
+			{#snippet carte(i)}<CarteAudio audio={data.audios[i]} />{/snippet}
+		</CatalogueAccueil>
+
+		<CatalogueAccueil
+			id="fascicules"
+			content={data.accueil.fascicules}
+			page="/fascicules"
+			nombre={data.fascicules.length}
+		>
+			{#snippet carte(i)}<CarteFascicule fascicule={data.fascicules[i]} />{/snippet}
+		</CatalogueAccueil>
+	</div>
+{/if}
 
 <Tarifs content={data.accueil.tarifs} />
 

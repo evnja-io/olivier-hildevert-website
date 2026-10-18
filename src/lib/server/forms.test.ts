@@ -1,5 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { enregistrerContact, enregistrerReservation, inscrireNewsletter } from './forms';
+import {
+	enregistrerCommande,
+	enregistrerContact,
+	enregistrerReservation,
+	inscrireNewsletter
+} from './forms';
 import { StrapiError } from './strapi';
 
 vi.mock('$env/dynamic/private', () => ({ env: process.env }));
@@ -28,6 +33,35 @@ describe('mode dégradé (Strapi non configuré)', () => {
 		);
 		expect(fetcher).not.toHaveBeenCalled();
 		expect(console.log).toHaveBeenCalled();
+	});
+});
+
+describe('enregistrerCommande', () => {
+	it('poste la demande sur demandes-commande avec son type', async () => {
+		const fetcher = ok();
+		await enregistrerCommande(
+			{
+				produit: 'Adhésion annuelle',
+				name: 'Jeanne Dupont',
+				email: 'jeanne@example.com',
+				phone: '06 12 34 56 78',
+				message: 'Bonjour',
+				type: 'inscription'
+			},
+			fetcher as unknown as typeof fetch
+		);
+		const [url, init] = fetcher.mock.calls[0] as unknown as [string, RequestInit];
+		expect(url).toBe('http://cms.test/api/demandes-commande');
+		expect(JSON.parse(init.body as string)).toEqual({
+			data: {
+				produit: 'Adhésion annuelle',
+				nom: 'Jeanne Dupont',
+				email: 'jeanne@example.com',
+				telephone: '06 12 34 56 78',
+				message: 'Bonjour',
+				type: 'inscription'
+			}
+		});
 	});
 });
 

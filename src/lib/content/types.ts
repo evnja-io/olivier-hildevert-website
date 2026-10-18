@@ -3,6 +3,8 @@
  * forme Strapi (le mapping vit dans $lib/server/content.ts). Les images, alt
  * et positions restent dans les composants, appariés par clé stable.
  */
+
+import type { TypeDemande } from '../commande/textes';
 import type { PrestationId } from '../booking/prestations';
 
 export interface StatHero {
@@ -99,11 +101,16 @@ export interface ProduitBoutique {
 	prixTexte: string;
 	boutonLabel: string;
 	/**
+	 * Nature de la demande quand « boutonLabel » ouvre le formulaire (pas de
+	 * `lien`) : absent = commande, « inscription » = adhésion (textes adaptés).
+	 */
+	typeDemande?: TypeDemande;
+	/**
 	 * URL externe de commande, ouverte dans un nouvel onglet. Absente : le
 	 * bouton ouvre le formulaire de commande (coordonnées).
 	 */
 	lien?: string;
-	/** Bouton « Infos » : document envoyé dans Strapi (PDF, JPEG) ou lien externe (Canva…). */
+	/** Bouton « En savoir plus » : document envoyé dans Strapi (PDF, JPEG) ou lien externe (Canva…). */
 	info?: string;
 }
 
@@ -112,6 +119,35 @@ export interface BoutiqueContent {
 	titre: string;
 	paragraphe: string;
 	produits: ProduitBoutique[];
+}
+
+export interface SectionCatalogue {
+	eyebrow: string;
+	titre: string;
+	paragraphe?: string;
+}
+
+export interface AudioContent {
+	titre: string;
+	description?: string;
+	fichier: { url: string; mime: string };
+	visuel?: ImageCms;
+	duree?: string;
+}
+
+export type FasciculeAction =
+	| { kind: 'telecharger'; url: string }
+	| { kind: 'lien'; url: string }
+	| { kind: 'demande'; type: TypeDemande }
+	| { kind: 'aucune' };
+
+export interface FasciculeContent {
+	titre: string;
+	description?: string;
+	couverture?: ImageCms;
+	/** Absent : gratuit. */
+	prixTexte?: string;
+	action: FasciculeAction;
 }
 
 /**
@@ -166,6 +202,8 @@ export interface PageAccueilContent {
 	prestationsIntro: IntroSection;
 	pourQui: PourQuiContent;
 	boutique: BoutiqueContent;
+	audios: SectionCatalogue;
+	fascicules: SectionCatalogue;
 	tarifs: TarifsContent;
 	mantra: MantraContent;
 	contactCta: ContactCtaContent;

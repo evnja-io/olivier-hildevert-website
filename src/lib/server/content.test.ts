@@ -8,7 +8,15 @@ import {
 	prestationsVersStrapi,
 	reglagesVersStrapi
 } from '$lib/content/seed-format';
-import { getPageAccueil, getPrestations, getReglages } from './content';
+import {
+	getAudios,
+	getFascicules,
+	getPageAccueil,
+	getPrestations,
+	getReglages,
+	sansMiseEnAvant,
+	vitrine
+} from './content';
 
 const reponse = (body: unknown) =>
 	vi.fn(async () => new Response(JSON.stringify(body))) as unknown as typeof fetch;
@@ -105,6 +113,16 @@ describe('getPageAccueil — produits de la boutique', () => {
 		prixTexte: '25 €',
 		boutonLabel: 'Commander'
 	};
+
+	it('garde typeDemande « inscription », omet « commande » et null', async () => {
+		const inscription = await getPageAccueil(avecProduit({ ...base, typeDemande: 'inscription' }));
+		expect(inscription.boutique.produits[0]).toEqual({ ...base, typeDemande: 'inscription' });
+
+		for (const typeDemande of ['commande', null]) {
+			const accueil = await getPageAccueil(avecProduit({ ...base, typeDemande }));
+			expect(accueil.boutique.produits[0]).toEqual(base);
+		}
+	});
 
 	it('rend absolues les URLs des médias et construit le srcset des formats plus petits', async () => {
 		const accueil = await getPageAccueil(
@@ -277,5 +295,194 @@ describe('getReglages', () => {
 
 	it('retombe sur les défauts si dépublié', async () => {
 		await expect(getReglages(reponse({ data: null }))).resolves.toEqual(defaultReglages);
+	});
+});
+
+describe('getPageAccueil — titres des catalogues', () => {
+	it('prend les titres par défaut quand le CMS n’a pas encore les sections, sans déclasser la page', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const accueil = await getPageAccueil(
+			reponse({
+				data: {
+					...brut,
+					audios: null,
+					fascicules: undefined,
+					hero: { ...brut.hero, eyebrow: 'Modifié' }
+				}
+			})
+		);
+		expect(accueil.hero.eyebrow).toBe('Modifié');
+		expect(accueil.audios).toEqual(defaultAccueil.audios);
+		expect(accueil.fascicules).toEqual(defaultAccueil.fascicules);
+	});
+
+	it('mappe les titres saisis et omet un paragraphe vide', async () => {
+		const brut = accueilVersStrapi(defaultAccueil);
+		const accueil = await getPageAccueil(
+			reponse({
+				data: { ...brut, audios: { eyebrow: 'Écoute', titre: 'Méditations', paragraphe: '  ' } }
+			})
+		);
+		expect(accueil.audios).toEqual({ eyebrow: 'Écoute', titre: 'Méditations' });
+	});
+
+	it('demande les deux sections dans le populate', async () => {
+		const fetcher = reponse({ data: accueilVersStrapi(defaultAccueil) });
+		await getPageAccueil(fetcher);
+		const url = decodeURIComponent(
+			(fetcher as unknown as { mock: { calls: [string][] } }).mock.calls[0][0]
+		);
+		expect(url).toContain('populate[audios][populate]=*');
+		expect(url).toContain('populate[fascicules][populate]=*');
+	});
+});
+
+const liste = (data: unknown[]) =>
+	reponse({
+		data,
+		meta: { pagination: { page: 1, pageSize: 100, pageCount: 1, total: data.length } }
+	});
+const premierAppel = (fetcher: typeof fetch) =>
+	decodeURIComponent((fetcher as unknown as { mock: { calls: [string][] } }).mock.calls[0][0]);
+
+describe('getAudios', () => {
+	const audio = {
+		titre: 'Respiration du matin',
+		description: 'Dix minutes pour commencer la journée.',
+		fichier: { url: '/uploads/respiration.mp3', mime: 'audio/mpeg' },
+		visuel: null,
+		duree: '10 min',
+		misEnAvant: true
+	};
+
+	it('mappe les audios et rend les URLs absolues', async () => {
+		await expect(getAudios(liste([audio]))).resolves.toEqual([
+			{
+				titre: 'Respiration du matin',
+				description: 'Dix minutes pour commencer la journée.',
+				fichier: { url: 'http://cms.test/uploads/respiration.mp3', mime: 'audio/mpeg' },
+				duree: '10 min',
+				misEnAvant: true
+			}
+		]);
+	});
+
+	it('écarte seulement l’entrée sans fichier, garde les autres', async () => {
+		const res = await getAudios(liste([{ ...audio, titre: 'Cassé', fichier: null }, audio]));
+		expect(res.map((a) => a.titre)).toEqual(['Respiration du matin']);
+		expect(console.warn).toHaveBeenCalled();
+	});
+
+	it('traite misEnAvant null (entrée antérieure à la case) comme non mis en avant', async () => {
+		const [a] = await getAudios(liste([{ ...audio, misEnAvant: null }]));
+		expect(a.misEnAvant).toBe(false);
+	});
+
+	it('demande 100 entrées par page, les plus récentes d’abord, médias inclus', async () => {
+		const fetcher = liste([]);
+		await getAudios(fetcher);
+		const url = premierAppel(fetcher);
+		expect(url).toContain('/api/audios?');
+		expect(url).toContain('pagination[pageSize]=100');
+		expect(url).toContain('sort=publishedAt:desc');
+		expect(url).toContain('populate=*');
+	});
+
+	it('renvoie une liste vide si Strapi est en erreur ou non configuré', async () => {
+		await expect(getAudios(enEchec)).resolves.toEqual([]);
+		vi.stubEnv('STRAPI_URL', '');
+		await expect(getAudios(enEchec)).resolves.toEqual([]);
+	});
+});
+
+describe('getFascicules', () => {
+	const base = {
+		titre: 'Les chakras',
+		description: 'Un fascicule.',
+		couverture: null,
+		misEnAvant: false,
+		lien: null,
+		typeDemande: null
+	};
+	const pdf = { url: '/uploads/chakras.pdf' };
+
+	it('gratuit avec PDF → télécharger ; prix fait d’espaces = gratuit', async () => {
+		for (const prixTexte of [null, '', '   ']) {
+			const [f] = await getFascicules(liste([{ ...base, prixTexte, document: pdf }]));
+			expect(f).toEqual({
+				titre: 'Les chakras',
+				description: 'Un fascicule.',
+				action: { kind: 'telecharger', url: 'http://cms.test/uploads/chakras.pdf' },
+				misEnAvant: false
+			});
+		}
+	});
+
+	it('gratuit sans PDF → aucune action', async () => {
+		const [f] = await getFascicules(liste([{ ...base, prixTexte: null, document: null }]));
+		expect(f.action).toEqual({ kind: 'aucune' });
+	});
+
+	it('payant avec lien → lien ; le PDF n’est jamais relayé', async () => {
+		const [f] = await getFascicules(
+			liste([{ ...base, prixTexte: '12 €', document: pdf, lien: 'https://boutique.test/chakras' }])
+		);
+		expect(f.action).toEqual({ kind: 'lien', url: 'https://boutique.test/chakras' });
+		expect(f.prixTexte).toBe('12 €');
+		expect(JSON.stringify(f)).not.toContain('chakras.pdf');
+	});
+
+	it('payant sans lien → demande, du type choisi (commande par défaut)', async () => {
+		const [commande, inscription] = await getFascicules(
+			liste([
+				{ ...base, prixTexte: '12 €', document: pdf },
+				{ ...base, titre: 'Cycle', prixTexte: '40 €', typeDemande: 'inscription' }
+			])
+		);
+		expect(commande.action).toEqual({ kind: 'demande', type: 'commande' });
+		expect(JSON.stringify(commande)).not.toContain('chakras.pdf');
+		expect(inscription.action).toEqual({ kind: 'demande', type: 'inscription' });
+	});
+
+	it('écarte un fascicule au lien non http(s), garde les autres', async () => {
+		const res = await getFascicules(
+			liste([
+				{ ...base, titre: 'Piégé', prixTexte: '5 €', lien: 'javascript:alert(1)' },
+				{ ...base, prixTexte: null, document: pdf }
+			])
+		);
+		expect(res.map((f) => f.titre)).toEqual(['Les chakras']);
+	});
+});
+
+describe('vitrine', () => {
+	const el = (titre: string, misEnAvant: boolean) => ({ titre, misEnAvant });
+
+	it('met d’abord les éléments mis en avant, complète par les autres, coupe à 4', () => {
+		const items = [
+			el('a', false),
+			el('b', true),
+			el('c', false),
+			el('d', true),
+			el('e', false),
+			el('f', false)
+		];
+		expect(vitrine(items)).toEqual([
+			{ titre: 'b' },
+			{ titre: 'd' },
+			{ titre: 'a' },
+			{ titre: 'c' }
+		]);
+	});
+
+	it('garde tout quand il y a moins de 4 éléments', () => {
+		expect(vitrine([el('a', false), el('b', true)])).toEqual([{ titre: 'b' }, { titre: 'a' }]);
+	});
+
+	it('sansMiseEnAvant conserve l’ordre et retire le drapeau', () => {
+		expect(sansMiseEnAvant([el('a', true), el('b', false)])).toEqual([
+			{ titre: 'a' },
+			{ titre: 'b' }
+		]);
 	});
 });

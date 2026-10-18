@@ -2,6 +2,7 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
 import { commandeSchema } from '$lib/commande/schema';
+import { TEXTES_DEMANDE, typeDemande } from '$lib/commande/textes';
 import { enregistrerCommande } from '$lib/server/forms';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -10,8 +11,9 @@ const adapter = zod4(commandeSchema);
 
 export const load: PageServerLoad = async ({ url }) => {
 	const produit = url.searchParams.get('produit')?.slice(0, 200) ?? '';
+	const type = typeDemande(url.searchParams.get('type'));
 	return {
-		form: await superValidate({ produit }, adapter, { errors: false })
+		form: await superValidate({ produit, type }, adapter, { errors: false })
 	};
 };
 
@@ -39,7 +41,7 @@ export const actions: Actions = {
 
 		return message(form, {
 			type: 'succes',
-			texte: 'Demande de commande transmise. Je vous recontacte rapidement pour la finaliser.'
+			texte: TEXTES_DEMANDE[form.data.type].confirmation
 		});
 	}
 };

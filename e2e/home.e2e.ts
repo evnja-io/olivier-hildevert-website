@@ -118,7 +118,7 @@ test.describe('réservation', () => {
 test.describe('navigation mobile', () => {
 	test.use({ viewport: { width: 390, height: 844 } });
 
-	test('le burger donne accès aux six liens de navigation', async ({ page }) => {
+	test('le burger donne accès aux sept liens de navigation', async ({ page }) => {
 		await page.goto('/');
 
 		const menu = page.locator('header details');
@@ -134,6 +134,7 @@ test.describe('navigation mobile', () => {
 			'Prestations',
 			'Tarifs',
 			'Contact',
+			'Ressources',
 			'Boutique'
 		]) {
 			await expect(nav.getByRole('link', { name: label, exact: true })).toBeVisible();
@@ -168,6 +169,51 @@ test.describe('commande', () => {
 
 		await expect(page.getByRole('status')).toContainText('Demande de commande transmise');
 		await contexte.close();
+	});
+
+	test('la page /commande passe en mode inscription avec ?type=inscription', async ({
+		browser
+	}) => {
+		const contexte = await browser.newContext({ javaScriptEnabled: false });
+		const page = await contexte.newPage();
+		await page.goto('/commande?produit=Adh%C3%A9sion%20annuelle&type=inscription');
+
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Adhérer');
+		await expect(page.getByText('finaliser votre inscription')).toBeVisible();
+		await page.getByLabel('Nom et prénom').fill('Jeanne Dupont');
+		await page.getByLabel('Adresse e-mail').fill('jeanne@example.com');
+		await page.getByLabel('Téléphone').fill('06 12 34 56 78');
+		await page.getByLabel('Votre message').fill('Bonjour');
+		await page.getByRole('button', { name: 'Envoyer ma demande' }).click();
+
+		await expect(page.getByRole('status')).toContainText('Demande d’inscription transmise');
+		await contexte.close();
+	});
+
+	test('un type inconnu retombe sur le parcours commande', async ({ page }) => {
+		await page.goto('/commande?produit=X&type=n-importe-quoi');
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Commander');
+		await expect(page.getByLabel('Votre message')).toBeVisible();
+	});
+
+	test('un type falsifié dans le POST ne provoque pas d’erreur 500', async ({ request }) => {
+		// Hors navigateur : l'en-tête Origin doit correspondre (protection CSRF de SvelteKit).
+		const origine = 'http://localhost:4173';
+		const base = { produit: 'X', email: 'jeanne@example.com', phone: '06 12 34 56 78' };
+
+		// formulaire invalide (nom manquant) : la page est re-rendue avec le type falsifié
+		const invalide = await request.post('/commande', {
+			form: { ...base, name: '', type: 'bogus' },
+			headers: { Origin: origine }
+		});
+		expect(invalide.status()).toBeLessThan(500);
+
+		// formulaire valide : le type falsifié est ramené à « commande »
+		const valide = await request.post('/commande', {
+			form: { ...base, name: 'Jeanne Dupont', type: 'bogus' },
+			headers: { Origin: origine }
+		});
+		expect(valide.status()).toBeLessThan(500);
 	});
 });
 

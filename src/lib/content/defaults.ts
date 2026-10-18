@@ -174,6 +174,18 @@ export const defaultAccueil: PageAccueilContent = {
 			}
 		]
 	},
+	audios: {
+		eyebrow: 'Audios',
+		titre: 'Écouter, respirer, se relier',
+		paragraphe:
+			'Des méditations et des enregistrements offerts, à écouter ici même, au calme, quand vous en avez besoin.'
+	},
+	fascicules: {
+		eyebrow: 'Fascicules',
+		titre: 'Des fascicules à thème pour approfondir',
+		paragraphe:
+			'Des repères écrits pour prolonger le travail entre deux séances : certains sont offerts, d’autres disponibles sur commande.'
+	},
 	tarifs: {
 		eyebrow: 'Tarifs',
 		titre: 'Une tarification claire',
