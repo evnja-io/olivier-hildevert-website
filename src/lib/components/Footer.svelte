@@ -74,6 +74,12 @@
 				>
 					Audios
 				</a>
+				<a
+					href={resolve('/avis')}
+					class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
+				>
+					Avis
+				</a>
 			</nav>
 			<nav aria-label="Prendre rendez-vous">
 				<h4 class="mb-4.5 font-mono text-xs font-medium tracking-[0.2em] text-amber-soft uppercase">

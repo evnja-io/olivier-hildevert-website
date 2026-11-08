@@ -9,9 +9,7 @@ test.describe('catalogues', () => {
 		await expect(page.locator('#fascicules')).toHaveCount(0);
 	});
 
-	for (const [chemin, titre] of [
-		['/audios', 'Écouter pour se transformer']
-	]) {
+	for (const [chemin, titre] of [['/audios', 'Écouter pour se transformer']]) {
 		test(`${chemin} répond et annonce un catalogue à venir`, async ({ page }) => {
 			const res = await page.goto(chemin);
 			expect(res?.status()).toBe(200);

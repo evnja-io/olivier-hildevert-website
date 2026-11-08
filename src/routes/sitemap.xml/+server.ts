@@ -11,6 +11,7 @@ const routes = [
 	'/commande',
 	'/newsletter',
 	'/audios',
+	'/avis',
 	...PRESTATION_IDS.map((cle) => `/prestations/${cle}`)
 ];
 

@@ -43,11 +43,11 @@ Ce lot doit pouvoir partir seul, même si le lot 2 n'est pas prêt le 11/11. Seu
 
 ### 3.1 Fascicules retirés du site
 
-- Supprimer la route `src/routes/fascicules/`. `/fascicules` répond alors 404 : la page était vide et n'a pas été annoncée. *Choix de ma part.*
+- Supprimer la route `src/routes/fascicules/`. `/fascicules` répond alors 404 : la page était vide et n'a pas été annoncée. _Choix de ma part._
 - Accueil : retirer le `CatalogueAccueil` des fascicules (`src/routes/+page.svelte`) et l'appel à `getFascicules` dans `src/routes/+page.server.ts`.
 - Pied de page : retirer le lien « Fascicules » (`src/lib/components/Footer.svelte`).
 - Sitemap : retirer `/fascicules` du tableau `routes` (`src/routes/sitemap.xml/+server.ts`).
-- **On garde** `CarteFascicule.svelte`, `getFascicules`, les types, la clé `fascicules` de la page d'accueil et la collection Strapi, pour pouvoir remettre la rubrique plus tard en réactivant la route et la section. *Choix de ma part, que l'utilisateur n'a pas contesté.* Le CLAUDE.md doit dire que les fascicules sont **en sommeil** : code et CMS présents, aucune exposition sur le site.
+- **On garde** `CarteFascicule.svelte`, `getFascicules`, les types, la clé `fascicules` de la page d'accueil et la collection Strapi, pour pouvoir remettre la rubrique plus tard en réactivant la route et la section. _Choix de ma part, que l'utilisateur n'a pas contesté._ Le CLAUDE.md doit dire que les fascicules sont **en sommeil** : code et CMS présents, aucune exposition sur le site.
 - Les e2e qui visitent `/fascicules` ou attendent son lien (`e2e/catalogues.e2e.ts`) sont adaptés : ils vérifient l'**absence** du lien et de l'entrée du sitemap.
 
 ### 3.2 Audios : plus de section sur l'accueil, nouvel en-tête de `/audios`
@@ -58,7 +58,8 @@ Ce lot doit pouvoir partir seul, même si le lot 2 n'est pas prêt le 11/11. Seu
   - `titre` : « Écouter pour se transformer »
   - `paragraphe` : « Des exercices sophrologiques offerts, à écouter ici même ou à emporter chez vous quand vous en aurez besoin. »
 
-  Le texte d'Olivier est repris tel quel, à deux détails près : la mention « (téléchargement) » est retirée, puisque le bouton « À emporter ! » la rend inutile, et une virgule est ajoutée. *Choix de ma part, à signaler à Olivier.*
+  Le texte d'Olivier est repris tel quel, à deux détails près : la mention « (téléchargement) » est retirée, puisque le bouton « À emporter ! » la rend inutile, et une virgule est ajoutée. _Choix de ma part, à signaler à Olivier._
+
 - Si Strapi contient déjà une valeur pour cette clé, c'est elle qui s'affiche, pas le défaut. **Action hors code :** mettre à jour le champ dans Strapi (Page d'accueil → Audios) et indiquer à Olivier où il se trouve.
 - Le lien d'ancre `#audios` n'existe plus sur l'accueil : vérifier qu'aucun lien interne n'y pointe encore.
 - Le pavé « Catalogue audio » de la Boutique pointe déjà sur `https://olivier-hildevert-website.vercel.app/audios`, ce que l'utilisateur a confirmé. Aucune redirection d'ancre n'est donc nécessaire. **Action hors code** au passage au domaine définitif : mettre à jour ce lien dans Strapi.
@@ -83,7 +84,7 @@ Ce lot doit pouvoir partir seul, même si le lot 2 n'est pas prêt le 11/11. Seu
 - ligne manuscrite (`font-script`) : « Une lettre de temps en temps ? » ;
 - paragraphe : « Actualités, nouveaux programmes et ateliers, conseils, lectures. Rien de plus. »
 
-Accents rétablis (« Actualités ») et espace insécable avant le « ? ». La page de repli `/newsletter` reprend le même titre et le même paragraphe, son `<meta description>` aussi. *Choix de ma part.* Adapter les tests et e2e qui ciblent les anciens textes.
+Accents rétablis (« Actualités ») et espace insécable avant le « ? ». La page de repli `/newsletter` reprend le même titre et le même paragraphe, son `<meta description>` aussi. _Choix de ma part._ Adapter les tests et e2e qui ciblent les anciens textes.
 
 ## 4. Lot 2 : section Avis
 
@@ -101,13 +102,13 @@ Accents rétablis (« Actualités ») et espace insécable avant le « ? ». La 
 ### 4.2 Site
 
 - Types (`src/lib/content/types.ts`) : `AvisContent { texte; nom; contexte? }`. `PageAccueilContent.avis` est du même type que les sections catalogue.
-- Défauts : section `{ eyebrow: 'Avis', titre: 'Ils en parlent', paragraphe: absent }`. **Aucun avis par défaut**. *Choix de ma part, Olivier pourra changer le titre dans Strapi.*
+- Défauts : section `{ eyebrow: 'Avis', titre: 'Ils en parlent', paragraphe: absent }`. **Aucun avis par défaut**. _Choix de ma part, Olivier pourra changer le titre dans Strapi._
 - Lecture : `getAvis` dans `src/lib/server/content.ts`, sur le modèle de `getAudios` : validation **élément par élément** (un avis invalide est écarté avec `console.warn`, les autres restent) et repli sur une liste vide.
 - `POPULATE_ACCUEIL` : ajout de `populate[avis][populate]` (cf. § 6).
 - **Accueil** : nouvelle section `Avis.svelte` (`src/lib/components/home/`) placée **juste avant `<References>`**, c'est-à-dire après le bandeau de contact. Disposition validée avec l'utilisateur sur maquette (option A, « grille de cartes ») :
   - eyebrow, titre, paragraphe facultatif ;
   - **3 cartes** (`vitrine(avis, 3)`) : guillemet décoratif corail, texte, nom en gras, contexte en gris dessous. Cartes blanches `border-line`, arrondi `rounded-card`, même esprit que les cartes Boutique ;
-  - 3 colonnes à partir de `md` (*choix de ma part : 3 et non 4, pour que la grille soit pleine*), une colonne sur mobile ;
+  - 3 colonnes à partir de `md` (_choix de ma part : 3 et non 4, pour que la grille soit pleine_), une colonne sur mobile ;
   - bouton `btn btn-line` « Lire tous les avis » vers `/avis` ;
   - aucun avis publié : la section n'est pas rendue (ni ancre, ni titre).
 - **Page `/avis`** : sur le modèle de `/audios` (ISR 300 s via `export const config`, `<svelte:head>` avec titre, description et canonical). En-tête tiré de la clé `avis`, toutes les cartes dans le même composant de carte que l'accueil, « Bientôt disponible. » avec un retour à l'accueil si la liste est vide. Ajouter `/avis` au sitemap.

@@ -10,6 +10,8 @@
 	import PourQui from '$lib/components/home/PourQui.svelte';
 	import Boutique from '$lib/components/home/Boutique.svelte';
 	import References from '$lib/components/home/References.svelte';
+	import CatalogueAccueil from '$lib/components/catalogue/CatalogueAccueil.svelte';
+	import CarteAvis from '$lib/components/catalogue/CarteAvis.svelte';
 	import Tarifs from '$lib/components/home/Tarifs.svelte';
 	import ContactCta from '$lib/components/home/ContactCta.svelte';
 
@@ -72,5 +74,16 @@
 	{/snippet}
 	<ContactCta content={data.accueil.contactCta} />
 </ImmersiveBand>
+
+<CatalogueAccueil
+	id="avis"
+	content={data.accueil.avis}
+	page="/avis"
+	lien="Lire tous les avis"
+	colonnes={3}
+	nombre={data.avis.length}
+>
+	{#snippet carte(i)}<CarteAvis avis={data.avis[i]} />{/snippet}
+</CatalogueAccueil>
 
 <References content={data.accueil.references} />
