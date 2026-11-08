@@ -10,12 +10,17 @@ test.describe('catalogues', () => {
 	});
 
 	for (const [chemin, titre] of [
-		['/audios', 'Écouter, respirer, se relier']
+		['/audios', 'Écouter pour se transformer']
 	]) {
 		test(`${chemin} répond et annonce un catalogue à venir`, async ({ page }) => {
 			const res = await page.goto(chemin);
 			expect(res?.status()).toBe(200);
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(titre);
+			await expect(
+				page.getByText(
+					'Des exercices sophrologiques offerts, à écouter ici même ou à emporter chez vous quand vous en aurez besoin.'
+				)
+			).toBeVisible();
 			await expect(page.getByText('Bientôt disponible.')).toBeVisible();
 			await expect(page.getByRole('link', { name: 'Retour à l’accueil' })).toHaveAttribute(
 				'href',

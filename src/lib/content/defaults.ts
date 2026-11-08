@@ -176,9 +176,9 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	audios: {
 		eyebrow: 'Audios',
-		titre: 'Écouter, respirer, se relier',
+		titre: 'Écouter pour se transformer',
 		paragraphe:
-			'Des méditations et des enregistrements offerts, à écouter ici même, au calme, quand vous en avez besoin.'
+			'Des exercices sophrologiques offerts, à écouter ici même ou à emporter chez vous quand vous en aurez besoin.'
 	},
 	fascicules: {
 		eyebrow: 'Fascicules',
