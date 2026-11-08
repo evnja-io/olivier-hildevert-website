@@ -176,15 +176,19 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	audios: {
 		eyebrow: 'Audios',
-		titre: 'Écouter, respirer, se relier',
+		titre: 'Écouter pour se transformer',
 		paragraphe:
-			'Des méditations et des enregistrements offerts, à écouter ici même, au calme, quand vous en avez besoin.'
+			'Des exercices sophrologiques offerts, à écouter ici même ou à emporter chez vous quand vous en aurez besoin.'
 	},
 	fascicules: {
 		eyebrow: 'Fascicules',
 		titre: 'Des fascicules à thème pour approfondir',
 		paragraphe:
 			'Des repères écrits pour prolonger le travail entre deux séances : certains sont offerts, d’autres disponibles sur commande.'
+	},
+	avis: {
+		eyebrow: 'Avis',
+		titre: 'Ils en parlent'
 	},
 	tarifs: {
 		eyebrow: 'Tarifs',

@@ -75,10 +75,10 @@
 					Audios
 				</a>
 				<a
-					href={resolve('/fascicules')}
+					href={resolve('/avis')}
 					class="block py-1.5 text-sm text-on-dusk-soft transition-colors hover:text-on-dusk"
 				>
-					Fascicules
+					Avis
 				</a>
 			</nav>
 			<nav aria-label="Prendre rendez-vous">

@@ -9,14 +9,20 @@
 		content,
 		page,
 		nombre,
-		carte
+		carte,
+		lien = 'Voir tout',
+		colonnes = 4
 	}: {
 		id: string;
 		content: SectionCatalogue;
 		/** Page complète du catalogue. */
-		page: '/audios' | '/fascicules';
+		page: '/audios' | '/avis';
 		nombre: number;
 		carte: Snippet<[number]>;
+		/** Libellé du bouton vers la page complète. */
+		lien?: string;
+		/** Colonnes de la grille sur grand écran. */
+		colonnes?: 3 | 4;
 	} = $props();
 
 	const href = $derived(resolve(page));
@@ -33,7 +39,12 @@
 					<p class="text-base leading-[1.66] text-ink-soft">{content.paragraphe}</p>
 				{/if}
 			</div>
-			<div class="grid gap-5.5 md:grid-cols-2 xl:grid-cols-4">
+			<div
+				class={[
+					'grid gap-5.5',
+					colonnes === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 xl:grid-cols-4'
+				]}
+			>
 				{#each { length: nombre }, i (i)}
 					<div class="reveal flex" {@attach reveal(i * 85)}>
 						{@render carte(i)}
@@ -42,7 +53,7 @@
 			</div>
 			<div class="mt-12 flex justify-center">
 				<a class="btn btn-line" {href}>
-					Voir tout<span class="sr-only">&nbsp;: {content.eyebrow}</span>
+					{lien}<span class="sr-only">&nbsp;: {content.eyebrow}</span>
 				</a>
 			</div>
 		</div>

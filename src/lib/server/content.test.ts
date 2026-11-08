@@ -10,6 +10,7 @@ import {
 } from '$lib/content/seed-format';
 import {
 	getAudios,
+	getAvis,
 	getFascicules,
 	getPageAccueil,
 	getPrestations,
@@ -307,6 +308,7 @@ describe('getPageAccueil — titres des catalogues', () => {
 					...brut,
 					audios: null,
 					fascicules: undefined,
+					avis: undefined,
 					hero: { ...brut.hero, eyebrow: 'Modifié' }
 				}
 			})
@@ -314,6 +316,7 @@ describe('getPageAccueil — titres des catalogues', () => {
 		expect(accueil.hero.eyebrow).toBe('Modifié');
 		expect(accueil.audios).toEqual(defaultAccueil.audios);
 		expect(accueil.fascicules).toEqual(defaultAccueil.fascicules);
+		expect(accueil.avis).toEqual({ eyebrow: 'Avis', titre: 'Ils en parlent' });
 	});
 
 	it('mappe les titres saisis et omet un paragraphe vide', async () => {
@@ -326,7 +329,7 @@ describe('getPageAccueil — titres des catalogues', () => {
 		expect(accueil.audios).toEqual({ eyebrow: 'Écoute', titre: 'Méditations' });
 	});
 
-	it('demande les deux sections dans le populate', async () => {
+	it('demande les sections catalogue et avis dans le populate', async () => {
 		const fetcher = reponse({ data: accueilVersStrapi(defaultAccueil) });
 		await getPageAccueil(fetcher);
 		const url = decodeURIComponent(
@@ -334,6 +337,7 @@ describe('getPageAccueil — titres des catalogues', () => {
 		);
 		expect(url).toContain('populate[audios][populate]=*');
 		expect(url).toContain('populate[fascicules][populate]=*');
+		expect(url).toContain('populate[avis][populate]=*');
 	});
 });
 
@@ -392,6 +396,45 @@ describe('getAudios', () => {
 		await expect(getAudios(enEchec)).resolves.toEqual([]);
 		vi.stubEnv('STRAPI_URL', '');
 		await expect(getAudios(enEchec)).resolves.toEqual([]);
+	});
+});
+
+describe('getAvis', () => {
+	const avis = { texte: 'Merci.', nom: 'Claire M.', contexte: 'Stage', misEnAvant: false };
+
+	it('mappe un avis complet depuis la collection temoignages', async () => {
+		const fetcher = liste([avis]);
+		await expect(getAvis(fetcher)).resolves.toEqual([avis]);
+		expect(premierAppel(fetcher)).toContain('/api/temoignages?');
+	});
+
+	it('omet un contexte null ou vide', async () => {
+		const res = await getAvis(
+			liste([
+				{ ...avis, contexte: null },
+				{ ...avis, contexte: '  ' }
+			])
+		);
+		expect(res).toEqual([
+			{ texte: 'Merci.', nom: 'Claire M.', misEnAvant: false },
+			{ texte: 'Merci.', nom: 'Claire M.', misEnAvant: false }
+		]);
+	});
+
+	it('écarte seulement les avis sans nom ou sans texte, garde les autres', async () => {
+		const res = await getAvis(
+			liste([
+				{ ...avis, nom: '  ' },
+				{ ...avis, texte: '' },
+				{ ...avis, nom: 'Inès B.' }
+			])
+		);
+		expect(res.map((a) => a.nom)).toEqual(['Inès B.']);
+		expect(console.warn).toHaveBeenCalledTimes(2);
+	});
+
+	it('renvoie une liste vide si Strapi est en erreur', async () => {
+		await expect(getAvis(enEchec)).resolves.toEqual([]);
 	});
 });
 

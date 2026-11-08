@@ -13,17 +13,16 @@
 	<title>Newsletter — {site.name}</title>
 	<meta
 		name="description"
-		content="Recevez la lettre occasionnelle de {site.name} : pratiques, audios de sophrologie et actualités du cabinet."
+		content="Une lettre de temps en temps de {site.name} : actualités, nouveaux programmes et ateliers, conseils, lectures."
 	/>
 	<link rel="canonical" href="{site.url}/newsletter" />
 </svelte:head>
 
 <section class="mx-auto max-w-xl px-4 pt-36 pb-24">
 	<span class="eyebrow">Newsletter</span>
-	<h1 class="mt-4 text-4xl text-ink">Restons en lien</h1>
+	<h1 class="mt-4 text-4xl text-ink">Une lettre de temps en temps&nbsp;?</h1>
 	<p class="mt-3 text-ink-soft">
-		Une lettre occasionnelle : pratiques à explorer, audios de sophrologie et actualités du cabinet.
-		Pas de spam, promis.
+		Actualités, nouveaux programmes et ateliers, conseils, lectures. Rien de plus.
 	</p>
 
 	{#if $message?.type === 'succes'}

@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { site } from '$lib/config';
-	import CatalogueAccueil from '$lib/components/catalogue/CatalogueAccueil.svelte';
-	import CarteAudio from '$lib/components/catalogue/CarteAudio.svelte';
-	import CarteFascicule from '$lib/components/catalogue/CarteFascicule.svelte';
 	import Hero from '$lib/components/home/Hero.svelte';
 	import ImmersiveBand from '$lib/components/home/ImmersiveBand.svelte';
 	import Mantra from '$lib/components/home/Mantra.svelte';
@@ -13,6 +10,8 @@
 	import PourQui from '$lib/components/home/PourQui.svelte';
 	import Boutique from '$lib/components/home/Boutique.svelte';
 	import References from '$lib/components/home/References.svelte';
+	import CatalogueAccueil from '$lib/components/catalogue/CatalogueAccueil.svelte';
+	import CarteAvis from '$lib/components/catalogue/CarteAvis.svelte';
 	import Tarifs from '$lib/components/home/Tarifs.svelte';
 	import ContactCta from '$lib/components/home/ContactCta.svelte';
 
@@ -62,24 +61,6 @@
 
 <Boutique content={data.accueil.boutique} />
 
-<CatalogueAccueil
-	id="audios"
-	content={data.accueil.audios}
-	page="/audios"
-	nombre={data.audios.length}
->
-	{#snippet carte(i)}<CarteAudio audio={data.audios[i]} />{/snippet}
-</CatalogueAccueil>
-
-<CatalogueAccueil
-	id="fascicules"
-	content={data.accueil.fascicules}
-	page="/fascicules"
-	nombre={data.fascicules.length}
->
-	{#snippet carte(i)}<CarteFascicule fascicule={data.fascicules[i]} />{/snippet}
-</CatalogueAccueil>
-
 <Tarifs content={data.accueil.tarifs} />
 
 <ImmersiveBand id="contact" onWarm>
@@ -93,5 +74,16 @@
 	{/snippet}
 	<ContactCta content={data.accueil.contactCta} />
 </ImmersiveBand>
+
+<CatalogueAccueil
+	id="avis"
+	content={data.accueil.avis}
+	page="/avis"
+	lien="Lire tous les avis"
+	colonnes={3}
+	nombre={data.avis.length}
+>
+	{#snippet carte(i)}<CarteAvis avis={data.avis[i]} />{/snippet}
+</CatalogueAccueil>
 
 <References content={data.accueil.references} />

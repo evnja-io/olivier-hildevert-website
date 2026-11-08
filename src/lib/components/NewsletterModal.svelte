@@ -96,14 +96,13 @@
 				Newsletter
 			</span>
 			<h3 class="mt-3 font-display text-2xl leading-[1.15]">
-				Avant de partir…
+				Avant de partir
 				<em class="block font-script text-[1.2em] leading-[1.1] text-coral not-italic">
-					restons en lien
+					Une lettre de temps en temps&nbsp;?
 				</em>
 			</h3>
 			<p class="mt-3 mb-5 text-sm leading-[1.6] text-ink-soft">
-				Une lettre occasionnelle : pratiques à explorer, audios de sophrologie et actualités du
-				cabinet. Rien de plus.
+				Actualités, nouveaux programmes et ateliers, conseils, lectures. Rien de plus.
 			</p>
 
 			<form method="POST" action={resolve('/newsletter')} use:enhance novalidate>

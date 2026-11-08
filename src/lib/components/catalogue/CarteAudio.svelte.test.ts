@@ -27,4 +27,15 @@ describe('CarteAudio', () => {
 		expect(lecteur.getAttribute('preload')).toBe('none');
 		expect(screen.container.querySelector('audio')).toBeNull();
 	});
+
+	it('propose « À emporter ! » sous le lecteur, en téléchargement', async () => {
+		const screen = render(CarteAudio, {
+			audio: { ...base, fichier: { url: 'https://cms.test/r.mp3', mime: 'audio/mpeg' } }
+		});
+		const lien = screen.getByRole('link', { name: /À emporter.*Respiration du matin/ });
+		await expect
+			.element(lien)
+			.toHaveAttribute('href', 'https://cms.test/r.mp3?download=respiration-du-matin.mp3');
+		await expect.element(lien).toHaveAttribute('download');
+	});
 });

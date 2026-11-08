@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { AudioContent } from '$lib/content/types';
+	import { lienEmporter } from './emporter';
 
 	let { audio }: { audio: AudioContent } = $props();
 
@@ -54,6 +55,14 @@
 					class="w-full"
 				></audio>
 			{/if}
+			<a
+				class="mt-4 btn btn-line justify-center"
+				href={lienEmporter(audio.fichier.url, audio.titre)}
+				rel="external"
+				download
+			>
+				À emporter&nbsp;!<span class="sr-only">&nbsp;: {audio.titre}</span>
+			</a>
 		</div>
 	</div>
 </article>

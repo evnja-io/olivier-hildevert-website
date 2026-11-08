@@ -12,6 +12,7 @@ import { PRESTATION_IDS } from '$lib/booking/prestations';
 import { defaultAccueil, defaultPrestations, defaultReglages } from '$lib/content/defaults';
 import type {
 	AudioContent,
+	AvisContent,
 	FasciculeContent,
 	ImageCms,
 	PageAccueilContent,
@@ -220,6 +221,7 @@ const accueilSchema = z.object({
 	}),
 	audios: sectionCatalogue(defaultAccueil.audios),
 	fascicules: sectionCatalogue(defaultAccueil.fascicules),
+	avis: sectionCatalogue(defaultAccueil.avis),
 	tarifs: z.object({
 		eyebrow: z.string(),
 		titre: z.string(),
@@ -308,6 +310,8 @@ const POPULATE_ACCUEIL = {
 	// Exigent un CMS qui connaît `audios` / `fascicules` (déployer le CMS AVANT le site).
 	'populate[audios][populate]': '*',
 	'populate[fascicules][populate]': '*',
+	// Exige un CMS qui connaît `avis` (déployer le CMS AVANT le site).
+	'populate[avis][populate]': '*',
 	'populate[tarifs][populate]': '*',
 	'populate[mantra][populate]': '*',
 	'populate[contactCta][populate]': '*',
@@ -457,6 +461,18 @@ const fasciculeSchema = z
 		}
 	);
 
+const avisSchema = z
+	.object({
+		texte: z.string().trim().min(1),
+		nom: z.string().trim().min(1),
+		contexte: texteOptionnel,
+		misEnAvant: drapeauMiseEnAvant
+	})
+	.transform(({ contexte, ...reste }): AvecMiseEnAvant<AvisContent> => ({
+		...reste,
+		...(contexte ? { contexte } : {})
+	}));
+
 const QUERY_CATALOGUE = {
 	populate: '*',
 	sort: 'publishedAt:desc',
@@ -479,7 +495,11 @@ async function lireCatalogue<T>(
 		return items.flatMap((item) => {
 			const res = schema.safeParse(item);
 			if (res.success) return [res.data];
-			console.warn(`Entrée « ${collection} » ignorée (invalide) :`, item.titre, res.error.issues);
+			console.warn(
+				`Entrée « ${collection} » ignorée (invalide) :`,
+				item.titre ?? item.nom,
+				res.error.issues
+			);
 			return [];
 		});
 	} catch (err) {
@@ -492,6 +512,8 @@ export const getAudios = (fetcher: typeof fetch) => lireCatalogue('audios', audi
 
 export const getFascicules = (fetcher: typeof fetch) =>
 	lireCatalogue('fascicules', fasciculeSchema, fetcher);
+
+export const getAvis = (fetcher: typeof fetch) => lireCatalogue('temoignages', avisSchema, fetcher);
 
 /** Liste complète, ordre conservé, sans le drapeau de mise en avant. */
 export function sansMiseEnAvant<T>(items: AvecMiseEnAvant<T>[]): T[] {
