@@ -11,7 +11,9 @@ test.describe('avis', () => {
 	test('/avis répond et annonce des avis à venir', async ({ page }) => {
 		const res = await page.goto('/avis');
 		expect(res?.status()).toBe(200);
-		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ils en parlent');
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+			'C’est vous qui en parlez le mieux…'
+		);
 		await expect(page.getByText('Bientôt disponible.')).toBeVisible();
 		await expect(page.getByRole('link', { name: 'Retour à l’accueil' })).toHaveAttribute(
 			'href',

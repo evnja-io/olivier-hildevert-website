@@ -102,7 +102,7 @@ Accents rétablis (« Actualités ») et espace insécable avant le « ? ». La 
 ### 4.2 Site
 
 - Types (`src/lib/content/types.ts`) : `AvisContent { texte; nom; contexte? }`. `PageAccueilContent.avis` est du même type que les sections catalogue.
-- Défauts : section `{ eyebrow: 'Avis', titre: 'Ils en parlent', paragraphe: absent }`. **Aucun avis par défaut**. _Choix de ma part, Olivier pourra changer le titre dans Strapi._
+- Défauts : section `{ eyebrow: 'Avis', titre: 'C’est vous qui en parlez le mieux…', paragraphe: absent }`. **Aucun avis par défaut**. _Choix de ma part, Olivier pourra changer le titre dans Strapi._
 - Lecture : `getAvis` dans `src/lib/server/content.ts`, sur le modèle de `getAudios` : validation **élément par élément** (un avis invalide est écarté avec `console.warn`, les autres restent) et repli sur une liste vide.
 - `POPULATE_ACCUEIL` : ajout de `populate[avis][populate]` (cf. § 6).
 - **Accueil** : nouvelle section `Avis.svelte` (`src/lib/components/home/`) placée **juste avant `<References>`**, c'est-à-dire après le bandeau de contact. Disposition validée avec l'utilisateur sur maquette (option A, « grille de cartes ») :

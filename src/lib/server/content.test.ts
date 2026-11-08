@@ -316,7 +316,7 @@ describe('getPageAccueil — titres des catalogues', () => {
 		expect(accueil.hero.eyebrow).toBe('Modifié');
 		expect(accueil.audios).toEqual(defaultAccueil.audios);
 		expect(accueil.fascicules).toEqual(defaultAccueil.fascicules);
-		expect(accueil.avis).toEqual({ eyebrow: 'Avis', titre: 'Ils en parlent' });
+		expect(accueil.avis).toEqual({ eyebrow: 'Avis', titre: 'C’est vous qui en parlez le mieux…' });
 	});
 
 	it('mappe les titres saisis et omet un paragraphe vide', async () => {
