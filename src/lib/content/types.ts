@@ -127,6 +127,13 @@ export interface SectionCatalogue {
 	paragraphe?: string;
 }
 
+/** Un avis du livre d'or (collection Strapi `temoignage`, « Avis »). */
+export interface AvisContent {
+	texte: string;
+	nom: string;
+	contexte?: string;
+}
+
 export interface AudioContent {
 	titre: string;
 	description?: string;
@@ -204,6 +211,7 @@ export interface PageAccueilContent {
 	boutique: BoutiqueContent;
 	audios: SectionCatalogue;
 	fascicules: SectionCatalogue;
+	avis: SectionCatalogue;
 	tarifs: TarifsContent;
 	mantra: MantraContent;
 	contactCta: ContactCtaContent;

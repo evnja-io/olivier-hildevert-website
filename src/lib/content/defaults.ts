@@ -186,6 +186,10 @@ export const defaultAccueil: PageAccueilContent = {
 		paragraphe:
 			'Des repères écrits pour prolonger le travail entre deux séances : certains sont offerts, d’autres disponibles sur commande.'
 	},
+	avis: {
+		eyebrow: 'Avis',
+		titre: 'Ils en parlent'
+	},
 	tarifs: {
 		eyebrow: 'Tarifs',
 		titre: 'Une tarification claire',
