@@ -22,6 +22,14 @@ test.describe('modale newsletter (exit-intent)', () => {
 
 		const modale = page.getByRole('dialog', { name: 'Newsletter' });
 		await expect(modale).toBeVisible();
+		await expect(
+			modale.getByRole('heading', { name: /^Avant de partir\s*Une lettre de temps en temps\s\?$/ })
+		).toBeVisible();
+		await expect(
+			modale.getByText(
+				'Actualités, nouveaux programmes et ateliers, conseils, lectures. Rien de plus.'
+			)
+		).toBeVisible();
 
 		await modale.getByLabel('Adresse e-mail').fill('jeanne@example.com');
 		await modale.getByRole('button', { name: "Je m'inscris" }).click();
@@ -88,7 +96,15 @@ test.describe('page /newsletter (fallback)', () => {
 
 		// scope « main » : la modale newsletter (fermée) porte les mêmes libellés
 		const zone = page.getByRole('main');
-		await expect(zone.getByRole('heading', { name: 'Restons en lien' })).toBeVisible();
+		await expect(
+			zone.getByRole('heading', { name: /^Une lettre de temps en temps\s\?$/ })
+		).toBeVisible();
+
+		await expect(
+			zone.getByText(
+				'Actualités, nouveaux programmes et ateliers, conseils, lectures. Rien de plus.'
+			)
+		).toBeVisible();
 
 		await zone.getByRole('button', { name: "Je m'inscris" }).click();
 		await expect(zone.getByText('Veuillez indiquer une adresse e-mail valide.')).toBeVisible();
