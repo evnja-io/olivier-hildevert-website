@@ -61,6 +61,17 @@
 
 <Boutique content={data.accueil.boutique} />
 
+<CatalogueAccueil
+	id="avis"
+	content={data.accueil.avis}
+	page="/avis"
+	lien="Lire tous les avis"
+	colonnes={3}
+	nombre={data.avis.length}
+>
+	{#snippet carte(i)}<CarteAvis avis={data.avis[i]} />{/snippet}
+</CatalogueAccueil>
+
 <Tarifs content={data.accueil.tarifs} />
 
 <ImmersiveBand id="contact" onWarm>
@@ -74,16 +85,5 @@
 	{/snippet}
 	<ContactCta content={data.accueil.contactCta} />
 </ImmersiveBand>
-
-<CatalogueAccueil
-	id="avis"
-	content={data.accueil.avis}
-	page="/avis"
-	lien="Lire tous les avis"
-	colonnes={3}
-	nombre={data.avis.length}
->
-	{#snippet carte(i)}<CarteAvis avis={data.avis[i]} />{/snippet}
-</CatalogueAccueil>
 
 <References content={data.accueil.references} />
