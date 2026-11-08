@@ -14,7 +14,7 @@
 		id: string;
 		content: SectionCatalogue;
 		/** Page complète du catalogue. */
-		page: '/audios' | '/fascicules';
+		page: '/audios';
 		nombre: number;
 		carte: Snippet<[number]>;
 	} = $props();
