@@ -8,5 +8,5 @@ export const config: Config = { isr: { expiration: 300 } };
 
 export const load: PageServerLoad = async ({ fetch }) => {
 	const [accueil, avis] = await Promise.all([getPageAccueil(fetch), getAvis(fetch)]);
-	return { accueil, avis: vitrine(avis, 3) };
+	return { accueil, avis: vitrine(avis, 6) };
 };
