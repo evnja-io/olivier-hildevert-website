@@ -188,7 +188,7 @@ export const defaultAccueil: PageAccueilContent = {
 	},
 	avis: {
 		eyebrow: 'Avis',
-		titre: 'Ils en parlent'
+		titre: 'C’est vous qui en parlez le mieux…'
 	},
 	tarifs: {
 		eyebrow: 'Tarifs',
